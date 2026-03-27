@@ -1,0 +1,112 @@
+.card {
+  display: inline-block;
+  background-color: rgb(70, 92, 92);
+  width: 250px;
+  height: 150px;
+  flex-shrink: 0;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.card-sm {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 165px;
+  flex-shrink: 0;
+  margin: 5px;
+  background-color: palegreen;
+  cursor: pointer;
+}
+
+.card-lg {
+  width: 100%;
+  height: 25vh;
+  cursor: pointer;
+}
+.flexCard {
+  width: 3500px;
+  max-width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #473f3f;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  font-family: sans-serif;
+}
+.Imagecard {
+  width: 80px;
+  height: 80px;
+  background-color: blue;
+}
+.Imagecard-sm {
+}
+.Imagecard-lg {
+  width: 120px;
+  height: 120px;
+}
+.circle {
+  flex-shrink: 0;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 100%;
+  margin: 5px;
+  background-color: azure;
+
+  border-radius: 100%;
+
+  align-content: center;
+}
+.circle-sm {
+  flex-shrink: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 5px;
+  background-color: azure;
+
+  border-radius: 100%;
+}
+
+.circle-lg {
+  border-radius: 100%;
+}
+
+.swipeablesCards {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-color: azure;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.swipeablesCards:active {
+  cursor: grabbing;
+}
+.swipeablesCards::-webkit-scrollbar {
+  display: none;
+}
+.sloganCard {
+  display: inline-block;
+  background-color: red;
+  width: fit-content;
+}
+
+/**/
+
+.perfilCard {
+  position: absolute;
+  top: 150px;
+  left: 80px;
+  z-index: 10;
+}
+.mural {
+  padding-top: 35%;
+  height: max-content;
+  background-color: blueviolet;
+}
+.desc {
+  background-color: yellow;
+}
