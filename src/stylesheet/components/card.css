@@ -1,3 +1,7 @@
+/*Yas*/
+
+/*Fim yas*/
+
 .card {
   display: inline-block;
   background-color: rgb(70, 92, 92);
@@ -23,6 +27,7 @@
   height: 25vh;
   cursor: pointer;
 }
+/*
 .flexCard {
   width: 3500px;
   max-width: 100%;
@@ -30,13 +35,14 @@
   overflow: hidden;
   background: #473f3f;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  font-family: sans-serif;
 }
-.Imagecard {
-  width: 80px;
-  height: 80px;
-  background-color: blue;
+
+.cardImg img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
+*/
 .Imagecard-sm {
 }
 .Imagecard-lg {
@@ -89,9 +95,13 @@
   display: none;
 }
 .sloganCard {
-  display: inline-block;
+  display: flex;
   background-color: red;
   width: fit-content;
+  height: 60px;
+}
+.sloganCard h2 {
+  margin: 5px;
 }
 
 /**/

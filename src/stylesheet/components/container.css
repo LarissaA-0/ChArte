@@ -6,9 +6,12 @@
 
 html,
 body {
+  margin: 0;
+  /*display: flex;*/
   overflow-x: hidden;
   overflow-y: visible;
-  margin: 0;
+  justify-content: center;
+  align-items: center;
 }
 .container {
   position: relative;
@@ -28,26 +31,57 @@ body {
   background-color: blue;
   padding: 0 1rem;
 }
-.container-flex {
-}
 
+/*Flex*/
+
+/*Imagens container*/
+.scrollCatalogue {
+  background-color: rgb(192, 211, 211);
+  width: 100%;
+  height: 100vh;
+  min-height: max-content;
+  column-count: 5;
+  column-gap: 10px;
+}
+/*
+.flexCard {
+  max-width: 2vw;
+  max-height: 2vh;
+  background-color: blue;
+  padding: 10px;
+  margin: 10px;
+}
+*/
+
+/* SINCERAMENTE, n sei pra que serve
+.container-flex {
+  max-width: 20vw;
+  max-height: 20vh;
+  background-color: blue;
+  padding: 10px;
+  margin: 10px;
+}
+*/
 .main_container {
   display: block;
   width: 100%;
   background-color: red;
 }
 
-/*Tentando fazer com que o menu acompanhe mesmo com scroll pra baixo*/
+/*Tentando fazer com que o menu acompanhe mesmo com scroll pra baixo= consegui*/
 .menubar {
   position: fixed;
   display: flex;
+  top: 0;
+  left: 0;
+  right: 0;
   justify-content: space-between;
-  width: 100vw;
+  width: 100%;
   padding: 0;
   height: 70px;
   align-items: center;
   background-color: aqua;
-  z-index: 1; /*N funcinou*/
+  z-index: 1;
 
   .center {
     max-width: fit-content;
@@ -63,7 +97,7 @@ body {
     max-height: 70px;
     background-color: blue;
   }
-  .right {
+  .right-onLogin {
     margin: 0 35px 0 0;
     max-width: fit-content;
     max-height: 70px;
@@ -73,13 +107,8 @@ body {
   }
 }
 .topContent {
+  margin-top: 70px;
   background-color: pink;
-}
-
-.scrollCatalogue {
-  background-color: rgb(192, 211, 211);
-  width: 100%;
-  height: 100vh;
 }
 
 .categorytitle {
@@ -92,8 +121,9 @@ body {
 
 .catalogueSelector {
   display: flex;
-
-  justify-content: flex;
+  width: 100%;
+  flex: 1 1 0;
+  /*justify-content: flex;Não esta funcionando*/
   background-color: salmon;
 }
 

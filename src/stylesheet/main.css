@@ -5,3 +5,7 @@
 @import "./components/mobile/hideOnMobile.css";
 @import "./components/reset.css";
 @import "../assets/fonts/typography.css";
+@import "./layouts/fonts.css";
+@import "../stylesheet/components/modal.css";
+@import "./layouts/fonts.css";
+@import "./vendor/masonry.css";

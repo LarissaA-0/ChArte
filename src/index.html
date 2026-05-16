@@ -9,7 +9,7 @@
   </head>
   <body>
     <!--Conteudo pagina home s/login-->
-    <div class="container main_container">
+ <div class="container main_container">
       <div class="header-conteiner">
         <header class="headerContent">
           <nav class="container menubar">
@@ -21,9 +21,9 @@
 
             <div class="center"></div>
 
-            <div class="right">
+            <div class="right-onLogin">
               <span class="hideOnMobile">
-                <button id="btnCart" class="btn btn-sm btn_cart">cD</button>
+                <button id="btnFav" class="btn btn-sm btn_cart" popovertarget="modal-chat">cD</button>
                 <button id="btnChat" class="btn btn-sm btn_chat">chat</button>
                 <button
                   id="btnSouartista"
@@ -31,19 +31,23 @@
                 >
                   Sou artista
                 </button>
+                <button
+                class="btn btn-primary btn_login"
+                popovertarget="modal-login"
+              >
+                Login
+              </button>
               </span>
 
-              <button class="btn btn-primary btn_login">Login</button>
-
-              <span class="hideOnMobile">
-                <button class="btn btn-primary btn_perfil">== O</button>
-              </span>
+              <button class="btn btn-primary btn_perfil" 
+                popovertarget="menu"
+                >== O</button>   
             </div>
           </nav>
         </header>
       </div>
       <header class="container topContent">
-        <div class="sloganCard">
+        <div class="sloganCard hideOnMobile">
           <h2>Conectando pessoas através da arte</h2>
         </div>
         <div class="searchCard">
@@ -57,7 +61,7 @@
         </div>
       </header>
 
-      <main>
+      <div class="main">
         <div class="container swipeablesCards">
           <a href="http://127.0.0.1:5500/src/pages/tags.html" class="card"></a>
           <a href="" class="card">Concept art</a>
@@ -70,7 +74,29 @@
         </div>
 
         <section class="container swipeablesCards">
-          <span class="catalogueSelector">
+          <div class="catalogueSelector">
+            <a
+              href="http://127.0.0.1:5500/src/pages/category.html"
+              class="card-sm"
+            >
+              <div class="Imagecard-sm">
+                <div class="circle-sm"></div>
+              </div>
+              <div class="container categorytitle">
+                <p>ILustra</p>
+              </div>
+            </a>
+             <a
+              href="http://127.0.0.1:5500/src/pages/category.html"
+              class="card-sm"
+            >
+              <div class="Imagecard-sm">
+                <div class="circle-sm"></div>
+              </div>
+              <div class="container categorytitle">
+                <p>ILustra</p>
+              </div>
+            </a>
             <a
               href="http://127.0.0.1:5500/src/pages/category.html"
               class="card-sm"
@@ -145,23 +171,104 @@
                 <p>Titulo categoria</p>
               </div>
             </a>
-          </span>
-          <span class="allCategory">
-            <button class="btn-sm">>></button>
-          </span>
+          </div>
         </section>
 
         <div class="container scrollCatalogue">
-          <span class="flexCard">
-            <!--<button class="btnFav"></button>-->
+          <div class="flexCard">
             <div class="cardImg">
               <img src="" alt="" />
             </div>
-          </span>
+          </div>
         </div>
 
-        <!--Partials side-menu.html-->
-      </main>
+     
+      </div>
+    </div>
+
+    <!--MODAL LOGIN - ta ruim no cell -->
+    <div class="container-login" id="modal-login" popover="">
+      <div class="modalLogin">
+        <header class="divLogo">
+          <h1 class="logo">ChArte</h1>
+        </header>
+
+        <main>
+          <form class="loginform">
+          <input
+            type="email"
+            name="gmail"
+            id="gmail-txt"
+            placeholder="E-mail"
+          />
+
+          <input
+            type="text"
+            name="username"
+            id="username-txt"
+            placeholder="Usuário"
+          />
+
+          <input
+            type="password"
+            name="password"
+            id="password-txt"
+            placeholder="Senha"
+          />
+        </form>
+
+        <div class="logar">
+          <a href="">Esqueceu a senha?</a>
+
+          <div class="buttonbox">
+            <input type="submit" value="Logar" id="login" />
+            </div>
+        </main>
+        
+            <a href="">Sou artista</a>
+            <footer class="modalfooter">
+              <p>Não tem uma conta?</p>
+              <a href="">criar conta</a>
+              
+            </footer>
+        </div>
+        </div>
+
+      </div>
+
+       <!--menu-->
+           <div class="container-menu" id="menu" popover="">
+      <div class="home-menu" id="menu-home">
+        <main>
+          <button>Perfil</button>
+          <button>Sou artista</button>
+          <button>Favoritos</button>
+          <button>Chat</button>
+          <button>ajuda</button>
+        </main>
+
+        <footer>
+          <div class="lightOrDark">
+            <button>☀️<img src="" alt="" /></button>
+            <button> 🌒<img src="" alt="" /></button>
+          </div>
+        </footer>
+      </div>
+
+      <div class="container" id="modal-chat" popover="">
+        <main>
+          <div class="chatscreen">
+
+        </div>
+        </main>
+        <footer>
+          <div class="chat-input">
+            <input type="text" id="inputChat">
+            <input type="submit" id="sendButton">
+            
+          </div>
+        </footer>
+      </div>
     </div>
   </body>
 </html>

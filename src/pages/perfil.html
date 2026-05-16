@@ -3,11 +3,78 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../stylesheet/main.css" />
-    <title>Perfil.</title>
+    <link rel="stylesheet" href="../stylesheet/components/cardyas.css" />
+    <link rel="stylesheet" href="../stylesheet/components/mobile/hideOnMobile.css"/>
+    <title>Perfil</title>
   </head>
+    <title>ChArte</title>
+</head>
+<body>
+  <div class="container main_container">
+    <div class="header-conteiner">
+      <header class="headerContent">
+        <nav class="container menubar">
+          <div class="left">
+            <div class="charte_logo">
+              <h1>ChArte</h1>
+            </div>
+          </div>
+
+          <div class="center"></div>
+
+          <!-- canto direito -> -->
+         <!-- parte dos botões e barra de pesquisa -->
+         <!-- #importante lembrar os nomes pra mexer no css -->
+          <div class="right">
+              <div class="searchCard">
+                <span>
+                    <input class="input searchbar" type="search" placeholder="Pesquise" />
+                </span>
+               </div>
+
+            <span class="hideOnMobile">
+              <button id="btnCart" class="btn btn-sm btn_cart">cD</button>
+              <button id="btnChat" class="btn btn-sm btn_chat">chat</button>
+              <button id="btnSouartista" class="btn btn-primary btn_souArtista">Sou artista</button>
+            </span>
+
+            <button class="btn btn-primary btn_login">Login</button>
+
+            <span class="hideOnMobile">
+              <button class="btn btn-primary btn_perfil">== O</button>
+            </span>
+          </div>
+        </nav>
+      </header>
+    </div>
+
   <body>
-    <div class="container main_container">
+    <section class="banner">
+      <div class="foto-perfil"></div>
+    </section>
+
+    <section class="conteudo">
+      <aside class="sidebar">
+        <p>@artista.instagram</p>
+        <p>@artista.twitter</p>
+        <p>@artista.discord</p>
+      </aside>
+
+      <main class="main">
+        <div class="mural-container">
+          <div class="mural-header"></div>
+          <div class="mural"></div>
+          <div class="barra"></div>
+          <div class="posts"></div>
+          <div class="posts"></div>
+        </div>
+      </main>
+    </section>
+  </body>
+</html>
+
+<!--
+<div class="container main_container">
       <header class="header-conteiner"></header>
 
       <div class="container">
@@ -47,5 +114,6 @@
         </div>
       </div>
     </div>
+  
   </body>
-</html>
+</html>-->

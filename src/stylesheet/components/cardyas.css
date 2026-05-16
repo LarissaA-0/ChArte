@@ -1,0 +1,229 @@
+/*YAS*/
+
+/*importante: left (esquerda) <-
+              right (direita) ->*/
+
+/*parte do header*/
+/*obs: mudar o header anterior e usar o já definido pela Lari*/
+/*header atualizado e anterior descartado*/
+:root {
+  --bg: #f1f3f6;
+  --topo: #ffffff;
+  --card: #ffffff;
+  --texto: #1a1a1a;
+  --borda: #e0e0e0;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  background: var(--bg);
+  color: var(--texto);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.headerContent {
+  background: var(--topo);
+  box-shadow: var(--shadow);
+  padding: 12px 25px;
+}
+
+.menubar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left h1 {
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+
+.right {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  border-radius: 20px;
+  padding: 6px 12px;
+  border: 1px solid var(--borda);
+  background: var(--card);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: var(--borda);
+}
+
+/*topo (abaixo do header)*/
+/*basicamente: banner do perfil do artista, barra de pesquisa, etc.*/
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  background: var(--topo);
+}
+
+.topContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+}
+
+.searchbar {
+  padding: 10px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--borda);
+  width: 240px;
+  background: var(--card);
+}
+
+.searchCard {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menubar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acoes {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/*botões*/
+.btn-icon {
+  position: static;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--borda);
+  background: var(--card);
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+
+.btn-icon:hover {
+  background: var(--borda);
+  transform: scale(1.05);
+}
+
+/*parte do perfil (banner e "avatar"(ou foto de perfil))*/
+.banner {
+  height: 200px;
+  background: linear-gradient(to right, #bbb, #999);
+  position: relative;
+}
+
+.foto-perfil {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  position: absolute;
+  left: 50px;
+  bottom: -75px;
+  background: #555;
+  border: 6px solid var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.conteudo {
+  display: flex;
+  padding: 100px 20px 20px;
+}
+
+.sidebar {
+  width: 220px;
+  padding: 20px;
+}
+
+.sidebar p {
+  margin-bottom: 15px;
+}
+
+.main {
+  flex: 1;
+  margin-top: -40px;
+  position: relative;
+}
+
+/*parte do mural
+          -> subir um pouco, mas não colar com a parte do banner*/
+/*parte onde também ficam os posts do artista*/
+.mural-container {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.mural {
+  margin-top: -40px;
+  background-color: #555;
+  border-radius: 10px;
+}
+
+.barra {
+  height: 35px;
+  background: var(--card);
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--borda);
+}
+
+.box {
+  height: 300px;
+  background: var(--card);
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  margin-bottom: 20px;
+}
+
+/*área dos posts (artes postadas pelo artista):*/
+/*grid é grade, óbvio né*/
+/*parte onde também ficam os posts do artista*/
+/*o hover é o efeito de seleção
+                        -> exemplo: quando o mouse passa por uma imagem e ela 
+                        "cresce", como se estivesse pronta para ser selecionada*/
+.posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.post {
+  height: 200px;
+  border-radius: 12px;
+  background: linear-gradient(280deg, #2a2a2a, #0a0a0a);
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.post:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: var(--shadow);
+}
