@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/dragscroll@0.0.8/dragscroll.min.js"></script>;
+
 export function SwipeableCards() {
   const container = document.querySelector(".swipeableCards");
   if (!container) return;

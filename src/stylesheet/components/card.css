@@ -1,15 +1,18 @@
 /*Yas*/
 
 /*Fim yas*/
-
+:root {
+  --text-bg: rgb(230, 230, 230);
+}
 .card {
   display: inline-block;
-  background-color: rgb(70, 92, 92);
+  background-color: rgb(96, 107, 107);
   width: 250px;
   height: 150px;
   flex-shrink: 0;
   margin: 5px;
   cursor: pointer;
+  border-radius: 15px;
 }
 
 .card-sm {
@@ -19,6 +22,7 @@
   flex-shrink: 0;
   margin: 5px;
   background-color: palegreen;
+  background-color: var(--trp);
   cursor: pointer;
 }
 
@@ -55,7 +59,7 @@
   height: 10rem;
   border-radius: 100%;
   margin: 5px;
-  background-color: azure;
+  background-color: var(--loading);
 
   border-radius: 100%;
 
@@ -66,7 +70,7 @@
   width: 3.5rem;
   height: 3.5rem;
   margin: 5px;
-  background-color: azure;
+  background-color: var(--loading);
 
   border-radius: 100%;
 }
@@ -81,9 +85,10 @@
   justify-content: space-evenly;
 
   width: 100%;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: hidden;
   background-color: azure;
+  background-color: var(--trp);
 
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -97,11 +102,13 @@
 .sloganCard {
   display: flex;
   background-color: red;
+  background-color: var(--trp);
   width: fit-content;
   height: 60px;
 }
 .sloganCard h2 {
   margin: 5px;
+  color: var();
 }
 
 /**/

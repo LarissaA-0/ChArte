@@ -10,9 +10,10 @@
 
   font-size: 1rem;
   font-weight: 500rem;
-
+  background-color: var(--btn);
   cursor: pointer;
   transition: none;
+  color: var(--text-bg);
 }
 .btn:hover {
   background-color: red;
@@ -29,7 +30,8 @@
   margin: 2px;
   border-radius: 100%;
   border: none;
-
+  background-color: var(--btn);
+  color: var(--text-bg);
   font-size: 1rem;
   font-weight: 500rem;
 
@@ -40,9 +42,13 @@
 }
 
 .btn-primary {
+  background-color: var(--btn-primary);
+  color: var(--btn-primary-btn);
 }
 
 .btn-secondary {
+  background-color: var(--btn-secondary);
+  color: var(--text-secondary-btn);
 }
 
 .btn-danger {
@@ -59,6 +65,7 @@
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.9);
+
   cursor: pointer;
   font-size: 18px;
   display: flex;
