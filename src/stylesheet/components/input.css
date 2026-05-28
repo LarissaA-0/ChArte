@@ -13,3 +13,9 @@
   border: none;
   font-size: large;
 }
+
+#gmail-txt,
+#username-txt,
+#password-txt {
+  border-radius: 20px;
+}

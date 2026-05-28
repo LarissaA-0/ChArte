@@ -27,6 +27,7 @@ body {
   justify-content: center;
   align-items: center;
   color: var(--text-bg);
+  background-color: var(--background);
 }
 .container {
   position: relative;
@@ -58,8 +59,10 @@ body {
   height: 100vh;
   min-height: max-content;
   column-count: 5;
+  gap: 20px;
   column-gap: 10px;
 }
+
 /*
 .flexCard {
   max-width: 2vw;
@@ -175,4 +178,7 @@ body {
   height: 800px;
   width: 30.5vh;
   background-color: aqua;
+}
+.right {
+  margin-left: auto;
 }

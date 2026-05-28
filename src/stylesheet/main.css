@@ -9,3 +9,4 @@
 @import "../stylesheet/components/modal.css";
 @import "./layouts/fonts.css";
 @import "./vendor/masonry.css";
+@import "./components/mobile/pin_container.css";

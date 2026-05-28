@@ -3,7 +3,77 @@
 /*Fim yas*/
 :root {
   --text-bg: rgb(230, 230, 230);
+  --card_width: 250px;
+  --card_border_radius: 16px;
+  --row_increment: 10px;
+
+  /**/
+  /*vertical*/
+  --pin-card_small: 26;
+  --pin-card_medium: 33;
+  --pin-card_large: 45;
+
+  --pin-card_horizontal: 2;
+  /*horizontal*/
+  --pin-card_small-h: 40;
+  --pin-card_medium-h: 55;
+  --pin-card_large-h: 70;
 }
+.pin_container {
+  margin: 0 auto;
+  padding: 0;
+  width: 96vw;
+  position: absolute;
+  columns: 5 320px;
+
+  /*
+  transform: translateX(-50%);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--card_width));
+  grid-auto-rows: var(--row_increment);
+  justify-content: center;*/
+}
+
+.pin-card {
+  width: 90%;
+  max-width: 1224px;
+  margin: auto;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  overflow: hidden;
+
+  break-inside: avoid;
+  /*
+  overflow: hidden;
+  padding: 0px;
+  margin: 15px 10px;
+  border-radius: var(--card_border_radius);
+  background-color: red;
+  cursor: pointer;*/
+}
+
+.pin-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 35px;
+  cursor: pointer;
+}
+
+.pin-card .title {
+  margin-top: 10px;
+  color: beige;
+}
+
+.description {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+}
+
 .card {
   display: inline-block;
   background-color: rgb(96, 107, 107);
@@ -21,8 +91,7 @@
   max-width: 165px;
   flex-shrink: 0;
   margin: 5px;
-  background-color: palegreen;
-  background-color: var(--trp);
+  /*background-color: var(--trp);*/
   cursor: pointer;
 }
 
@@ -114,10 +183,12 @@
 /**/
 
 .perfilCard {
+  display: flex;
   position: absolute;
   top: 150px;
   left: 80px;
   z-index: 10;
+  background-color: aqua;
 }
 .mural {
   padding-top: 35%;
