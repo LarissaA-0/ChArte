@@ -1,0 +1,18 @@
+.modal-pin-card {
+  position: fixed;
+  width: 90%;
+  min-width: 600px;
+  min-height: 80vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px;
+  z-index: 9999;
+
+  border-radius: 30px;
+  color: beige;
+
+  a {
+    color: beige;
+  }
+}

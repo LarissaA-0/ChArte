@@ -1,0 +1,145 @@
+/*LOGIN*/
+
+.container-login {
+  position: fixed;
+  width: 90%;
+  min-width: 300px;
+  height: 70vh;
+  max-width: 500px;
+  max-height: 700px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px;
+  z-index: 9999;
+  background-color: var(--modal-bg);
+  border-radius: 30px;
+  color: beige;
+
+  a {
+    color: beige;
+  }
+}
+.modalLogin {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+}
+
+.loginform input {
+  display: flex;
+  width: 100%;
+  height: 5vh;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  outline: none;
+}
+
+.buttonbox input {
+  width: 100%;
+  height: 6vh;
+  margin: 10px 0px 10px 0px;
+  border-radius: 30px;
+
+  background-color: var(--btn-primary);
+  color: beige;
+  font-size: large;
+  font-weight: bold;
+
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+}
+
+.divLogo {
+  display: flex;
+  justify-content: center;
+  .logo {
+    font-size: 80px;
+  }
+}
+.modalfooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /*background-color: red;*/
+
+  max-height: 20px;
+  font-size: 18px;
+}
+
+/*MENU*/
+.home-menu {
+  display: flex;
+
+  flex-direction: column;
+  margin-left: auto;
+  width: 35vw;
+  max-width: 300px;
+  height: 70vh;
+
+  background-color: var(--modal-bg);
+  border-radius: 35px 0 35px 35px;
+
+  button {
+    color: beige;
+  }
+
+  z-index: 1;
+}
+
+.home-menu footer {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  width: 100%;
+  height: 30vh;
+}
+.home-menu main {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+.lightOrDark {
+  display: flex;
+  justify-content: flex-start;
+  width: 80%;
+  height: 50px;
+  background-color: #494966;
+  margin-top: 15px;
+  border-radius: 20px;
+}
+.lightOrDark button {
+  width: 50%;
+  margin: 5px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+main button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  height: 65px;
+  width: 100%;
+  text-align: start;
+  padding-left: 40px;
+  font-size: large;
+  font-weight: bold;
+  border-bottom: 1px solid black;
+}
+.container-menu {
+  background-color: transparent;
+  border: none;
+  margin-top: 66px;
+  margin-right: 0px;
+}
+
+#modal-login .hideOnMobile {
+  overflow: auto;
+}
+#modal-login::-webkit-scrollbar {
+  display: none;
+}

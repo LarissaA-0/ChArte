@@ -1,0 +1,22 @@
+@if ((modal.modalOpen$ | async) === 'subMenu') {
+  <div class="modal-overlay" (click)="modal.closeModal()">
+    <div class="home-menu" (click)="$event.stopPropagation()">
+      <div class="home-menu" id="menu-home">
+        <main>
+          <button>Perfil</button>
+          <button>Sou artista</button>
+          <button>Favoritos</button>
+          <button>Chat</button>
+          <button>ajuda</button>
+        </main>
+
+        <footer>
+          <div class="lightOrDark">
+            <button>☀️<img src="" alt="" /></button>
+            <button>🌒<img src="" alt="" /></button>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+}

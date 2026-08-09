@@ -1,0 +1,49 @@
+<body>
+  <!--Conteudo pagina home s/login-->
+
+  <div class="header-conteiner">
+    <header class="headerContent">
+      <nav class="container menubar">
+        <div class="left">
+          <div class="charte_logo">
+            <h1>ChArte</h1>
+          </div>
+        </div>
+
+        <div class="center"></div>
+
+        <div class="right-onLogin">
+          <span class="hideOnMobile">
+            <button id="btnFav" class="btn btn-sm btn_cart">cD</button>
+            <button id="btnChat" class="btn btn-sm btn_chat">chat</button>
+
+            @if (!auth.estaLogado()) {
+              <button
+                id="btnSouartista"
+                class="btn btn-secondary btn_souArtista"
+                (click)="modal.openModal('artistLogin')"
+              >
+                Sou artista
+              </button>
+              <button class="btn btn-primary btn_login" (click)="modal.openModal('login')">
+                Login
+              </button>
+            }
+          </span>
+
+          <button class="btn btn_perfil" (click)="modal.openModal('subMenu')">== O</button>
+        </div>
+      </nav>
+    </header>
+  </div>
+  <header class="container topContent">
+    <div class="sloganCard hideOnMobile">
+      <h2>Conectando pessoas através da arte</h2>
+    </div>
+    <div class="searchCard">
+      <span>
+        <input class="input searchbar" type="search" placeholder="Pesquise" />
+      </span>
+    </div>
+  </header>
+</body>

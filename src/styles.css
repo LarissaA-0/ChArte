@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import './styles/var.css';
+@import './styles/button.css';
+@import './styles/card.css';
+@import './styles/form.css';
+@import './styles/modal.css';
+@import './styles/container.css';
+@import './styles/input.css';
+@import './styles/bgModal.css';
+@import './styles/fonts.css';
+@import './styles/root.css';
+@import './styles/Mobile/hideOnMobile.css';

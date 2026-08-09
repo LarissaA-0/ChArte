@@ -1,0 +1,11 @@
+<div class="swipeablesCards">
+  @for (estilo of estilo; track estilo.nome) {
+    <app-card [imagem]="estilo.imagem" [estilo]="estilo.nome"> </app-card>
+  }
+</div>
+
+<div class="catalogueSelector">
+  @for (categoria of categorias; track categoria.nome) {
+    <app-card-sm [imagem]="categoria.imagem" [categoria]="categoria.nome"> </app-card-sm>
+  }
+</div>

@@ -1,0 +1,21 @@
+<div class="container scrollCatalogue">
+  <div class="pin_container">
+    <div class="pin-card" (click)="modal.openModal('pinModal')">
+      <button class="btnFav">Fav</button>
+
+      <img [src]="post.portfolio" />
+
+      <div class="description">
+        <div class="left">
+          <div class="circle-sm">
+            <img [src]="post?.usuario?.fotoPerfil" [alt]="" />
+          </div>
+        </div>
+        <div class="midle">
+          <div class="title">{{ post.titulo }}</div>
+          <div class="title">@{{ post.nomeArtistico }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

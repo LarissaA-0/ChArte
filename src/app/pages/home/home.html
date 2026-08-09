@@ -1,0 +1,10 @@
+<app-search-bar></app-search-bar>
+
+<app-swipeables-cards></app-swipeables-cards>
+@for (post of posts; track post.id) {
+  <app-pin-card [post]="post"></app-pin-card>
+}
+<app-user-login-modal></app-user-login-modal>
+<app-artist-login-modal></app-artist-login-modal>
+<app-sub-menu></app-sub-menu>
+<app-pin-card-modal></app-pin-card-modal>
