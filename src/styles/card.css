@@ -129,6 +129,14 @@
 }
 .circle-lg {
   border-radius: 100%;
+
+  width: 5rem;
+  height: 5rem;
+  margin: 10px;
+
+  background-color: var(--loading);
+
+  overflow: hidden;
 }
 
 .swipeablesCards {

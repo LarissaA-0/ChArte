@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './card.html',
   styleUrl: './card.css',
 })
 export class Card {
-  @Input() estilo!: string;
+  @Input() titulo!: string;
+  @Input() categoria!: string;
   @Input() imagem!: string;
-  @Input() link!: string;
 }

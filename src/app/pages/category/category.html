@@ -1,0 +1,5 @@
+<app-search-bar></app-search-bar>
+@for (post of posts; track post.id) {
+  <app-pin-card [post]="post"></app-pin-card>
+}
+<app-pin-card-modal></app-pin-card-modal>

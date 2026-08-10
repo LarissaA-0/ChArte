@@ -9,6 +9,6 @@ import { Component, Input } from '@angular/core';
 })
 export class CardSm {
   @Input() imagem!: string;
-  @Input() categoria!: string;
+  @Input() estilo!: string;
   @Input() link!: string;
 }

@@ -9,18 +9,18 @@ import { CardSm } from '../card-sm/card-sm';
   styleUrl: './swipeables-cards.css',
 })
 export class SwipeablesCards {
-  estilo = [
-    { nome: 'Ilustração', imagem: 'assets/ilustracao.jpg' },
-    { nome: 'Concept Art', imagem: 'assets/concept.jpg' },
-    { nome: 'Background', imagem: 'assets/background.jpg' },
-    { nome: 'Fanart', imagem: 'assets/fanart.jpg' },
-    { nome: 'Animação 2D', imagem: 'assets/2d.jpg' },
-    { nome: 'Animação 3D', imagem: 'assets/3d.jpg' },
-  ];
   categorias = [
-    { nome: 'Ilustração', imagem: 'assets/ilustracao.jpg' },
-    { nome: 'Background', imagem: 'assets/background.jpg' },
-    { nome: 'Original', imagem: 'assets/original.jpg' },
-    { nome: 'Fanart', imagem: 'assets/fanart.jpg' },
+    { nome: 'Ilustração', imagem: 'assets/ilustracao.jpg', categoria: 'ilustração' },
+    { nome: 'ConceptArt', imagem: 'assets/concept.jpg', categoria: '' },
+    { nome: 'Background', imagem: 'assets/background.jpg', categoria: '' },
+    { nome: 'Fanart', imagem: 'assets/fanart.jpg', categoria: '' },
+    { nome: 'Animação 2D', imagem: 'assets/2d.jpg', categoria: '' },
+    { nome: 'Animação 3D', imagem: 'assets/3d.jpg', categoria: '' },
+  ];
+  estilo = [
+    { nome: 'Anime', imagem: 'assets/ilustracao.jpg' },
+    { nome: 'Cartoon', imagem: 'assets/background.jpg' },
+    { nome: 'Realismo', imagem: 'assets/original.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
   ];
 }

@@ -1,14 +1,14 @@
-<p>pin-card-modal works!</p>
-
 @if ((modal.modalOpen$ | async) === 'pinModal') {
   <div class="modal-overlay" (click)="modal.closeModal()">
     <div class="container-login" (click)="$event.stopPropagation()">
       <div class="container-modal-pin">
         <button class="close-login" (click)="modal.closeModal()">×</button>
+
         <div class="left">
           <div class="modal-pin-card">
             <img [src]="post.portfolio" [alt]="post.descricao" />
           </div>
+
           <div class="tags-container">
             <div class="tags">
               <div class="tag"></div>
