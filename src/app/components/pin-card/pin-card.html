@@ -1,21 +1,17 @@
-<div class="container scrollCatalogue">
-  <div class="pin_container">
-    <div class="pin-card" (click)="modal.openModal('pinModal')">
-      <button class="btnFav">Fav</button>
+<div class="pin-card">
+  <button class="btnFav">Fav</button>
 
-      <img [src]="post.portfolio" />
+  <img [src]="post.portfolio" />
 
-      <div class="description">
-        <div class="left">
-          <!--<a [routerLink]="['/perfil', artista]" class="circle-sm">
-            <img [src]="post?.usuario?.fotoPerfil" [alt]="" />
-          </a>-->
-        </div>
-        <div class="midle">
-          <div class="title">{{ post.titulo }}</div>
-          <div class="title">@{{ post.nomeArtistico }}</div>
-        </div>
-      </div>
+  <div class="description">
+    <div class="left">
+      <a class="circle-sm" routerLink="/perfil">
+        <img [src]="post?.usuario?.fotoPerfil" [alt]="" />
+      </a>
+    </div>
+    <div class="midle">
+      <div class="title">{{ post.titulo }}</div>
+      <div class="title">@{{ post.nomeArtistico }}</div>
     </div>
   </div>
 </div>

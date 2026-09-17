@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DrawStyles } from './draw-styles';
+import { Sidebar } from './sidebar';
 
-describe('DrawStyles', () => {
-  let component: DrawStyles;
-  let fixture: ComponentFixture<DrawStyles>;
+describe('Sidebar', () => {
+  let component: Sidebar;
+  let fixture: ComponentFixture<Sidebar>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DrawStyles],
+      imports: [Sidebar],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DrawStyles);
+    fixture = TestBed.createComponent(Sidebar);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

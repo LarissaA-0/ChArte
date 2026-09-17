@@ -62,6 +62,21 @@
   background-color: pink;
   background-color: var(--trp);
 }
+
+.btn:hover {
+  background-color: var(--btn-hover);
+}
+
+.btn-primary {
+  background-color: var(--btn-primary);
+  color: var(--btn-primary-btn);
+  font-weight: bold;
+}
+
+.btn-secondary {
+  background-color: var(--btn-secondary);
+  color: var(--text-secondary-btn);
+}
 .btn {
   display: inline-flex;
   align-items: center;
@@ -73,7 +88,6 @@
   border: none;
 
   font-size: 1rem;
-  font-weight: 500rem;
   background-color: var(--btn);
   cursor: pointer;
   transition: none;

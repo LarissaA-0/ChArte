@@ -9,6 +9,8 @@ import { UserLoginModal } from '../../components/user-login-modal/user-login-mod
 import { SubMenu } from '../../components/sub-menu/sub-menu';
 import { ArtistLoginModal } from '../../components/artist-login-modal/artist-login-modal';
 import { PinCardModal } from '../../components/pin-card-modal/pin-card-modal';
+import { ModalService } from '../../../services/modal.service';
+import { PinService } from '../../../services/pinService';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -27,26 +29,82 @@ import { PinCardModal } from '../../components/pin-card-modal/pin-card-modal';
   styleUrl: './home.css',
 })
 export class Home {
-  posts: Post[] = [
+  constructor(
+    public modal: ModalService,
+    private pinService: PinService,
+  ) {}
+  artes: Post[] = [
     {
       id: 1,
-      titulo: 'Minha primeira arte',
-      descricao: 'Arte para teste',
-      portfolio: '_(1).jpeg',
+      titulo: 'Batman',
+      descricao: '',
+      portfolio: 'batman.jpeg',
       nomeArtistico: 'Larissa',
-
+      preco: 12.99,
       usuario: {
         id: 1,
-        artista: 'Larissa',
-        fotoPerfil: 'assets/img/perfil.png',
+        artistaId: 2,
+        nomeArtistico: 'Larissa',
+        fotoPerfil: 'batman.jpeg',
       },
 
       categoria: {
         id: 1,
-        nomeCategoria: 'Digital',
+        nomeCategoria: 'Ilustração',
+      },
+    },
+    {
+      id: 2,
+      titulo: 'Frieren',
+      descricao: 'Fanart da Frieren',
+      portfolio: 'frieren.jpeg',
+      nomeArtistico: 'Yasmin',
+      preco: 0.0,
+      usuario: {
+        id: 2,
+        artistaId: 2,
+        nomeArtistico: 'YasArt',
+        fotoPerfil: 'frieren.jpeg',
       },
 
-      curtidas: 0,
+      categoria: {
+        id: 2,
+        nomeCategoria: 'Fanart',
+      },
+    },
+    {
+      id: 3,
+      titulo: 'Nimona',
+      descricao: 'Ilustração da personagem Nimona',
+      portfolio: 'nimona.jpeg',
+      nomeArtistico: 'Carol',
+      preco: 0.0,
+
+      usuario: {
+        id: 3,
+        artistaId: 2,
+        nomeArtistico: 'CarolArt',
+        fotoPerfil: 'nimona.jpeg',
+      },
+
+      categoria: {
+        id: 1,
+        nomeCategoria: 'Ilustração',
+      },
     },
   ];
+  postSelecionado!: Post;
+
+  /*
+  openPinModal(post: Post) {
+    this.modal.selecionarPost(post);
+    this.modal.openModal('pinModal');
+  }*/
+
+  openPinModal(pin: Post) {
+    console.log('POST CLICADO:', pin);
+
+    this.modal.selecionarPost(pin);
+    this.modal.openModal('pinModal');
+  }
 }

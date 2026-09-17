@@ -1,29 +1,55 @@
-@if ((modal.modalOpen$ | async) === 'pinModal') {
+@if ((modal.modalOpen$ | async) === 'pinModal' && post) {
   <div class="modal-overlay" (click)="modal.closeModal()">
     <div class="container-login" (click)="$event.stopPropagation()">
       <div class="container-modal-pin">
         <button class="close-login" (click)="modal.closeModal()">×</button>
 
         <div class="left">
-          <div class="modal-pin-card">
+          <div class="pin-card modalPin">
             <img [src]="post.portfolio" [alt]="post.descricao" />
           </div>
 
           <div class="tags-container">
             <div class="tags">
-              <div class="tag"></div>
+              <span class="tag"> #{{ post.categoria?.nomeCategoria }} </span>
             </div>
           </div>
         </div>
-        <div class="right">
-          <div class="circle-sm">
-            <img [src]="post?.usuario?.fotoPerfil" [alt]="" />
 
-            <div class="title">{{ post.titulo }}</div>
-            <div class="title">@{{ post.nomeArtistico }}</div>
+        <div class="right">
+          <!-- ARTISTA -->
+          <div class="artist-info">
+            <div class="circle-sm" routerLink="/perfil">
+              <img [src]="post?.usuario?.fotoPerfil" />
+            </div>
+
+            <div class="artist-name">
+              <div class="modalTitle">{{ post.titulo }}</div>
+
+              <div class="artist-username">@{{ post.nomeArtistico }}</div>
+            </div>
           </div>
 
-          <button class="btn btn-primary comprar"></button>
+          <!-- DESCRIÇÃO -->
+          <div class="description modalDescription">
+            <p>
+              teste teste teste testeteste testeteste testeteste testeteste testeteste testeteste
+              testeteste testeteste testeteste teste teste teste teste teste teste testeteste
+              testeteste testeteste testeteste testeteste teste teste teste teste teste teste teste
+              teste testeteste testeteste testeteste teste teste teste v teste testeteste testeteste
+              testeteste testeteste testeteste teste teste teste teste teste teste testeteste
+              testeteste testeteste testeteste
+            </p>
+          </div>
+        </div>
+        <div class="bottom-actions">
+          <button class="btn-chat btn-sm">Chat</button>
+
+          <div class="bottom-right">
+            <span class="price">R$1200,00</span>
+
+            <button class="btn-buy"></button>
+          </div>
         </div>
       </div>
     </div>

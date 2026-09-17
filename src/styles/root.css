@@ -6,7 +6,7 @@
   --btn: #85858d77;
   --search-bar: rgba(240, 240, 240, 0.199);
   --btn-primary: rgb(139, 11, 224);
-  --btn-secondary: rgb(236, 236, 236);
+  --btn-secondary: rgb(150, 114, 167);
   --text-bg: rgb(255, 255, 255);
   --text-secondary-btn: black;
   --btn-primary-btn: beige;
@@ -17,6 +17,7 @@
   --trp: transparent;
   --banner: #19192b;
   --btn: #85858d77;
+  --btn-hover: #4e4e6b77;
   --search-bar: rgba(240, 240, 240, 0.199);
   --btn-primary: rgb(139, 11, 224);
   --btn-secondary: rgb(236, 236, 236);

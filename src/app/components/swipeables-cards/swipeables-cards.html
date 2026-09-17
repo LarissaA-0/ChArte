@@ -5,7 +5,7 @@
 </div>
 
 <div class="catalogueSelector">
-  @for (estilo of estilo; track estilo.nome) {
+  @for (estilo of estilos; track estilo.nome) {
     <app-card-sm [imagem]="estilo.imagem" [estilo]="estilo.nome"> </app-card-sm>
   }
 </div>

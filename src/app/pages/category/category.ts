@@ -5,44 +5,24 @@ import { SearchBar } from '../../components/search-bar/search-bar';
 import { PinCard } from '../../components/pin-card/pin-card';
 import { Post } from '../../models/post';
 import { PinCardModal } from '../../components/pin-card-modal/pin-card-modal';
-
-//Serviços
+import { UserLoginModal } from '../../components/user-login-modal/user-login-modal';
+import { SubMenu } from '../../components/sub-menu/sub-menu';
+import { ArtistLoginModal } from '../../components/artist-login-modal/artist-login-modal';
+import { ModalService } from '../../../services/modal.service';
 import { PinService } from '../../../services/pinService';
+import { submit } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [SearchBar, PinCard, PinCardModal],
+  imports: [SearchBar, PinCard, PinCardModal, ArtistLoginModal, UserLoginModal, SubMenu],
   templateUrl: './category.html',
   styleUrl: './category.css',
 })
 export class Category {
   //variavel categoria. Garda a categoria da URL
+  artes: Post[] = [];
   categoria!: string;
-
-  //Lista de pins que o back responde
-  posts: Post[] = [
-    {
-      id: 1,
-      titulo: 'Minha primeira arte',
-      descricao: 'Arte para teste',
-      portfolio: '_(1).jpeg',
-      nomeArtistico: 'Larissa',
-
-      usuario: {
-        id: 1,
-        artista: 'Larissa',
-        fotoPerfil: 'assets/img/perfil.png',
-      },
-
-      categoria: {
-        id: 1,
-        nomeCategoria: 'Ilustração',
-      },
-
-      curtidas: 0,
-    },
-  ];
 
   //função que recebe dependecias de um obj
   constructor(
@@ -53,7 +33,7 @@ export class Category {
   ngOnInit() {
     this.categoria = this.route.snapshot.paramMap.get('categoria')!;
 
-    this.posts = this.posts.filter((post) => post.categoria.nomeCategoria === this.categoria);
+    this.artes = this.artes.filter((post) => post.categoria.nomeCategoria === this.categoria);
   }
   /*
   //carregar dados

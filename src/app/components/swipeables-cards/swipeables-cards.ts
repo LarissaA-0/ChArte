@@ -16,11 +16,30 @@ export class SwipeablesCards {
     { nome: 'Fanart', imagem: 'assets/fanart.jpg', categoria: '' },
     { nome: 'Animação 2D', imagem: 'assets/2d.jpg', categoria: '' },
     { nome: 'Animação 3D', imagem: 'assets/3d.jpg', categoria: '' },
+    { nome: 'Animação 3D', imagem: 'assets/3d.jpg', categoria: '' },
+    { nome: 'Animação 3D', imagem: 'assets/3d.jpg', categoria: '' },
+    { nome: 'Animação 3D', imagem: 'assets/3d.jpg', categoria: '' },
+    { nome: 'Animação 3D', imagem: 'assets/3d.jpg', categoria: '' },
+    { nome: 'Animação 3D', imagem: 'assets/3d.jpg', categoria: '' },
+    { nome: 'Animação 3D', imagem: 'assets/3d.jpg', categoria: '' },
+    { nome: 'Animação 3D', imagem: 'assets/3d.jpg', categoria: '' },
+    { nome: 'Animação 3D', imagem: 'assets/3d.jpg', categoria: '' },
   ];
-  estilo = [
+  estilos = [
     { nome: 'Anime', imagem: 'assets/ilustracao.jpg' },
     { nome: 'Cartoon', imagem: 'assets/background.jpg' },
     { nome: 'Realismo', imagem: 'assets/original.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
+    { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
     { nome: 'Semi Realismo', imagem: 'assets/fanart.jpg' },
   ];
 }

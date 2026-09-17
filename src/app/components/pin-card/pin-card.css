@@ -3,3 +3,44 @@
     columns: 2 132px;
   }
 }
+.circle-sm {
+  width: 65px !important;
+  height: 65px !important;
+  min-width: 65px !important;
+  min-height: 65px !important;
+  max-width: 65px !important;
+  max-height: 65px !important;
+
+  border: 1px solid #7040c6;
+  display: block !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+
+  padding: 0 !important;
+  margin: 5px !important;
+}
+
+.circle-sm img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  @media (max-width: 768px) {
+    /* O fundo do modal ocupa toda a tela */
+    .modal-overlay {
+      padding: 0;
+      align-items: stretch;
+      overflow: hidden;
+    }
+  }
+  /* Modal ocupa toda a tela */
+  .container-modal-pin {
+    width: 100vw;
+    min-height: 100vh;
+
+    max-height: none !important;
+
+    object-fit: cover !important;
+    object-position: center top;
+    display: block !important;
+  }
+}
