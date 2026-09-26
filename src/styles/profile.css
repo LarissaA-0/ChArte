@@ -227,30 +227,21 @@
 
   padding-left: 15px;
 }
-
 .menu-perfil {
   display: flex;
-
   width: 100%;
   min-height: 60px;
-
   box-sizing: border-box;
-
   align-items: center;
-
   padding: 10px 30px;
-
   gap: 55px;
-
   flex-wrap: wrap;
-
   background: #202039;
-
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.menu-perfil a {
+.menu-perfil button {
   position: relative;
 
   padding: 10px 5px;
@@ -260,12 +251,15 @@
   font-size: 18px;
   font-weight: 500;
 
-  text-decoration: none;
+  background: none;
+  border: none;
+
+  cursor: pointer;
 
   transition: color 0.2s ease;
 }
 
-.menu-perfil a::after {
+.menu-perfil button::after {
   content: '';
 
   position: absolute;
@@ -283,11 +277,11 @@
   transition: width 0.25s ease;
 }
 
-.menu-perfil a:hover {
+.menu-perfil button:hover {
   color: white;
 }
 
-.menu-perfil a:hover::after {
+.menu-perfil button:hover::after {
   width: 100%;
 }
 

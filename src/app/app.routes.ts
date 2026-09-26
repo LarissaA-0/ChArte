@@ -25,4 +25,8 @@ export const routes: Routes = [
     path: 'estilo/:estilo',
     component: Styles,
   },
+  {
+    path: 'perfil/:nomeUsuario',
+    component: ArtistProfile,
+  },
 ];

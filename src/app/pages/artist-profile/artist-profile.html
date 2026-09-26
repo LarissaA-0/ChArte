@@ -1,4 +1,27 @@
 <app-search-bar></app-search-bar>
 <app-banner></app-banner>
-<app-perfil-menu></app-perfil-menu>
+<app-perfil-menu (abaSelecionada)="selecionarAba($event)"></app-perfil-menu>
+<app-sub-menu></app-sub-menu>
+<!-- PARTE QUE MUDA -->
+<main class="conteudo-perfil">
+  @if (abaAtual === 'colecao') {
+    <app-colecao />
+  }
+
+  @if (abaAtual === 'comissoes') {
+    <app-comissoes />
+  }
+
+  @if (abaAtual === 'portfolio') {
+    <app-portfolio />
+  }
+</main>
 <app-sidebar></app-sidebar>
+
+<app-user-login-modal></app-user-login-modal>
+<app-artist-login-modal></app-artist-login-modal>
+@if ((modalService.modalOpen$ | async) === 'postModal') {
+  <app-post-modal></app-post-modal>
+}
+<app-pin-card-modal> </app-pin-card-modal>
+<app-post-button></app-post-button>

@@ -1,0 +1,12 @@
+.perfil-conteudo {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  min-height: 500px;
+}

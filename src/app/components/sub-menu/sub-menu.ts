@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalService } from '../../../services/modal.service';
 import { AsyncPipe } from '@angular/common';
-
+import { Perfil } from '../../models/perfil';
 @Component({
   selector: 'app-sub-menu',
   standalone: true,

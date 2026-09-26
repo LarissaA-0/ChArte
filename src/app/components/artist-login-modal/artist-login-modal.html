@@ -10,15 +10,27 @@
         <form class="loginform">
           <input type="email" name="gmail" id="gmail-txt" placeholder="E-mail" />
 
-          <input type="text" name="username" id="username-txt" placeholder="Usuário" />
+          <input
+            [(ngModel)]="nomeUsuario"
+            type="text"
+            name="username"
+            id="username-txt"
+            placeholder="Usuário"
+          />
 
-          <input type="password" name="password" id="password-txt" placeholder="Senha" />
+          <input
+            [(ngModel)]="senha"
+            type="password"
+            name="password"
+            id="password-txt"
+            placeholder="Senha"
+          />
 
           <div class="logar">
             <a href="">Esqueceu a senha?</a>
 
             <div class="buttonbox">
-              <input type="submit" value="Logar" id="login" />
+              <input type="submit" (click)="entrar()" value="Logar" id="login" />
             </div>
           </div>
         </form>

@@ -95,7 +95,7 @@ export class Home {
   ];
   postSelecionado!: Post;
 
-  /*
+  /*como
   openPinModal(post: Post) {
     this.modal.selecionarPost(post);
     this.modal.openModal('pinModal');

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Post } from '../../../models/post';
-
+import { PerfilView } from '../../../models/perfil';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -10,4 +10,5 @@ import { Post } from '../../../models/post';
 })
 export class Sidebar {
   @Input() post!: Post;
+  @Input() perfil!: PerfilView;
 }
