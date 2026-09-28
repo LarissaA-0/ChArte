@@ -1,9 +1,35 @@
 <nav class="menu-perfil">
-  <button (click)="selecionarAba('colecao')">Coleção</button>
+  <button
+    type="button"
+    [class.active]="abaAtiva === 'portfolio'"
+    (click)="selecionarAba('portfolio')"
+  >
+    Portfólio
+  </button>
 
-  <button (click)="selecionarAba('portfolio')">Portfólio</button>
+  <button
+    type="button"
+    [class.active]="abaAtiva === 'colecao'"
+    (click)="selecionarAba('colecao')"
+  >
+    Coleção
+  </button>
 
-  <button (click)="selecionarAba('comissoes')">Comissões</button>
+  <button
+    type="button"
+    [class.active]="abaAtiva === 'comissoes'"
+    (click)="selecionarAba('comissoes')"
+  >
+    Comissões
+  </button>
 
-  <button (click)="selecionarAba('artista')">Área do Artista</button>
+  @if (mostrarAreaArtista) {
+    <button
+      type="button"
+      [class.active]="abaAtiva === 'artista'"
+      (click)="selecionarAba('artista')"
+    >
+      Área do Artista
+    </button>
+  }
 </nav>

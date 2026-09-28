@@ -1,3 +1,10 @@
+export interface RedesSociais {
+  twitter?: string;
+  instagram?: string;
+  tiktok?: string;
+  youtube?: string;
+}
+
 export interface Perfil {
   usuario: {
     id_usuario: number;
@@ -42,4 +49,6 @@ export interface PerfilView {
   totalReviews?: number;
 
   idArtista?: number;
+  redesSociais?: RedesSociais;
 }
+

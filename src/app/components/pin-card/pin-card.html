@@ -1,21 +1,26 @@
-<div class="pin-card">
-  <!-- o botão abaixo leva para a pagina carrinho-->
-  <button class="btnFav">Carrinho</button>
+<div class="pin-card" [class.apenas-imagem]="apenasImagem">
+  @if (!apenasImagem) {
+    <!-- o botão abaixo leva para a pagina carrinho-->
+    <button class="btnFav">Carrinho</button>
+  }
 
-  <img [src]="post.portfolio" />
+  <img [src]="post.portfolio" [alt]="post.titulo" />
 
-  <div class="description">
-    <div class="left">
-      <a class="circle-sm" routerLink="/perfil">
-        <img [src]="post?.usuario?.fotoPerfil" [alt]="" />
-      </a>
+  @if (!apenasImagem) {
+    <div class="description">
+      <div class="left">
+        <a class="circle-sm" [routerLink]="['/perfil', post?.usuario?.nomeUsuario || 'muzzle']">
+          <img [src]="post?.usuario?.fotoPerfil" [alt]="" />
+        </a>
+      </div>
+      <div class="midle">
+        <div class="title">{{ post.titulo }}</div>
+        <div class="title">@{{ post.nomeArtistico }}</div>
+      </div>
     </div>
-    <div class="midle">
-      <div class="title">{{ post.titulo }}</div>
-      <div class="title">@{{ post.nomeArtistico }}</div>
-    </div>
-  </div>
+  }
 </div>
+
 <!--
 chat, quero terminar meu site em dois dias. Eu tenho a home, tenho layout de perfil mas que n ta
 pegando os dados, tenho modals de login para artista e usuario comum, tenho modal pra entrada de

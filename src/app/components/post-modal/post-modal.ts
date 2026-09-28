@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
-import { ModalService } from '../../../services/modal.service';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
+import { ModalService } from '../../../services/modal.service';
+import { PerfilService } from '../../../services/perfil.service';
+import { PinService } from '../../../services/pinService';
+import { Post } from '../../models/post';
 
 @Component({
   selector: 'app-post-modal',
@@ -10,61 +14,63 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './post-modal.css',
 })
 export class PostModal {
+  @Output() artePublicada = new EventEmitter<Post>();
   titulo = '';
   descricao = '';
-
   categoria = '';
   estilo = '';
-
   compravel = false;
   preco: number | null = null;
+  imagemSelecionada: File | null = null;
+  previewImagem = '';
+  erro = '';
 
   categorias = [
-    { id: 1, nome: 'Ilustração' },
-    { id: 2, nome: 'Pixel Art' },
-    { id: 3, nome: '3D' },
-    { id: 4, nome: 'Animação' },
-    { id: 5, nome: 'Pintura' },
+    { id: 1, nome: 'Ilustração' }, { id: 2, nome: 'Pixel Art' }, { id: 3, nome: '3D' },
+    { id: 4, nome: 'Animação' }, { id: 5, nome: 'Pintura' },
   ];
-
   estilos = [
-    { id: 1, nome: 'Anime' },
-    { id: 2, nome: 'Cartoon' },
-    { id: 3, nome: 'Realista' },
-    { id: 4, nome: 'Conceitual' },
-    { id: 5, nome: 'Minimalista' },
+    { id: 1, nome: 'Anime' }, { id: 2, nome: 'Cartoon' }, { id: 3, nome: 'Realista' },
+    { id: 4, nome: 'Conceitual' }, { id: 5, nome: 'Minimalista' },
   ];
 
-  constructor(private modalService: ModalService) {}
+  constructor(
+    private modalService: ModalService,
+    private authService: AuthService,
+    private perfilService: PerfilService,
+    private pinService: PinService,
+  ) {}
 
-  fecharModal(): void {
-    this.modalService.closeModal();
-  }
+  fecharModal(): void { this.modalService.closeModal(); }
 
   publicarPostagem(): void {
-    const postagem = {
-      titulo: this.titulo,
-      descricao: this.descricao,
-      categoria: this.categoria,
-      estilo: this.estilo,
-      compravel: this.compravel,
-      preco: this.compravel ? this.preco : null,
-    };
-
-    console.log(postagem);
-
-    this.modalService.closeModal();
+    const usuario = this.authService.getUsuarioLogado();
+    if (!usuario || usuario.tipoUsuario !== 'Artista') { this.erro = 'Entre como artista para publicar uma obra.'; return; }
+    if (!this.titulo.trim() || !this.imagemSelecionada || !this.categoria) { this.erro = 'Preencha o título, a imagem e a categoria.'; return; }
+    if (this.compravel && (!this.preco || this.preco <= 0)) { this.erro = 'Informe um preço válido para a obra.'; return; }
+    this.perfilService.getPerfil(usuario.nomeUsuario).subscribe((perfil) => {
+      if (!perfil) { this.erro = 'Não foi possível localizar o perfil da artista.'; return; }
+      const arte = this.pinService.adicionarArte({
+        titulo: this.titulo.trim(), descricao: this.descricao.trim(), portfolio: this.previewImagem || this.imagemSelecionada!.name,
+        categoria: this.categorias.find((item) => item.id.toString() === this.categoria || item.nome.toLowerCase() === this.categoria.toLowerCase())?.nome || this.categoria,
+        estilo: this.estilos.find((item) => item.id.toString() === this.estilo || item.nome.toLowerCase() === this.estilo.toLowerCase())?.nome || this.estilo,
+        preco: this.compravel ? Number(this.preco) : 0,
+      }, perfil);
+      this.artePublicada.emit(arte);
+      this.limparFormulario();
+      this.modalService.closeModal();
+    });
   }
 
-  imagemSelecionada: File | null = null;
-
   selecionarImagem(event: Event): void {
-    const input = event.target as HTMLInputElement;
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) { this.imagemSelecionada = file; this.previewImagem = URL.createObjectURL(file); this.erro = ''; }
+  }
 
-    if (input.files && input.files.length > 0) {
-      this.imagemSelecionada = input.files[0];
+  removerImagem(): void { this.imagemSelecionada = null; this.previewImagem = ''; }
 
-      console.log('Imagem selecionada:', this.imagemSelecionada);
-    }
+  private limparFormulario(): void {
+    this.titulo = this.descricao = this.categoria = this.estilo = '';
+    this.compravel = false; this.preco = null; this.removerImagem(); this.erro = '';
   }
 }

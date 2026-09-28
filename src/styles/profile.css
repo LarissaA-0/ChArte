@@ -427,3 +427,8 @@
     padding: 20px 15px;
   }
 }
+
+/* Keep profile sidebars stretched to the full content row. */
+.perfil-layout { min-height: max(75vh, calc(100vh - 250px)); align-items: stretch; }
+.perfil-layout > app-sidebar { display: flex; min-height: 100%; }
+.perfil-layout .side-bar { height: 100%; min-height: 100%; flex: 1 1 auto; }

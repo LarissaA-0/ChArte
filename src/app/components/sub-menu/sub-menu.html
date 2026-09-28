@@ -1,12 +1,32 @@
 @if ((modal.modalOpen$ | async) === 'subMenu') {
   <div class="modal-overlay" (click)="modal.closeModal()">
     <div class="home-menu" (click)="$event.stopPropagation()">
+      @if (auth.usuarioLogado$ | async; as usuario) {
+        <div class="user-header">
+          <img
+            class="user-avatar-sm"
+            [src]="usuario.fotoPerfil || 'assets/imagens/perfil.jpg'"
+            [alt]="usuario.nome"
+          />
+          <div class="user-info">
+            <strong class="user-name">{{ usuario.nomeArtistico || usuario.nome }}</strong>
+            <span class="user-handle">@{{ usuario.nomeUsuario }}</span>
+          </div>
+        </div>
+      }
+
       <main>
-        <button>Meu Perfil</button>
-        <button>Sou artista</button>
+        <button (click)="irParaMeuPerfil()">Meu Perfil</button>
+        @if (!(auth.usuarioLogado$ | async)) {
+          <button (click)="modal.openModal('artistLogin')">Sou artista</button>
+        }
         <button>Favoritos</button>
         <button>Chat</button>
         <button>ajuda</button>
+
+        @if (auth.usuarioLogado$ | async) {
+          <button class="btn-logout" (click)="logout()">Logout</button>
+        }
       </main>
 
       <footer>
@@ -18,3 +38,4 @@
     </div>
   </div>
 }
+

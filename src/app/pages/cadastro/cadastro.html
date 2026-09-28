@@ -1,0 +1,17 @@
+<main class="signup-page">
+  <a class="signup-brand" routerLink="/">ChArte</a>
+  <section class="signup-card" aria-labelledby="signup-title">
+    <header><span class="signup-eyebrow">COMUNIDADE CHARTE</span><h1 id="signup-title">Crie sua conta</h1><p>Entre para compartilhar e descobrir arte.</p></header>
+    <form (ngSubmit)="criarConta()">
+      <label>Nome<input required maxlength="80" [(ngModel)]="nome" name="nome" autocomplete="name" /></label>
+      <label>Nome de usuário<input required minlength="3" maxlength="24" pattern="[A-Za-z0-9_.]+" [(ngModel)]="nomeUsuario" name="nomeUsuario" autocomplete="username" placeholder="seu_usuario" /></label>
+      <label>E-mail<input required type="email" maxlength="254" [(ngModel)]="email" name="email" autocomplete="email" /></label>
+      <label>Tipo de conta<select [(ngModel)]="tipoUsuario" name="tipoUsuario"><option value="Comum">Usuário</option><option value="Artista">Artista</option></select></label>
+      @if (tipoUsuario === 'Artista') { <label>Nome artístico<input maxlength="80" [(ngModel)]="nomeArtistico" name="nomeArtistico" /></label> }
+      <div class="signup-passwords"><label>Senha<input required type="password" minlength="6" [(ngModel)]="senha" name="senha" autocomplete="new-password" /></label><label>Confirmar senha<input required type="password" minlength="6" [(ngModel)]="confirmarSenha" name="confirmarSenha" autocomplete="new-password" /></label></div>
+      @if (erro) { <p class="signup-error" role="alert">{{ erro }}</p> }
+      <button class="signup-submit" type="submit">Criar conta</button>
+    </form>
+    <footer>Já tem uma conta? <a routerLink="/">Voltar para o início e entrar</a></footer>
+  </section>
+</main>

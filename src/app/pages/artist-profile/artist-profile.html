@@ -1,27 +1,63 @@
 <app-search-bar></app-search-bar>
-<app-banner></app-banner>
-<app-perfil-menu (abaSelecionada)="selecionarAba($event)"></app-perfil-menu>
-<app-sub-menu></app-sub-menu>
-<!-- PARTE QUE MUDA -->
-<main class="conteudo-perfil">
-  @if (abaAtual === 'colecao') {
-    <app-colecao />
-  }
 
-  @if (abaAtual === 'comissoes') {
-    <app-comissoes />
-  }
+@if (perfil && perfilPublico) {
+  <app-banner [perfil]="perfil" [isOwner]="isOwner" (imagemSelecionada)="salvarImagemPerfil($event)"></app-banner>
+  <app-perfil-menu
+    [mostrarAreaArtista]="podeAcessarAreaArtista"
+    [abaAtiva]="abaAtual"
+    (abaSelecionada)="selecionarAba($event)"
+  ></app-perfil-menu>
+  <app-sub-menu></app-sub-menu>
 
-  @if (abaAtual === 'portfolio') {
-    <app-portfolio />
+  <!-- CORPO DO PERFIL: SIDEBAR À ESQUERDA E ÁREA DOS PINS À DIREITA -->
+  <div class="perfil-layout">
+    <app-sidebar
+      [perfil]="perfil"
+      [isOwner]="isOwner"
+      [editandoPerfil]="false"
+      [exibirInformacoes]="exibirInformacoesPublicas"
+      [exibirRedesSociais]="exibirRedesSociaisPublicas"
+      (editarPerfil)="iniciarEdicaoPerfil()"
+    ></app-sidebar>
+
+    <main class="perfil-main-content">
+      @if (abaAtual === 'colecao') {
+        <app-colecao [artes]="artesArtista" />
+      }
+
+      @if (abaAtual === 'comissoes') {
+        <app-comissoes [perfil]="perfil" />
+      }
+
+      @if (abaAtual === 'portfolio') {
+        <app-portfolio [artes]="artesArtista" />
+      }
+
+    </main>
+  </div>
+
+  @if (isOwner && perfil.tipoUsuario === 'Artista') {
+    <app-post-button></app-post-button>
   }
-</main>
-<app-sidebar></app-sidebar>
+} @else if (perfil && !perfilPublico) {
+  <div class="perfil-nao-encontrado"><h2>Perfil privado</h2><p>Este artista optou por manter o perfil privado.</p></div>
+} @else if (perfilNaoEncontrado) {
+  <div class="perfil-nao-encontrado">
+    <h2>Perfil não encontrado</h2>
+    <p>O usuário solicitado não existe ou não foi informado.</p>
+  </div>
+}
 
 <app-user-login-modal></app-user-login-modal>
 <app-artist-login-modal></app-artist-login-modal>
 @if ((modalService.modalOpen$ | async) === 'postModal') {
-  <app-post-modal></app-post-modal>
+  <app-post-modal (artePublicada)="atualizarArtes()"></app-post-modal>
 }
-<app-pin-card-modal> </app-pin-card-modal>
-<app-post-button></app-post-button>
+<app-pin-card-modal></app-pin-card-modal>
+@if (perfil && isOwner) {
+  <app-edit-profile-modal
+    [perfil]="perfil"
+    [isOwner]="isOwner"
+    (perfilAtualizado)="atualizarPerfilNaTela($event)"
+  ></app-edit-profile-modal>
+}

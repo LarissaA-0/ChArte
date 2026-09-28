@@ -1,1 +1,33 @@
-<p>comissoes works!</p>
+<div class="comissoes-container">
+  <header class="comissoes-status-bar">
+    <div class="status-box">
+      <span class="status-indicator" [class.aberto]="comissoesAbertas"></span>
+      <div><strong class="status-title">{{ comissoesAbertas ? 'Comissões Abertas' : 'Comissões Temporariamente Fechadas' }}</strong><p class="status-sub">{{ comissoesAbertas ? 'Vagas disponíveis para produção personalizada.' : 'A artista não está aceitando novos pedidos.' }}</p></div>
+    </div>
+    <div class="artist-avaliacao-badge"><span class="star">★</span><strong>{{ perfil?.avaliacaoMedia || 4.8 }}</strong><span class="reviews-count">({{ perfil?.totalReviews || 15 }} avaliações)</span></div>
+  </header>
+
+  <section class="pacotes-section">
+    <h3 class="section-title">Opções de Comissões</h3>
+    <div class="pacotes-grid">
+      @for (pacote of pacotes; track pacote.id) {
+        <article class="pacote-card" [class.destaque]="pacote.destaque">
+          @if (pacote.destaque) { <span class="card-badge">Destaque</span> }
+          <div class="pacote-topo"><h4 class="pacote-title">{{ pacote.titulo }}</h4><p class="pacote-desc">{{ pacote.descricao }}</p></div>
+          <div class="pacote-preco-box"><span class="a-partir">A partir de</span><span class="valor">{{ pacote.precoInicial | currency:'BRL' }}</span><span class="prazo">Prazo médio: {{ pacote.prazo }}</span></div>
+          <ul class="pacote-itens">@for (item of pacote.itens; track item) { <li><span class="check">✓</span> {{ item }}</li> }</ul>
+          @if (perfilEhDono) { <span class="owner-note">Edite esta opção pela área do artista.</span> }
+          @else { <button class="btn-solicitar" type="button" [disabled]="!comissoesAbertas">{{ comissoesAbertas ? 'Solicitar orçamento' : 'Comissões fechadas' }}</button> }
+        </article>
+      } @empty { <p class="empty-state">Esta artista ainda não cadastrou opções de comissão.</p> }
+    </div>
+  </section>
+
+  <section class="termos-section">
+    <h3 class="section-title">Diretrizes & Processo</h3>
+    <div class="termos-cards">
+      @for (diretriz of diretrizes; track diretriz.id) { <article class="termo-card"><h4>{{ diretriz.titulo }}</h4><p>{{ diretriz.descricao }}</p></article> }
+      @empty { <p class="empty-state">Nenhuma diretriz foi publicada.</p> }
+    </div>
+  </section>
+</div>

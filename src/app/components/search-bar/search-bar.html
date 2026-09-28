@@ -17,7 +17,7 @@
             <button id="btnFav" class="btn btn-sm btn_cart" [routerLink]="['/carrinho']">cD</button>
             <button id="btnChat" class="btn btn-sm btn_chat" [routerLink]="['/chat']">chat</button>
 
-            @if (!auth.estaLogado()) {
+            @if (!(auth.usuarioLogado$ | async)) {
               <button
                 id="btnSouartista"
                 class="btn btn-secondary btn_souArtista"
@@ -31,15 +31,18 @@
             }
           </span>
 
+
           <button class="btn btn_perfil" (click)="modal.openModal('subMenu')">== O</button>
         </div>
       </nav>
     </header>
   </div>
   <header class="container topContent">
-    <div class="sloganCard hideOnMobile">
-      <h2>Conectando pessoas através da arte</h2>
-    </div>
+    @if (auth.usuarioLogado$ | async; as usuario) {
+      <div class="sloganCard"><h2>Olá, {{ usuario.nomeUsuario }}</h2></div>
+    } @else {
+      <div class="sloganCard hideOnMobile"><h2>Conectando pessoas através da arte</h2></div>
+    }
     <div class="searchCard">
       <span>
         <input class="input searchbar" type="search" placeholder="Pesquise" />

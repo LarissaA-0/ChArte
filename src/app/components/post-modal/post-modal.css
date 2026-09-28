@@ -543,3 +543,6 @@
     width: 100%;
   }
 }
+.imagem-preview { display: block; width: min(100%, 260px); max-height: 180px; margin: 10px auto; object-fit: contain; border-radius: 8px; }
+.btn-remover-imagem { display: block; margin: 8px auto 0; color: #e8cafa; background: transparent; border: 0; cursor: pointer; }
+.form-error { margin: 0 20px; color: #ff9ca7; font-size: 12px; }

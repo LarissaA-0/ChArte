@@ -6,10 +6,12 @@ export interface Post {
   portfolio: string;
   nomeArtistico: string;
   preco: number;
+  estilo?: string;
 
   usuario: {
     id: number;
     artistaId: number;
+    nomeUsuario?: string;
     nomeArtistico: string;
     fotoPerfil: string;
   };

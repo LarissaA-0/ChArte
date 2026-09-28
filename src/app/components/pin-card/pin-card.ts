@@ -13,6 +13,7 @@ import { PinService } from '../../../services/pinService';
 })
 export class PinCard {
   @Input() post!: Post;
+  @Input() apenasImagem: boolean = false;
 
   @Input() portfolio: string = '';
   @Input() titulo: string = '';
@@ -29,3 +30,4 @@ export class PinCard {
     this.modal.openModal('pinModal');
   }
 }
+

@@ -1,89 +1,53 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { Post } from '../app/models/post';
+import { MOCK_ARTES } from '../app/mocks/artes.mock';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PinService {
-  constructor(private http: HttpClient) {}
+  artes: Post[] = [...MOCK_ARTES];
 
-  artes: Post[] = [
-    {
-      id: 1,
-      titulo: 'Batman',
-      descricao: '',
-      portfolio: 'batman.jpeg',
-      nomeArtistico: 'Larissa',
-      preco: 12.99,
-      usuario: {
-        id: 1,
-        artistaId: 2,
-        nomeArtistico: 'Larissa',
-        fotoPerfil: 'batman.jpeg',
-      },
-
-      categoria: {
-        id: 1,
-        nomeCategoria: 'Ilustração',
-      },
-    },
-    {
-      id: 2,
-      titulo: 'Frieren',
-      descricao: 'Fanart da Frieren',
-      portfolio: 'frieren.jpeg',
-      nomeArtistico: 'Yasmin',
-      preco: 0.0,
-      usuario: {
-        id: 2,
-        artistaId: 2,
-        nomeArtistico: 'YasArt',
-        fotoPerfil: 'frieren.jpeg',
-      },
-
-      categoria: {
-        id: 2,
-        nomeCategoria: 'Fanart',
-      },
-    },
-    {
-      id: 3,
-      titulo: 'Nimona',
-      descricao: 'Ilustração da personagem Nimona',
-      portfolio: 'nimona.jpeg',
-      nomeArtistico: 'Carol',
-      preco: 0.0,
-
-      usuario: {
-        id: 3,
-        artistaId: 2,
-        nomeArtistico: 'CarolArt',
-        fotoPerfil: 'nimona.jpeg',
-      },
-
-      categoria: {
-        id: 1,
-        nomeCategoria: 'Ilustração',
-      },
-    },
-  ];
-  //pega todas s artes
+  //pega todas as artes
   getArtes(): Post[] {
     return this.artes;
   }
+
   //pega artes por categoria
-  buscarPorCategoria(categoria: string) {
-    return this.http.get<Post[]>(`/api/pins?categoria=${categoria}`);
+  buscarPorCategoria(categoria: string): Observable<Post[]> {
+    return of(this.artes.filter((arte) => arte.categoria.nomeCategoria.toLowerCase() === categoria.trim().toLowerCase()));
   }
 
-  //pega artes de um artista em especifico
-  getArtist(artistald: number): Post[] {
-    return this.artes.filter((arte) => arte.usuario.artistaId === artistald);
+  //pega artes de um artista em especifico por artistaId
+  getArtist(artistaId: number): Post[] {
+    return this.artes.filter((arte) => arte.usuario.artistaId === artistaId);
   }
 
-  /*
-  buscarPorArtista(artista: string) {
-    return this.http.get<artista[]>(`/api/pins?artista=${artista}`);
-  }*/
+  //pega artes de um artista pelo nomeUsuario
+  getArtesPorArtista(nomeUsuario: string): Post[] {
+    return this.artes.filter(
+      (arte) => arte.usuario.nomeUsuario?.toLowerCase() === nomeUsuario.trim().toLowerCase(),
+    );
+  }
+
+  adicionarArte(dados: { titulo: string; descricao: string; portfolio: string; categoria: string; estilo: string; preco: number }, perfil: import('../app/models/perfil').PerfilView): Post {
+    const arte: Post = {
+      id: Math.max(0, ...this.artes.map((item) => item.id)) + 1,
+      titulo: dados.titulo, descricao: dados.descricao, portfolio: dados.portfolio,
+      nomeArtistico: perfil.nomeArtistico || perfil.nome, preco: dados.preco, estilo: dados.estilo,
+      usuario: { id: Number(perfil.idUsuario.slice(-2)) || 1, artistaId: perfil.idArtista || 0, nomeUsuario: perfil.nomeUsuario, nomeArtistico: perfil.nomeArtistico || perfil.nome, fotoPerfil: perfil.fotoPerfil },
+      categoria: { id: 0, nomeCategoria: dados.categoria },
+    };
+    this.artes = [...this.artes, arte];
+    return { ...arte };
+  }
+
+  atualizarArte(arte: Post): void {
+    this.artes = this.artes.map((item) => item.id === arte.id ? { ...arte } : item);
+  }
+
+  excluirArte(id: number): void {
+    this.artes = this.artes.filter((item) => item.id !== id);
+  }
 }

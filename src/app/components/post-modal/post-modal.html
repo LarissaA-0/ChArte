@@ -17,6 +17,7 @@
         <label class="section-title"> Imagem da arte </label>
 
         <div class="imagem-upload">
+          @if (previewImagem) { <img class="imagem-preview" [src]="previewImagem" alt="Prévia da arte" /> }
           <div class="upload-icon">+</div>
 
           <strong>Adicionar imagem</strong>
@@ -31,6 +32,7 @@
           />
 
           <label for="imagem" class="btn-upload"> Escolher imagem </label>
+          @if (imagemSelecionada) { <button type="button" class="btn-remover-imagem" (click)="removerImagem()">Remover imagem</button> }
         </div>
       </section>
 
@@ -71,15 +73,15 @@
           <select id="categoria" [(ngModel)]="categoria">
             <option value="">Selecione uma categoria</option>
 
-            <option value="ilustracao">Ilustração</option>
+            <option value="Ilustração">Ilustração</option>
 
-            <option value="pixel-art">Pixel Art</option>
+            <option value="Pixel Art">Pixel Art</option>
 
-            <option value="3d">3D</option>
+            <option value="3D">3D</option>
 
-            <option value="animacao">Animação</option>
+            <option value="Animação">Animação</option>
 
-            <option value="pintura">Pintura</option>
+            <option value="Pintura">Pintura</option>
           </select>
         </div>
 
@@ -138,6 +140,8 @@
         }
       </section>
     </div>
+
+    @if (erro) { <p class="form-error" role="alert">{{ erro }}</p> }
 
     <!-- RODAPÉ -->
     <footer class="modal-footer">

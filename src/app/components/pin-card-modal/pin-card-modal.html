@@ -19,7 +19,11 @@
         <div class="right">
           <!-- ARTISTA -->
           <div class="artist-info">
-            <div class="circle-sm" routerLink="/perfil">
+            <div
+              class="circle-sm"
+              [routerLink]="['/perfil', post?.usuario?.nomeUsuario || 'muzzle']"
+              (click)="modal.closeModal()"
+            >
               <img [src]="post?.usuario?.fotoPerfil" />
             </div>
 
@@ -29,6 +33,7 @@
               <div class="artist-username">@{{ post.nomeArtistico }}</div>
             </div>
           </div>
+
 
           <!-- DESCRIÇÃO -->
           <div class="description modalDescription">

@@ -4,11 +4,12 @@ import { AsyncPipe } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-artist-login-modal',
   standalone: true,
-  imports: [AsyncPipe, FormsModule],
+  imports: [AsyncPipe, FormsModule, RouterLink],
   templateUrl: './artist-login-modal.html',
   styleUrl: './artist-login-modal.css',
 })
@@ -21,15 +22,17 @@ export class ArtistLoginModal {
     private authService: AuthService,
     private router: Router,
   ) {}
-  entrar(): void {
-    const sucesso = this.authService.login(this.nomeUsuario, this.senha);
+  async entrar(): Promise<void> {
+    const sucesso = await this.authService.login(this.nomeUsuario, this.senha, 'Artista');
 
     if (sucesso) {
-      this.router.navigate(['/perfil', this.nomeUsuario]);
+      this.modal.closeModal();
+      this.router.navigate(['/perfil', this.nomeUsuario.trim()]);
     } else {
-      alert('Usuário ou senha incorretos');
+      alert('Usuário ou senha incorretos para login de artista');
     }
   }
+
 
   openLogin() {
     this.modal.openModal('artistLogin');

@@ -1,30 +1,38 @@
-<div class="page-layout">
-  <!-- SIDEBAR -->
-  <aside class="side-bar">
-    <div class="user-container">
-      <div class="nickName">{{ perfil.nomeArtistico }}</div>
+<!-- SIDEBAR -->
+<aside class="side-bar">
+  <div class="user-container">
+    <div class="nickName">{{ perfil?.nomeArtistico || perfil?.nome }}</div>
 
-      <div class="user">{{ perfil.nomeUsuario }}</div>
-    </div>
+    <div class="user">@{{ perfil?.nomeUsuario }}</div>
+  </div>
 
-    <div class="contact-container">
-      <a href=""></a>
+  <div class="contact-container">
+    @if (isOwner && !editandoPerfil) {
+      <button class="btn btn-primary" (click)="abrirEditarPerfil()">Editar perfil</button>
+    } @else {
       <button class="btn btn-primary">Formulário</button>
-
       <button class="btn btn-sm">chat</button>
-    </div>
+    }
+  </div>
 
-    <div class="description-container">
-      <p>{{ perfil.bio }}</p>
-    </div>
+  @if (exibirInformacoes) { <div class="description-container">
+    <p>{{ perfil?.bio || 'Sem descrição informada.' }}</p>
+  </div> }
 
-    <div class="social-container">
-      <ul>
-        <li><a href="">@X/Twitter</a></li>
-        <li><a href="">@Instagram</a></li>
-        <li><a href="">@TIKTOK</a></li>
-        <li><a href="">@Youtube</a></li>
-      </ul>
-    </div>
-  </aside>
-</div>
+  @if (exibirRedesSociais) { <div class="social-container">
+    <ul>
+      @if (perfil?.redesSociais?.twitter) {
+        <li><a href="">{{ perfil?.redesSociais?.twitter }} (X)</a></li>
+      }
+      @if (perfil?.redesSociais?.instagram) {
+        <li><a href="">{{ perfil?.redesSociais?.instagram }} (Insta)</a></li>
+      }
+      @if (perfil?.redesSociais?.tiktok) {
+        <li><a href="">{{ perfil?.redesSociais?.tiktok }} (TikTok)</a></li>
+      }
+      @if (perfil?.redesSociais?.youtube) {
+        <li><a href="">{{ perfil?.redesSociais?.youtube }} (YouTube)</a></li>
+      }
+    </ul>
+  </div> }
+</aside>

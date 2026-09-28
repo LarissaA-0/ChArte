@@ -29,71 +29,15 @@ import { PinService } from '../../../services/pinService';
   styleUrl: './home.css',
 })
 export class Home {
+  artes: Post[] = [];
+  postSelecionado!: Post;
+
   constructor(
     public modal: ModalService,
     private pinService: PinService,
-  ) {}
-  artes: Post[] = [
-    {
-      id: 1,
-      titulo: 'Batman',
-      descricao: '',
-      portfolio: 'batman.jpeg',
-      nomeArtistico: 'Larissa',
-      preco: 12.99,
-      usuario: {
-        id: 1,
-        artistaId: 2,
-        nomeArtistico: 'Larissa',
-        fotoPerfil: 'batman.jpeg',
-      },
-
-      categoria: {
-        id: 1,
-        nomeCategoria: 'Ilustração',
-      },
-    },
-    {
-      id: 2,
-      titulo: 'Frieren',
-      descricao: 'Fanart da Frieren',
-      portfolio: 'frieren.jpeg',
-      nomeArtistico: 'Yasmin',
-      preco: 0.0,
-      usuario: {
-        id: 2,
-        artistaId: 2,
-        nomeArtistico: 'YasArt',
-        fotoPerfil: 'frieren.jpeg',
-      },
-
-      categoria: {
-        id: 2,
-        nomeCategoria: 'Fanart',
-      },
-    },
-    {
-      id: 3,
-      titulo: 'Nimona',
-      descricao: 'Ilustração da personagem Nimona',
-      portfolio: 'nimona.jpeg',
-      nomeArtistico: 'Carol',
-      preco: 0.0,
-
-      usuario: {
-        id: 3,
-        artistaId: 2,
-        nomeArtistico: 'CarolArt',
-        fotoPerfil: 'nimona.jpeg',
-      },
-
-      categoria: {
-        id: 1,
-        nomeCategoria: 'Ilustração',
-      },
-    },
-  ];
-  postSelecionado!: Post;
+  ) {
+    this.artes = this.pinService.getArtes();
+  }
 
   /*como
   openPinModal(post: Post) {
@@ -108,3 +52,4 @@ export class Home {
     this.modal.openModal('pinModal');
   }
 }
+
