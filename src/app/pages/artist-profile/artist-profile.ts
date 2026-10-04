@@ -67,7 +67,15 @@ export class ArtistProfile implements OnInit, OnDestroy {
 
   selecionarAba(aba: string): void {
     if (aba === 'artista' && !this.podeAcessarAreaArtista) return;
+    if ((aba === 'portfolio' || aba === 'comissoes') && !this.perfilEhArtista) return;
+    if (aba === 'configuracoes' && !this.podeConfigurarPerfilComum) return;
     this.abaAtual = aba;
+  }
+
+  get perfilEhArtista(): boolean { return this.perfil?.tipoUsuario === 'Artista'; }
+
+  get podeConfigurarPerfilComum(): boolean {
+    return this.isOwner && this.perfil?.tipoUsuario === 'Comum';
   }
 
   get podeAcessarAreaArtista(): boolean {

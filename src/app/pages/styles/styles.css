@@ -4,6 +4,4 @@
 .catalog-heading h1 { margin: 8px 0 6px; font-size: clamp(30px, 4vw, 46px); line-height: 1.1; text-transform: capitalize; }
 .catalog-heading p { margin: 0; color: rgba(255,255,255,.62); font-size: 14px; }
 .catalog-empty { max-width: 1440px; margin: 0 auto; padding: 52px 24px; border: 1px dashed rgba(255,255,255,.16); border-radius: 18px; color: rgba(255,255,255,.65); text-align: center; }
-.catalog-page .pin_container { position: static; width: 100%; max-width: 1440px; columns: 5 220px; column-gap: 18px; }
-.catalog-page .pin_container app-pin-card { display: inline-block; width: 100%; margin: 0 0 18px; break-inside: avoid; }
-@media (max-width: 785px) { .catalog-page { padding: 24px 14px 90px; } .catalog-heading { margin-bottom: 20px; padding: 20px; } .catalog-page .pin_container { display: block; column-count: 2; column-gap: 12px; } .catalog-page .pin_container app-pin-card { margin-bottom: 12px; } }
+@media (max-width: 785px) { .catalog-page { padding: 24px 14px 90px; } .catalog-heading { margin-bottom: 20px; padding: 20px; } }

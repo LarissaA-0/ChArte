@@ -38,17 +38,6 @@
   font-weight: 500;
 }
 
-.artes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  align-items: start;
-  gap: 22px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.artes-grid app-pin-card { display: block; min-width: 0; }
-
 .portfolio-item {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);

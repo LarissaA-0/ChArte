@@ -14,6 +14,7 @@ export interface SessaoUsuario {
 
 const STORAGE_SESSAO = 'usuarioLogado';
 const STORAGE_CADASTROS = 'charte:usuarios-cadastrados:v1';
+const STORAGE_CONTAS_EXCLUIDAS = 'charte:contas-excluidas:v1';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -27,8 +28,18 @@ export class AuthService {
     try {
       const dados = localStorage.getItem(STORAGE_CADASTROS);
       const cadastrados = dados ? JSON.parse(dados) as UsuarioMock[] : [];
-      return [...MOCK_USUARIOS, ...(Array.isArray(cadastrados) ? cadastrados.filter((novo) => !MOCK_USUARIOS.some((mock) => mock.idUsuario === novo.idUsuario)) : [])];
+      const excluidos = this.contasExcluidas();
+      return [...MOCK_USUARIOS, ...(Array.isArray(cadastrados) ? cadastrados.filter((novo) => !MOCK_USUARIOS.some((mock) => mock.idUsuario === novo.idUsuario)) : [])]
+        .filter((usuario) => !excluidos.has(usuario.idUsuario));
     } catch { return [...MOCK_USUARIOS]; }
+  }
+
+  private contasExcluidas(): Set<string> {
+    try {
+      const dados = localStorage.getItem(STORAGE_CONTAS_EXCLUIDAS);
+      const ids = dados ? JSON.parse(dados) as unknown : [];
+      return new Set(Array.isArray(ids) ? ids.filter((id): id is string => typeof id === 'string') : []);
+    } catch { return new Set(); }
   }
 
   private async gerarHashSenha(senha: string, saltHex: string): Promise<string> {
@@ -107,11 +118,28 @@ export class AuthService {
   }
 
   getUsuarioLogado(): SessaoUsuario | null { return this.usuarioLogadoSubject.value; }
+  obterEmailUsuarioLogado(): string {
+    const sessao = this.usuarioLogadoSubject.value;
+    return this.usuarios.find((item) => item.idUsuario === sessao?.idUsuario)?.email ?? '';
+  }
   estaLogado(): boolean { return this.usuarioLogadoSubject.value !== null; }
 
   logout(): void {
     localStorage.removeItem(STORAGE_SESSAO);
     this.usuarioLogadoSubject.next(null);
+  }
+
+  excluirContaLogada(): boolean {
+    const sessao = this.usuarioLogadoSubject.value;
+    if (!sessao) return false;
+    const excluidas = this.contasExcluidas();
+    excluidas.add(sessao.idUsuario);
+    try { localStorage.setItem(STORAGE_CONTAS_EXCLUIDAS, JSON.stringify([...excluidas])); } catch { /* A remoção ainda vale durante esta sessão. */ }
+    this.usuarios = this.usuarios.filter((usuario) => usuario.idUsuario !== sessao.idUsuario);
+    this.persistirCadastros();
+    this.perfis.removerPerfil(sessao.idUsuario);
+    this.logout();
+    return true;
   }
 
   atualizarEmailMock(email: string): boolean {

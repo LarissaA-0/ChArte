@@ -11,4 +11,9 @@ import { UserLoginModal } from './components/user-login-modal/user-login-modal';
 })
 export class App {
   protected readonly title = signal('charte');
+
+  constructor() {
+    const temaSalvo = localStorage.getItem('charte-tema');
+    document.documentElement.dataset['theme'] = temaSalvo === 'claro' ? 'claro' : 'escuro';
+  }
 }

@@ -38,16 +38,6 @@
   font-weight: 500;
 }
 
-.artes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  gap: 20px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.artes-grid app-pin-card { display: block; min-width: 0; }
-
 .sem-obras {
   padding: 60px 20px;
   text-align: center;

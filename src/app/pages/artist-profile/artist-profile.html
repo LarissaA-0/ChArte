@@ -4,6 +4,8 @@
   <app-banner [perfil]="perfil" [isOwner]="isOwner" (imagemSelecionada)="salvarImagemPerfil($event)"></app-banner>
   <app-perfil-menu
     [mostrarAreaArtista]="podeAcessarAreaArtista"
+    [mostrarAbasArtista]="perfilEhArtista"
+    [mostrarConfiguracoes]="podeConfigurarPerfilComum"
     [abaAtiva]="abaAtual"
     (abaSelecionada)="selecionarAba($event)"
   ></app-perfil-menu>

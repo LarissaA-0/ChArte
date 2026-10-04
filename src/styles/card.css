@@ -17,9 +17,9 @@
 }*/
 
 .pin_container {
-  margin: 0 auto;
+  margin: 0 15px;
   padding: 0;
-  width: 96vw;
+  width: calc(100% - 30px);
   position: absolute;
   columns: 5 320px;
 }
@@ -28,7 +28,7 @@
   .pin_container {
     position: static;
     display: block;
-    width: 100%;
+    width: calc(100% - 30px);
     box-sizing: border-box;
     column-count: 2;
     column-gap: 12px;

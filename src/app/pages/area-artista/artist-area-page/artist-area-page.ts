@@ -12,7 +12,7 @@ import { Post } from '../../../models/post';
   imports: [ArtistArea],
   template: `
     @if (perfil) {
-      <app-artist-area [perfil]="perfil" [artes]="artes" (perfilAtualizado)="atualizarPerfil($event)" />
+      <app-artist-area [perfil]="perfil" [artes]="artes" (perfilAtualizado)="atualizarPerfil($event)" (artesAtualizadas)="atualizarArtes($event)" />
     } @else {
       <main class="artist-area-loading"><p>Carregando área do artista…</p></main>
     }
@@ -42,4 +42,6 @@ export class ArtistAreaPage implements OnInit {
     this.perfil = perfil;
     this.artes = this.pins.getArtesPorArtista(perfil.nomeUsuario);
   }
+
+  atualizarArtes(artes: Post[]): void { this.artes = [...artes]; }
 }

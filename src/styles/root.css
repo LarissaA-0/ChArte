@@ -1,5 +1,6 @@
 /*colors*/
 :root {
+  color-scheme: dark;
   --background: #19192b;
   --trp: transparent;
   --banner: #19192b;
@@ -25,6 +26,18 @@
   --text-secondary-btn: black;
   --btn-primary-btn: beige;
   --loading: rgb(126, 74, 126);
+}
+
+html[data-theme='claro'] {
+  color-scheme: light;
+  --background: #f5f2f8;
+  --banner: #ffffff;
+  --btn: #e8e1ed;
+  --btn-hover: #ddd0e8;
+  --search-bar: rgba(55, 35, 70, 0.1);
+  --text-bg: #241b2b;
+  --text-secondary-btn: #241b2b;
+  --modal-bg: #ffffff;
 }
 /*card*/
 :root {

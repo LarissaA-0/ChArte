@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
 })
 export class PerfilMenuComponent {
   @Input() mostrarAreaArtista: boolean = false;
-  @Input() abaAtiva: string = 'portfolio';
+  @Input() mostrarAbasArtista: boolean = true;
+  @Input() mostrarConfiguracoes: boolean = false;
+  @Input() abaAtiva: string = 'colecao';
   @Output() abaSelecionada = new EventEmitter<string>();
 
   constructor(private router: Router) {}
@@ -17,6 +19,11 @@ export class PerfilMenuComponent {
   selecionarAba(aba: string): void {
     if (aba === 'artista') {
       void this.router.navigate(['/artista']);
+      this.abaSelecionada.emit(aba);
+      return;
+    }
+    if (aba === 'configuracoes') {
+      void this.router.navigate(['/configuracoes']);
       this.abaSelecionada.emit(aba);
       return;
     }

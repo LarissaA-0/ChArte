@@ -11,7 +11,7 @@
   </header>
 
   @if (artes && artes.length > 0) {
-    <div class="artes-grid">
+    <div class="pin_container">
       @for (arte of artes; track arte.id) {
         <app-pin-card
           [post]="arte"
@@ -27,5 +27,4 @@
     </div>
   }
 </div>
-
 

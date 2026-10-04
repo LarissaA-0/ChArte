@@ -11,6 +11,7 @@ import { OrderDetail } from './pages/order-detail/order-detail';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { ModalService } from '../services/modal.service';
+import { UserProfileSettings } from './components/profile/user-profile-settings/user-profile-settings';
 
 const userLoginGuard = () => {
   if (inject(AuthService).estaLogado()) return true;
@@ -39,6 +40,11 @@ export const routes: Routes = [
   {
     path: 'cadastro',
     component: Cadastro,
+  },
+  {
+    path: 'configuracoes',
+    component: UserProfileSettings,
+    canActivate: [userLoginGuard],
   },
   {
     path: 'perfil',

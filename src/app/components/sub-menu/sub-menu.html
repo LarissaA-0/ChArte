@@ -32,8 +32,8 @@
 
       <footer>
         <div class="lightOrDark">
-          <button>☀️<img src="" alt="" /></button>
-          <button>🌒<img src="" alt="" /></button>
+          <button type="button" aria-label="Tema claro" [attr.aria-pressed]="tema === 'claro'" [class.active]="tema === 'claro'" (click)="definirTema('claro')">☀️</button>
+          <button type="button" aria-label="Tema escuro" [attr.aria-pressed]="tema === 'escuro'" [class.active]="tema === 'escuro'" (click)="definirTema('escuro')">🌒</button>
         </div>
       </footer>
     </div>

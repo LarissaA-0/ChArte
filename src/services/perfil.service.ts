@@ -4,6 +4,7 @@ import { PerfilView } from '../app/models/perfil';
 import { MOCK_PERFIS } from '../app/mocks/perfis.mock';
 
 const STORAGE_KEY = 'charte:perfis:v1';
+const STORAGE_CONTAS_EXCLUIDAS = 'charte:contas-excluidas:v1';
 
 @Injectable({ providedIn: 'root' })
 export class PerfilService {
@@ -14,8 +15,13 @@ export class PerfilService {
     try {
       const dadosSalvos = localStorage.getItem(STORAGE_KEY);
       const extras = dadosSalvos ? JSON.parse(dadosSalvos) as PerfilView[] : [];
-      if (!Array.isArray(extras)) return [...MOCK_PERFIS];
-      return [...MOCK_PERFIS, ...extras.filter((extra) => !MOCK_PERFIS.some((perfil) => perfil.nomeUsuario.toLowerCase() === extra.nomeUsuario.toLowerCase()))];
+      const dadosExcluidos = localStorage.getItem(STORAGE_CONTAS_EXCLUIDAS);
+      const idsExcluidos = dadosExcluidos ? JSON.parse(dadosExcluidos) as unknown : [];
+      const excluidos = new Set(Array.isArray(idsExcluidos) ? idsExcluidos.filter((id): id is string => typeof id === 'string') : []);
+      const perfis = Array.isArray(extras)
+        ? [...MOCK_PERFIS, ...extras.filter((extra) => !MOCK_PERFIS.some((perfil) => perfil.nomeUsuario.toLowerCase() === extra.nomeUsuario.toLowerCase()))]
+        : [...MOCK_PERFIS];
+      return perfis.filter((perfil) => !excluidos.has(perfil.idUsuario));
     } catch { return [...MOCK_PERFIS]; }
   }
 
@@ -66,6 +72,12 @@ export class PerfilService {
     this.perfisSubject.next([...this.perfis]);
     this.persistirPerfis();
     return true;
+  }
+
+  removerPerfil(idUsuario: string): void {
+    this.perfis = this.perfis.filter((perfil) => perfil.idUsuario !== idUsuario);
+    this.perfisSubject.next([...this.perfis]);
+    this.persistirPerfis();
   }
 
   nomeUsuarioDisponivel(nomeUsuario: string, atual = ''): boolean {

@@ -17,13 +17,14 @@ import { criarDadosDashboard } from '../artist-dashboard/artist-dashboard.models
 import { PinCard } from '../../../components/pin-card/pin-card';
 import { PinCardModal } from '../../../components/pin-card-modal/pin-card-modal';
 import { CommissionDetailModal } from '../../../components/commission-detail-modal/commission-detail-modal';
+import { DeleteAccountCard } from '../../../components/profile/delete-account-card/delete-account-card';
 
 type SecaoArtista = 'dashboard' | 'solicitacoes' | 'comissoes' | 'opcoes-comissao' | 'historico' | 'artes' | 'adicionar' | 'portfolio' | 'avaliacoes' | 'privacidade' | 'seguranca';
 
 @Component({
   selector: 'app-artist-area',
   standalone: true,
-  imports: [ArtistDashboard, CommonModule, FormsModule, RouterLink, Portfolio, PinCard, PinCardModal, CommissionDetailModal],
+  imports: [ArtistDashboard, CommonModule, FormsModule, RouterLink, Portfolio, PinCard, PinCardModal, CommissionDetailModal, DeleteAccountCard],
   templateUrl: './artist-area.html',
   styleUrl: './artist-area.css',
 })
@@ -31,10 +32,13 @@ export class ArtistArea {
   @Input({ required: true }) perfil!: PerfilView;
   @Input() artes: Post[] = [];
   @Output() perfilAtualizado = new EventEmitter<PerfilView>();
+  @Output() artesAtualizadas = new EventEmitter<Post[]>();
 
   secaoAtual: SecaoArtista = 'dashboard';
   filtroComissao: 'Todas' | StatusComissao = 'Todas';
   editandoArte: Post | null = null;
+  previewEdicaoArte = '';
+  erroEdicaoArte = '';
   menuAberto = false;
   arquivoSelecionado: File | null = null;
   previewEntrega = '';
@@ -175,12 +179,47 @@ export class ArtistArea {
   }
 
   abrirCriacaoArte(): void { this.modal.openModal('postModal'); }
-  iniciarEdicaoArte(arte: Post): void { this.editandoArte = { ...arte, categoria: { ...arte.categoria }, usuario: { ...arte.usuario } }; }
+  iniciarEdicaoArte(arte: Post): void {
+    this.editandoArte = { ...arte, categoria: { ...arte.categoria }, usuario: { ...arte.usuario }, tags: arte.tags ? [...arte.tags] : undefined };
+    this.previewEdicaoArte = arte.portfolio;
+    this.erroEdicaoArte = '';
+  }
+
+  selecionarImagemEdicao(evento: Event): void {
+    const arquivo = (evento.target as HTMLInputElement).files?.[0];
+    if (!arquivo || !this.editandoArte) return;
+    if (!arquivo.type.startsWith('image/') || arquivo.size > 5 * 1024 * 1024) {
+      this.erroEdicaoArte = 'Escolha uma imagem de até 5 MB.';
+      return;
+    }
+    const leitor = new FileReader();
+    leitor.onload = () => {
+      const imagem = typeof leitor.result === 'string' ? leitor.result : '';
+      if (!imagem) { this.erroEdicaoArte = 'Não foi possível carregar a imagem.'; return; }
+      this.editandoArte = { ...this.editandoArte!, portfolio: imagem };
+      this.previewEdicaoArte = imagem;
+      this.erroEdicaoArte = '';
+    };
+    leitor.onerror = () => this.erroEdicaoArte = 'Não foi possível ler a imagem. Tente outro arquivo.';
+    leitor.readAsDataURL(arquivo);
+  }
+
   salvarArte(): void {
     if (!this.editandoArte) return;
-    this.pinService.atualizarArte(this.editandoArte);
-    this.artes = this.artes.map((item) => item.id === this.editandoArte?.id ? { ...this.editandoArte } : item);
+    const titulo = this.editandoArte.titulo.trim();
+    const categoria = this.editandoArte.categoria.nomeCategoria.trim();
+    const preco = Number(this.editandoArte.preco);
+    if (!titulo || !categoria || !Number.isFinite(preco) || preco < 0) {
+      this.erroEdicaoArte = 'Informe título, categoria e um preço válido.';
+      return;
+    }
+    const arteAtualizada: Post = { ...this.editandoArte, titulo, descricao: this.editandoArte.descricao.trim(), preco, categoria: { ...this.editandoArte.categoria, nomeCategoria: categoria }, usuario: { ...this.editandoArte.usuario } };
+    this.pinService.atualizarArte(arteAtualizada);
+    this.artes = this.artes.map((item) => item.id === arteAtualizada.id ? arteAtualizada : item);
+    this.artesAtualizadas.emit(this.artes);
     this.editandoArte = null;
+    this.previewEdicaoArte = '';
+    this.erroEdicaoArte = '';
   }
   excluirArte(arte: Post): void {
     if (!window.confirm(`Excluir “${arte.titulo}” do portfólio?`)) return;

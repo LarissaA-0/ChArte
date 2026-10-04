@@ -36,8 +36,22 @@
 
           <!-- DESCRIÇÃO -->
           <div class="description modalDescription">
+            <h3>Descrição</h3>
             <p>{{ post.descricao || 'Esta publicação ainda não tem descrição.' }}</p>
           </div>
+
+          <section class="modal-info-card" aria-label="Detalhes da obra">
+            <h3>Detalhes da obra</h3>
+            <div class="modal-info-row"><span>Categoria</span><strong>{{ post.categoria?.nomeCategoria || 'Não informada' }}</strong></div>
+            @if (post.estilo) { <div class="modal-info-row"><span>Estilo</span><strong>{{ post.estilo }}</strong></div> }
+            @if (post.tags?.length) { <div class="modal-info-row"><span>Tags</span><strong>{{ post.tags?.join(', ') }}</strong></div> }
+          </section>
+
+          <section class="modal-info-card artist-card" aria-label="Informações do artista">
+            <h3>Artista</h3>
+            <p>Conheça outras obras de {{ post.nomeArtistico }}.</p>
+            <a [routerLink]="['/perfil', post?.usuario?.nomeUsuario || 'muzzle']" (click)="modal.closeModal()">Ver perfil do artista <span aria-hidden="true">↗</span></a>
+          </section>
         </div>
         <div class="bottom-actions">
           <button
@@ -56,11 +70,13 @@
           </button>
 
           <div class="bottom-right">
-            <div class="price-block">
-              <span class="price">R$ {{ post.preco }}</span>
-            </div>
-
-            <button class="btn-buy" type="button">Comprar</button>
+            @if (post.preco > 0) {
+              <div class="price-block">
+                <span class="price-label">Disponível para compra</span>
+                <span class="price">{{ post.preco | currency:'BRL' }}</span>
+              </div>
+              <button class="btn-buy" type="button">Comprar</button>
+            }
           </div>
         </div>
       </div>
