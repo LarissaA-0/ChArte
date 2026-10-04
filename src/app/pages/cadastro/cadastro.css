@@ -20,6 +20,7 @@
 .signup-field--reveal { animation: signupRise .28s; }
 .signup-duo { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 13px; }
 .signup-hint { margin: -4px 0 0; color: rgba(255,255,255,.42); font-size: 12px; }
+.signup-field-error { color: #ffc2cb; font-size: 12px; line-height: 1.35; }
 .signup-error { margin: 0; padding: 11px 13px; color: #ffc2cb; font-size: 13.5px; line-height: 1.45; background: rgba(255,99,124,.12); border: 1px solid rgba(255,99,124,.3); border-radius: 12px; animation: signupRise .25s; }
 .signup-submit { height: 52px; margin-top: 4px; color: #fff; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; background: linear-gradient(135deg,#8b0be0,#b22cff); border: 0; border-radius: 14px; box-shadow: 0 8px 20px rgba(139,11,224,.3); transition: .2s; }
 .signup-submit:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 12px 28px rgba(139,11,224,.45); }

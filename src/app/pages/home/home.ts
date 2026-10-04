@@ -8,7 +8,6 @@ import { Post } from '../../models/post';
 import { SubMenu } from '../../components/sub-menu/sub-menu';
 import { ArtistLoginModal } from '../../components/artist-login-modal/artist-login-modal';
 import { PinCardModal } from '../../components/pin-card-modal/pin-card-modal';
-import { ModalService } from '../../../services/modal.service';
 import { PinService } from '../../../services/pinService';
 @Component({
   selector: 'app-home',
@@ -30,23 +29,7 @@ export class Home {
   artes: Post[] = [];
   postSelecionado!: Post;
 
-  constructor(
-    public modal: ModalService,
-    private pinService: PinService,
-  ) {
+  constructor(private pinService: PinService) {
     this.artes = this.pinService.getArtes();
-  }
-
-  /*como
-  openPinModal(post: Post) {
-    this.modal.selecionarPost(post);
-    this.modal.openModal('pinModal');
-  }*/
-
-  openPinModal(pin: Post) {
-    console.log('POST CLICADO:', pin);
-
-    this.modal.selecionarPost(pin);
-    this.modal.openModal('pinModal');
   }
 }

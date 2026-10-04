@@ -69,9 +69,21 @@
           maxlength="254"
           [(ngModel)]="email"
           name="email"
+          #emailControl="ngModel"
           autocomplete="email"
+          inputmode="email"
+          autocapitalize="none"
+          spellcheck="false"
           placeholder="voce@email.com"
+          aria-describedby="email-hint email-error"
         />
+        <span id="email-hint" class="signup-hint">Use um endereço no formato voce@email.com.</span>
+        @if (emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+          <span id="email-error" class="signup-field-error" role="status">
+            @if (emailControl.errors?.['required']) { Informe seu e-mail. }
+            @else { Confira o formato do e-mail. }
+          </span>
+        }
       </label>
 
       <div class="signup-field">
@@ -106,25 +118,21 @@
       <div class="signup-duo">
         <label class="signup-field">
           <span class="signup-label">Senha</span>
-          <input
-            required
-            type="password"
-            minlength="6"
-            [(ngModel)]="senha"
-            name="senha"
-            autocomplete="new-password"
-          />
+          <div class="password-field-control">
+            <input required [type]="mostrarSenha ? 'text' : 'password'" minlength="6" [(ngModel)]="senha" name="senha" autocomplete="new-password" />
+            <button type="button" class="password-visibility" (click)="mostrarSenha = !mostrarSenha" [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarSenha">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>@if (!mostrarSenha) { <path class="eye-slash" d="m4 4 16 16"/> }</svg>
+            </button>
+          </div>
         </label>
         <label class="signup-field">
           <span class="signup-label">Confirmar senha</span>
-          <input
-            required
-            type="password"
-            minlength="6"
-            [(ngModel)]="confirmarSenha"
-            name="confirmarSenha"
-            autocomplete="new-password"
-          />
+          <div class="password-field-control">
+            <input required [type]="mostrarConfirmarSenha ? 'text' : 'password'" minlength="6" [(ngModel)]="confirmarSenha" name="confirmarSenha" autocomplete="new-password" />
+            <button type="button" class="password-visibility" (click)="mostrarConfirmarSenha = !mostrarConfirmarSenha" [attr.aria-label]="mostrarConfirmarSenha ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarConfirmarSenha">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>@if (!mostrarConfirmarSenha) { <path class="eye-slash" d="m4 4 16 16"/> }</svg>
+            </button>
+          </div>
         </label>
       </div>
       <p class="signup-hint">A senha precisa ter no mínimo 6 caracteres.</p>

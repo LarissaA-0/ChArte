@@ -10,7 +10,6 @@ import { CATEGORIAS, ESTILOS } from '../../models/catalog-options';
   styleUrl: './swipeables-cards.css',
 })
 export class SwipeablesCards {
-  private readonly imagens = ['batman.jpeg', 'frieren.jpeg', 'nimona.jpeg', 'totoro.jpg', 'gato.jpeg'];
   private readonly imagensPorEstilo: Record<string, string> = {
     'Mangá': 'Manga_style.jpeg',
     'Cartoon': 'cartoon_style.jpeg',
@@ -34,11 +33,11 @@ export class SwipeablesCards {
     'Grunge': 'grunge_style.jpeg',
     'Punk': 'punk_style.jpeg',
   };
-  categorias = CATEGORIAS.map((nome, index) => ({ nome, imagem: this.imagens[index % this.imagens.length], categoria: nome }));
-  estilos = ESTILOS.map((nome, index) => ({
+  categorias = CATEGORIAS.map((nome) => ({ nome, categoria: nome }));
+  estilos = ESTILOS.map((nome) => ({
     nome,
     imagem: this.imagensPorEstilo[nome]
       ? `/styles-icons/${this.imagensPorEstilo[nome]}`
-      : this.imagens[index % this.imagens.length],
+      : '/gato.jpeg',
   }));
 }

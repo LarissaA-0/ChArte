@@ -47,6 +47,9 @@ export class ArtistArea {
   senhaAtual = '';
   senhaNova = '';
   senhaConfirmacao = '';
+  mostrarSenhaAtual = false;
+  mostrarSenhaNova = false;
+  mostrarSenhaConfirmacao = false;
   usernameNovo = '';
   mensagemSeguranca = '';
   readonly filtrosComissao: ('Todas' | StatusComissao)[] = ['Todas', 'Solicitada', 'Aguardando aprovação do cliente', 'Pendente', 'Em andamento', 'Entregue', 'Finalizada', 'Recusada', 'Cancelada'];

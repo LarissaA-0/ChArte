@@ -16,6 +16,7 @@ import { RouterLink } from '@angular/router';
 export class UserLoginModal {
   nomeUsuario = '';
   senha = '';
+  mostrarSenha = false;
 
   constructor(
     public modal: ModalService,
@@ -28,7 +29,7 @@ export class UserLoginModal {
 
     if (sucesso) {
       this.modal.closeModal();
-      this.router.navigate(['/perfil', this.nomeUsuario.trim()]);
+      void this.router.navigate(['/']);
     } else {
       alert('Usuário ou senha incorretos para login de usuário comum');
     }

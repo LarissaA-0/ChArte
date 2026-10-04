@@ -1,6 +1,6 @@
 <div class="swipeablesCards">
   @for (categoria of categorias; track categoria.nome) {
-    <app-card [imagem]="categoria.imagem" [categoria]="categoria.nome"> </app-card>
+    <app-card [categoria]="categoria.nome"> </app-card>
   }
 </div>
 

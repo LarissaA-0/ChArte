@@ -30,6 +30,8 @@ export class Cadastro {
   email = '';
   senha = '';
   confirmarSenha = '';
+  mostrarSenha = false;
+  mostrarConfirmarSenha = false;
   tipoUsuario: TipoUsuario = 'Comum';
   erro = '';
   carregando = false;
@@ -82,6 +84,11 @@ export class Cadastro {
 
   async criarConta(): Promise<void> {
     this.erro = '';
+    const emailNormalizado = this.email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailNormalizado)) {
+      this.erro = 'Digite um e-mail válido, como voce@email.com.';
+      return;
+    }
     if (this.senha !== this.confirmarSenha) {
       this.erro = 'As senhas não conferem.';
       return;
@@ -92,7 +99,7 @@ export class Cadastro {
         nome: this.nome,
         nomeArtistico: this.nomeArtistico,
         nomeUsuario: this.nomeUsuario,
-        email: this.email,
+        email: emailNormalizado,
         senha: this.senha,
         tipoUsuario: this.tipoUsuario,
       });

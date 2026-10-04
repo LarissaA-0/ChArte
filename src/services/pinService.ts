@@ -16,7 +16,20 @@ export class PinService {
 
   //pega artes por categoria
   buscarPorCategoria(categoria: string): Observable<Post[]> {
-    return of(this.artes.filter((arte) => arte.categoria.nomeCategoria.toLowerCase() === categoria.trim().toLowerCase()));
+    const filtro = this.normalizar(categoria);
+    return of(this.artes.filter((arte) => this.normalizar(arte.categoria.nomeCategoria) === filtro));
+  }
+
+  buscarPorEstilo(estilo: string): Observable<Post[]> {
+    const filtro = this.normalizar(estilo);
+    return of(this.artes.filter((arte) =>
+      this.normalizar(arte.estilo ?? '') === filtro ||
+      (arte.tags ?? []).some((tag) => this.normalizar(tag) === filtro),
+    ));
+  }
+
+  private normalizar(valor: string): string {
+    return valor.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
   }
 
   //pega artes de um artista em especifico por artistaId

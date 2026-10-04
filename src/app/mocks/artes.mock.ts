@@ -8,6 +8,7 @@ export const MOCK_ARTES: Post[] = [
     portfolio: 'batman.jpeg',
     nomeArtistico: 'Muzzle',
     preco: 12.99,
+    estilo: 'Dark',
     usuario: {
       id: 1,
       artistaId: 1,
@@ -17,7 +18,7 @@ export const MOCK_ARTES: Post[] = [
     },
     categoria: {
       id: 1,
-      nomeCategoria: 'Ilustração',
+      nomeCategoria: 'Ilustração digital',
     },
     tags: ['fanart', 'digital', 'personagem'],
     criadoEm: '2026-09-18T14:30:00.000Z',
@@ -29,6 +30,7 @@ export const MOCK_ARTES: Post[] = [
     portfolio: 'frieren.jpeg',
     nomeArtistico: 'YasArt',
     preco: 25.0,
+    estilo: 'Fantasia',
     usuario: {
       id: 3,
       artistaId: 2,
@@ -50,6 +52,7 @@ export const MOCK_ARTES: Post[] = [
     portfolio: 'nimona.jpeg',
     nomeArtistico: 'YasArt',
     preco: 18.5,
+    estilo: 'Cartoon',
     usuario: {
       id: 3,
       artistaId: 2,
@@ -59,7 +62,7 @@ export const MOCK_ARTES: Post[] = [
     },
     categoria: {
       id: 1,
-      nomeCategoria: 'Ilustração',
+      nomeCategoria: 'Ilustração digital',
     },
     tags: ['fanart', 'ilustração'],
     criadoEm: '2026-09-25T16:45:00.000Z',
