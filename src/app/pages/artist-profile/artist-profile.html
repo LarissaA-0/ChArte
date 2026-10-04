@@ -48,7 +48,6 @@
   </div>
 }
 
-<app-user-login-modal></app-user-login-modal>
 <app-artist-login-modal></app-artist-login-modal>
 @if ((modalService.modalOpen$ | async) === 'postModal') {
   <app-post-modal (artePublicada)="atualizarArtes()"></app-post-modal>

@@ -250,6 +250,10 @@
   display: block;
 
   margin-top: 20px;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
 
   text-align: center;
 
@@ -261,6 +265,7 @@
   text-decoration: none;
 
   transition: color 0.2s ease;
+  cursor: pointer;
 }
 
 .artist-link:hover {

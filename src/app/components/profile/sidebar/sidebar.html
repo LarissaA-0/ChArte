@@ -11,28 +11,40 @@
       <button class="btn btn-primary" (click)="abrirEditarPerfil()">Editar perfil</button>
     } @else {
       <button class="btn btn-primary">Formulário</button>
-      <button class="btn btn-sm">chat</button>
+      <button class="btn btn-sm" type="button" (click)="modal.openChat()">Chat</button>
     }
   </div>
 
-  @if (exibirInformacoes) { <div class="description-container">
-    <p>{{ perfil?.bio || 'Sem descrição informada.' }}</p>
-  </div> }
+  @if (exibirInformacoes) {
+    <div class="description-container">
+      <p>{{ perfil?.bio || 'Esse usuario gosta de ser misterioso.' }}</p>
+    </div>
+  }
 
-  @if (exibirRedesSociais) { <div class="social-container">
-    <ul>
-      @if (perfil?.redesSociais?.twitter) {
-        <li><a href="">{{ perfil?.redesSociais?.twitter }} (X)</a></li>
-      }
-      @if (perfil?.redesSociais?.instagram) {
-        <li><a href="">{{ perfil?.redesSociais?.instagram }} (Insta)</a></li>
-      }
-      @if (perfil?.redesSociais?.tiktok) {
-        <li><a href="">{{ perfil?.redesSociais?.tiktok }} (TikTok)</a></li>
-      }
-      @if (perfil?.redesSociais?.youtube) {
-        <li><a href="">{{ perfil?.redesSociais?.youtube }} (YouTube)</a></li>
-      }
-    </ul>
-  </div> }
+  @if (exibirRedesSociais) {
+    <div class="social-container">
+      <ul>
+        @if (perfil?.redesSociais?.twitter) {
+          <li>
+            <a href="">{{ perfil?.redesSociais?.twitter }} (X)</a>
+          </li>
+        }
+        @if (perfil?.redesSociais?.instagram) {
+          <li>
+            <a href="">{{ perfil?.redesSociais?.instagram }} (Insta)</a>
+          </li>
+        }
+        @if (perfil?.redesSociais?.tiktok) {
+          <li>
+            <a href="">{{ perfil?.redesSociais?.tiktok }} (TikTok)</a>
+          </li>
+        }
+        @if (perfil?.redesSociais?.youtube) {
+          <li>
+            <a href="">{{ perfil?.redesSociais?.youtube }} (YouTube)</a>
+          </li>
+        }
+      </ul>
+    </div>
+  }
 </aside>

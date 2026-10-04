@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PerfilView } from '../../../models/perfil';
+import { ModalService } from '../../../../services/modal.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,6 +10,7 @@ import { PerfilView } from '../../../models/perfil';
   styleUrl: './sidebar.css',
 })
 export class Sidebar {
+  constructor(public modal: ModalService) {}
   @Input() perfil!: PerfilView;
   @Input() isOwner: boolean = false;
   @Input() editandoPerfil = false;

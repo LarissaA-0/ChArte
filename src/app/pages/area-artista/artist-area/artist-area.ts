@@ -14,13 +14,16 @@ import { Post } from '../../../models/post';
 import { Portfolio } from '../../../components/profile/portfolio/portfolio';
 import { ArtistDashboard } from '../artist-dashboard/artist-dashboard';
 import { criarDadosDashboard } from '../artist-dashboard/artist-dashboard.models';
+import { PinCard } from '../../../components/pin-card/pin-card';
+import { PinCardModal } from '../../../components/pin-card-modal/pin-card-modal';
+import { CommissionDetailModal } from '../../../components/commission-detail-modal/commission-detail-modal';
 
 type SecaoArtista = 'dashboard' | 'solicitacoes' | 'comissoes' | 'opcoes-comissao' | 'historico' | 'artes' | 'adicionar' | 'portfolio' | 'avaliacoes' | 'privacidade' | 'seguranca';
 
 @Component({
   selector: 'app-artist-area',
   standalone: true,
-  imports: [ArtistDashboard, CommonModule, FormsModule, RouterLink, Portfolio],
+  imports: [ArtistDashboard, CommonModule, FormsModule, RouterLink, Portfolio, PinCard, PinCardModal, CommissionDetailModal],
   templateUrl: './artist-area.html',
   styleUrl: './artist-area.css',
 })
@@ -35,7 +38,9 @@ export class ArtistArea {
   menuAberto = false;
   arquivoSelecionado: File | null = null;
   previewEntrega = '';
+  erroEntrega = '';
   entregaAtual: Comissao | null = null;
+  comissaoSelecionada: Comissao | null = null;
   observacaoEntrega = '';
   privacidade: PrivacidadeArtista = { perfilPublico: true, exibirRedesSociais: true, exibirInformacoes: true, aceitarComissoes: true };
   emailNovo = '';
@@ -44,7 +49,7 @@ export class ArtistArea {
   senhaConfirmacao = '';
   usernameNovo = '';
   mensagemSeguranca = '';
-  readonly filtrosComissao: ('Todas' | StatusComissao)[] = ['Todas', 'Solicitada', 'Pendente', 'Em andamento', 'Entregue', 'Finalizada', 'Recusada', 'Cancelada'];
+  readonly filtrosComissao: ('Todas' | StatusComissao)[] = ['Todas', 'Solicitada', 'Aguardando aprovação do cliente', 'Pendente', 'Em andamento', 'Entregue', 'Finalizada', 'Recusada', 'Cancelada'];
   readonly secoes: { grupo: string; itens: { id: SecaoArtista; titulo: string }[] }[] = [
     { grupo: 'PAINEL', itens: [{ id: 'dashboard', titulo: 'Dashboard' }] },
     { grupo: 'COMISSÕES', itens: [{ id: 'solicitacoes', titulo: 'Solicitações' }, { id: 'comissoes', titulo: 'Minhas Comissões' }, { id: 'opcoes-comissao', titulo: 'Opções e diretrizes' }, { id: 'historico', titulo: 'Histórico' }] },
@@ -65,15 +70,14 @@ export class ArtistArea {
   get comissoes(): Comissao[] { return this.artistData.listarComissoes(this.perfil.nomeUsuario); }
   get opcoesComissao(): OpcaoComissao[] { return this.artistData.listarOpcoesComissao(this.perfil.nomeUsuario, true); }
   get diretrizesComissao(): DiretrizComissao[] { return this.artistData.listarDiretrizes(this.perfil.nomeUsuario); }
-  get statusTopo() { return this.dashboardData.comissoesPorStatus.filter((item) => ['Solicitada', 'Pendente', 'Em andamento', 'Entregue', 'Finalizada'].includes(item.status)); }
+  get statusTopo() { return this.dashboardData.comissoesPorStatus.filter((item) => ['Solicitada', 'Aguardando aprovação do cliente', 'Pendente', 'Em andamento', 'Entregue', 'Finalizada'].includes(item.status)); }
   get avaliacoes(): AvaliacaoArtista[] { return this.artistData.listarAvaliacoes(this.perfil.nomeUsuario); }
   get comissoesVisiveis(): Comissao[] {
-    if (this.secaoAtual === 'solicitacoes' && !this.artistData.obterPrivacidade(this.perfil.nomeUsuario).aceitarComissoes) return [];
     const relevantes = this.secaoAtual === 'solicitacoes'
       ? this.comissoes.filter((item) => item.status === 'Solicitada')
       : this.secaoAtual === 'historico'
         ? this.comissoes.filter((item) => ['Finalizada', 'Cancelada', 'Recusada'].includes(item.status))
-        : this.comissoes.filter((item) => ['Pendente', 'Em andamento', 'Entregue'].includes(item.status));
+        : this.comissoes.filter((item) => ['Aguardando aprovação do cliente', 'Pendente', 'Em andamento', 'Entregue'].includes(item.status));
     return this.filtroComissao === 'Todas' ? relevantes : relevantes.filter((item) => item.status === this.filtroComissao);
   }
   get avaliacaoMedia(): number {
@@ -117,11 +121,25 @@ export class ArtistArea {
     if (secao === 'privacidade' || secao === 'opcoes-comissao') this.privacidade = this.artistData.obterPrivacidade(this.perfil.nomeUsuario);
   }
 
-  aceitar(comissao: Comissao): void { this.artistData.atualizarStatus(comissao.id, 'Pendente'); }
+  aceitar(comissao: Comissao): void {
+    this.artistData.enviarProposta(comissao.id, Number(comissao.propostaValor ?? comissao.valor), comissao.propostaPrazo ?? comissao.prazo);
+  }
   recusar(comissao: Comissao): void {
     if (window.confirm(`Recusar a solicitação “${comissao.titulo}” de ${comissao.cliente.nome}?`)) this.artistData.atualizarStatus(comissao.id, 'Recusada');
   }
   iniciar(comissao: Comissao): void { this.artistData.atualizarStatus(comissao.id, 'Em andamento'); }
+  abrirDetalhesComissao(comissao: Comissao): void { this.comissaoSelecionada = comissao; }
+  iniciarComissaoSelecionada(): void {
+    if (!this.comissaoSelecionada || this.comissaoSelecionada.pagamentoStatus !== 'pago') return;
+    this.iniciar(this.comissaoSelecionada);
+    this.comissaoSelecionada = this.artistData.obterComissao(this.comissaoSelecionada.id) ?? null;
+  }
+  enviarComissaoSelecionada(): void {
+    if (!this.comissaoSelecionada || this.comissaoSelecionada.pagamentoStatus !== 'pago') return;
+    const comissao = this.comissaoSelecionada;
+    this.comissaoSelecionada = null;
+    this.abrirEntrega(comissao);
+  }
   finalizar(comissao: Comissao): void { this.artistData.atualizarStatus(comissao.id, 'Finalizada'); }
 
   abrirEntrega(comissao: Comissao): void {
@@ -129,16 +147,27 @@ export class ArtistArea {
     this.arquivoSelecionado = null;
     this.previewEntrega = '';
     this.observacaoEntrega = '';
+    this.erroEntrega = '';
   }
   selecionarArquivo(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) return;
+    if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) {
+      this.arquivoSelecionado = null;
+      this.previewEntrega = '';
+      this.erroEntrega = 'Escolha uma imagem de até 5 MB para a entrega.';
+      return;
+    }
     this.arquivoSelecionado = file;
-    this.previewEntrega = file.type.startsWith('image/') ? URL.createObjectURL(file) : '';
+    this.erroEntrega = '';
+    const reader = new FileReader();
+    reader.onload = () => this.previewEntrega = typeof reader.result === 'string' ? reader.result : '';
+    reader.onerror = () => this.erroEntrega = 'Não foi possível ler essa imagem. Tente outro arquivo.';
+    reader.readAsDataURL(file);
   }
   enviarEntrega(): void {
-    if (!this.entregaAtual || !this.arquivoSelecionado) return;
-    this.artistData.registrarEntrega(this.entregaAtual.id, this.previewEntrega || this.arquivoSelecionado.name, this.observacaoEntrega.trim());
+    if (!this.entregaAtual || !this.arquivoSelecionado || !this.previewEntrega.startsWith('data:image')) return;
+    this.artistData.registrarEntrega(this.entregaAtual.id, this.previewEntrega, this.observacaoEntrega.trim());
     this.entregaAtual = null;
   }
 
@@ -185,4 +214,5 @@ export class ArtistArea {
   sair(): void { this.auth.logout(); void this.router.navigate(['/']); }
   acessarPerfil(): void { void this.router.navigate(['/perfil', this.perfil.nomeUsuario]); }
   statusDaObra(preco: number): string { return preco > 0 ? 'À venda' : 'No portfólio'; }
+  abrirPin(arte: Post): void { this.modal.selecionarPost(arte); this.modal.openModal('pinModal'); }
 }

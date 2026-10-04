@@ -37,5 +37,10 @@ export class UserLoginModal {
   openLogin() {
     this.modal.openModal('login');
   }
-}
 
+  abrirLoginArtista(): void {
+    this.modal.closeModal();
+    this.modal.openModal('artistLogin');
+  }
+
+}

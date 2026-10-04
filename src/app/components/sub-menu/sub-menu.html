@@ -16,14 +16,15 @@
       }
 
       <main>
-        <button (click)="irParaMeuPerfil()">Meu Perfil</button>
-        @if (!(auth.usuarioLogado$ | async)) {
+        @if (auth.usuarioLogado$ | async) {
+          <button (click)="irParaMeuPerfil()">Meu Perfil</button>
+        } @else {
+          <button (click)="abrirLogin()">Logar</button>
           <button (click)="modal.openModal('artistLogin')">Sou artista</button>
         }
-        <button>Favoritos</button>
-        <button>Chat</button>
+        <button (click)="irParaCarrinho()">Favoritos</button>
+        <button (click)="irParaChat()">Chat</button>
         <button>ajuda</button>
-
         @if (auth.usuarioLogado$ | async) {
           <button class="btn-logout" (click)="logout()">Logout</button>
         }
@@ -38,4 +39,3 @@
     </div>
   </div>
 }
-

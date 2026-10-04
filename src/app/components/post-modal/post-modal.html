@@ -60,28 +60,11 @@
         <div class="campo">
           <label for="categoria"> Categoria </label>
 
-          <!--categoria vindo do bd-->
-          <!--<select [(ngModel)]="categoria">
-            <option value="">Selecione uma categoria</option>
-
-            @for (categoria of categorias; track categoria.id) {
-              <option [value]="categoria.id">
-                {{ categoria.nome }}
-              </option>
-            }
-          </select>-->
           <select id="categoria" [(ngModel)]="categoria">
             <option value="">Selecione uma categoria</option>
-
-            <option value="Ilustração">Ilustração</option>
-
-            <option value="Pixel Art">Pixel Art</option>
-
-            <option value="3D">3D</option>
-
-            <option value="Animação">Animação</option>
-
-            <option value="Pintura">Pintura</option>
+            @for (item of categorias; track item.nome) {
+              <option [value]="item.nome">{{ item.nome }}</option>
+            }
           </select>
         </div>
 
@@ -90,16 +73,9 @@
 
           <select id="estilo" [(ngModel)]="estilo">
             <option value="">Selecione um estilo</option>
-
-            <option value="anime">Anime</option>
-
-            <option value="cartoon">Cartoon</option>
-
-            <option value="realista">Realista</option>
-
-            <option value="conceitual">Conceitual</option>
-
-            <option value="minimalista">Minimalista</option>
+            @for (item of estilos; track item.nome) {
+              <option [value]="item.nome">{{ item.nome }}</option>
+            }
           </select>
         </div>
       </div>

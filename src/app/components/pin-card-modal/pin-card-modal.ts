@@ -1,15 +1,14 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { ModalService } from '../../../services/modal.service';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { Post } from '../../models/post';
-import { DecimalPipe } from '@angular/common';
 import { CarrinhoService } from '../../../services/buy.service';
 import { PinCard } from '../pin-card/pin-card';
 import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-pin-card-modal',
   standalone: true,
-  imports: [AsyncPipe, DecimalPipe, RouterLink],
+  imports: [AsyncPipe, CurrencyPipe, RouterLink],
   templateUrl: './pin-card-modal.html',
   styleUrl: './pin-card-modal.css',
 })
@@ -42,6 +41,11 @@ export class PinCardModal {
 
   openPin() {
     this.modal.openModal('pinModal');
+  }
+
+  abrirChatDoArtista(): void {
+    const artista = this.post?.usuario;
+    this.modal.openChat(artista?.nomeUsuario, artista?.id);
   }
   /*
   adicionarCarrinho() {

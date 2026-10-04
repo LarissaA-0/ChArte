@@ -22,6 +22,10 @@ export class SubMenu {
     this.modal.openModal('subMenu');
   }
 
+  abrirLogin(): void {
+    this.modal.openModal('login');
+  }
+
   irParaMeuPerfil(): void {
     const usuario = this.auth.getUsuarioLogado();
     this.modal.closeModal();
@@ -31,6 +35,15 @@ export class SubMenu {
     } else {
       this.modal.openModal('login');
     }
+  }
+
+  irParaChat(): void {
+    this.modal.openChat();
+  }
+
+  irParaCarrinho(): void {
+    this.modal.closeModal();
+    void this.router.navigate(['/carrinho']);
   }
 
   logout(): void {

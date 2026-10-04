@@ -40,11 +40,13 @@
 
 .artes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 20px;
   width: 100%;
   box-sizing: border-box;
 }
+
+.artes-grid app-pin-card { display: block; min-width: 0; }
 
 .sem-obras {
   padding: 60px 20px;
@@ -70,6 +72,5 @@
   font-size: 14px;
   margin: 0;
 }
-
 
 

@@ -1,5 +1,5 @@
 .banner-container { width: 100%; }
-.cover-photo { position: relative; height: clamp(170px, 27vw, 290px); background: #282840; }
+.cover-photo { position: relative; width: 100%; height: 100%; background: #282840; }
 .cover-image { display: block; width: 100%; height: 100%; object-fit: cover; }
 .profile-container { position: absolute; top: 50%; left: clamp(20px, 7vw, 85px); width: 112px; height: 112px; transform: translateY(-50%); }
 .circle { display: block; width: 100%; height: 100%; object-fit: cover; border: 4px solid #19192b; border-radius: 50%; box-sizing: border-box; }

@@ -6,7 +6,6 @@ import { PinService } from '../../../services/pinService';
 import { SearchBar } from '../../components/search-bar/search-bar';
 import { Sidebar } from '../../components/profile/sidebar/sidebar';
 import { Banner } from '../../components/banner/banner';
-import { UserLoginModal } from '../../components/user-login-modal/user-login-modal';
 import { SubMenu } from '../../components/sub-menu/sub-menu';
 import { ArtistLoginModal } from '../../components/artist-login-modal/artist-login-modal';
 import { ModalService } from '../../../services/modal.service';
@@ -35,7 +34,6 @@ import { EditProfileModal } from '../../components/profile/edit-profile-modal/ed
     Sidebar,
     Banner,
     SubMenu,
-    UserLoginModal,
     ArtistLoginModal,
     Colecao,
     Comissoes,

@@ -18,7 +18,6 @@
       @for (arte of artes; track arte.id) {
         <app-pin-card
           [post]="arte"
-          [apenasImagem]="true"
           (click)="abrirPin(arte)"
         ></app-pin-card>
       }
@@ -31,5 +30,4 @@
     </div>
   }
 </div>
-
 

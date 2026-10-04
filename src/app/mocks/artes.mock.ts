@@ -19,6 +19,8 @@ export const MOCK_ARTES: Post[] = [
       id: 1,
       nomeCategoria: 'Ilustração',
     },
+    tags: ['fanart', 'digital', 'personagem'],
+    criadoEm: '2026-09-18T14:30:00.000Z',
   },
   {
     id: 2,
@@ -38,6 +40,8 @@ export const MOCK_ARTES: Post[] = [
       id: 2,
       nomeCategoria: 'Fanart',
     },
+    tags: ['fantasia', 'anime', 'digital'],
+    criadoEm: '2026-09-21T10:15:00.000Z',
   },
   {
     id: 3,
@@ -57,6 +61,7 @@ export const MOCK_ARTES: Post[] = [
       id: 1,
       nomeCategoria: 'Ilustração',
     },
+    tags: ['fanart', 'ilustração'],
+    criadoEm: '2026-09-25T16:45:00.000Z',
   },
 ];
-

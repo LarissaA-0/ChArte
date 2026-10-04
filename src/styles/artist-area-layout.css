@@ -18,6 +18,11 @@
 #artist-area-root .commission-meta { display: grid; gap: 5px; justify-items: end; }
 #artist-area-root .commission-meta small { color: rgba(255,255,255,.55); font-size: 12px; }
 #artist-area-root .commission-actions { display: flex; gap: 7px; margin-left: 50px; }
+#artist-area-root .proposal-actions { width: min(100%, 760px); margin-left: 50px; align-items: end; flex-wrap: wrap; }
+#artist-area-root .proposal-actions label { display: grid; gap: 5px; color: #cfc2d4; font-size: 12px; }
+#artist-area-root .proposal-actions input { width: min(220px, 100%); box-sizing: border-box; padding: 9px 10px; border: 1px solid #514657; border-radius: 8px; background: #171319; color: #fff; font: inherit; }
+#artist-area-root .reference-thumb { display: block; width: 72px; height: 56px; margin-bottom: 5px; object-fit: cover; border-radius: 6px; }
+#artist-area-root .status-hint { color: #eacb8f; font-size: 12px; }
 #artist-area-root .primary-action, #artist-area-root .secondary-action, #artist-area-root .danger-action { padding: 9px 13px; color: #fff; background: #8424c2; border: 1px solid #a348d8; border-radius: 8px; font: inherit; font-size: 14px; cursor: pointer; }
 #artist-area-root .primary-action:hover { background: #9b24e8; }
 #artist-area-root .primary-action:disabled { opacity: .45; cursor: not-allowed; }
@@ -55,7 +60,10 @@
   #artist-area-root { grid-template-columns: minmax(0, 1fr); min-height: unset; overflow: visible; }
   #artist-area-root .mobile-menu { display: flex; align-items: center; gap: 9px; padding: 12px 16px; color: white; background: rgba(8,8,20,.55); border: 0; border-bottom: 1px solid rgba(255,255,255,.08); text-align: left; font: inherit; font-size: 15px; }
   #artist-area-root .artist-sidebar { display: none; min-height: 0; height: auto; gap: 12px; padding: 15px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.08); }
-  #artist-area-root .artist-sidebar.open { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); }
+  #artist-area-root .artist-sidebar.open { display: grid; grid-template-columns: minmax(0,1fr); }
+  #artist-area-root .artist-sidebar .nav-group { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 5px; }
+  #artist-area-root .artist-sidebar .nav-group h2 { grid-column: 1 / -1; }
+  #artist-area-root .artist-sidebar .nav-group button { min-width: 0; padding: 10px 9px; line-height: 1.25; overflow-wrap: anywhere; }
   #artist-area-root .artist-sidebar .brand, #artist-area-root .artist-sidebar .logout { grid-column: 1 / -1; }
   #artist-area-root .artist-content { padding: 18px 14px; }
 }
@@ -66,6 +74,7 @@
   #artist-area-root .security-grid, #artist-area-root .form-grid { grid-template-columns: minmax(0,1fr); }
   #artist-area-root .commission-meta { justify-items: start; margin-left: 50px; }
   #artist-area-root .commission-actions { flex-wrap: wrap; }
+  #artist-area-root .proposal-actions { margin-left: 0; }
   #artist-area-root .commission-card { align-items: flex-start; }
 }
 

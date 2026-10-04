@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { MOCK_COMISSOES } from '../app/mocks/comissoes.mock';
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MOCK_AVALIACOES } from '../app/mocks/avaliacoes.mock';
 import { AvaliacaoArtista, Comissao, DiretrizComissao, OpcaoComissao, PrivacidadeArtista, StatusComissao } from '../app/models/artist-area';
+import { COMMISSION_STORE, CommissionStore } from './commission-store';
 
 const PRIVACIDADE_PADRAO: PrivacidadeArtista = { perfilPublico: true, exibirRedesSociais: true, exibirInformacoes: true, aceitarComissoes: true };
-const STORAGE_COMISSOES = 'charte:artist-area:comissoes:v1';
 const STORAGE_CATALOGO = 'charte:artist-area:catalogo:v1';
 const STORAGE_PRIVACIDADE = 'charte:artist-area:privacidade:v1';
 
@@ -13,19 +12,16 @@ const CLONAR_COMISSAO = (item: Comissao): Comissao => ({ ...item, referencias: [
 
 @Injectable({ providedIn: 'root' })
 export class ArtistAreaService {
-  private readonly comissoesSubject = new BehaviorSubject<Comissao[]>(this.carregarComissoes());
-  readonly comissoes$ = this.comissoesSubject.asObservable();
+  private readonly comissoesSubject: BehaviorSubject<Comissao[]>;
+  readonly comissoes$: Observable<Comissao[]>;
   private readonly catalogoSubject = new BehaviorSubject<{ opcoes: OpcaoComissao[]; diretrizes: DiretrizComissao[] }>(this.carregarCatalogo());
   readonly catalogo$ = this.catalogoSubject.asObservable();
   private readonly privacidade = this.carregarPrivacidade();
   private readonly avaliacoes = MOCK_AVALIACOES.map((item) => ({ ...item }));
 
-  private carregarComissoes(): Comissao[] {
-    try {
-      const salvo = localStorage.getItem(STORAGE_COMISSOES);
-      const dados = salvo ? JSON.parse(salvo) as Comissao[] : null;
-      return Array.isArray(dados) ? dados.map(CLONAR_COMISSAO) : MOCK_COMISSOES.map(CLONAR_COMISSAO);
-    } catch { return MOCK_COMISSOES.map(CLONAR_COMISSAO); }
+  constructor(@Inject(COMMISSION_STORE) private readonly commissionStore: CommissionStore) {
+    this.comissoesSubject = new BehaviorSubject<Comissao[]>(commissionStore.load().map(CLONAR_COMISSAO));
+    this.comissoes$ = this.comissoesSubject.asObservable();
   }
 
   private carregarCatalogo(): { opcoes: OpcaoComissao[]; diretrizes: DiretrizComissao[] } {
@@ -64,12 +60,28 @@ export class ArtistAreaService {
     } catch { return new Map(); }
   }
 
-  private salvarComissoes(): void { try { localStorage.setItem(STORAGE_COMISSOES, JSON.stringify(this.comissoesSubject.value)); } catch { /* O repositório remoto poderá persistir quando estiver configurado. */ } }
+  private salvarComissoes(): void { this.commissionStore.save(this.comissoesSubject.value); }
   private salvarCatalogo(): void { try { localStorage.setItem(STORAGE_CATALOGO, JSON.stringify(this.catalogoSubject.value)); } catch { /* O repositório remoto poderá persistir quando estiver configurado. */ } }
   private salvarPrivacidadeMap(): void { try { localStorage.setItem(STORAGE_PRIVACIDADE, JSON.stringify(Object.fromEntries(this.privacidade))); } catch { /* O repositório remoto poderá persistir quando estiver configurado. */ } }
 
   listarComissoes(username: string): Comissao[] {
     return this.comissoesSubject.value.filter((item) => item.artistaUsername.toLowerCase() === username.toLowerCase()).map(CLONAR_COMISSAO);
+  }
+
+  listarPedidosCliente(username: string): Comissao[] {
+    return this.comissoesSubject.value.filter((item) => item.cliente.username.toLowerCase() === username.toLowerCase()).map(CLONAR_COMISSAO);
+  }
+
+  obterComissao(id: number): Comissao | undefined {
+    const item = this.comissoesSubject.value.find((comissao) => comissao.id === id);
+    return item ? CLONAR_COMISSAO(item) : undefined;
+  }
+
+  solicitarComissao(dados: Omit<Comissao, 'id' | 'status' | 'criadaEm'>): Comissao {
+    const comissao: Comissao = { ...dados, id: Math.max(0, ...this.comissoesSubject.value.map((item) => item.id)) + 1, criadaEm: new Date().toISOString(), status: 'Solicitada' };
+    this.comissoesSubject.next([...this.comissoesSubject.value, CLONAR_COMISSAO(comissao)]);
+    this.salvarComissoes();
+    return CLONAR_COMISSAO(comissao);
   }
 
   listarOpcoesComissao(username: string, incluirInativas = false): OpcaoComissao[] {
@@ -131,12 +143,43 @@ export class ArtistAreaService {
   }
 
   atualizarStatus(id: number, status: StatusComissao): void {
-    this.comissoesSubject.next(this.comissoesSubject.value.map((item) => item.id === id ? { ...item, status } : item));
+    this.comissoesSubject.next(this.comissoesSubject.value.map((item) => {
+      if (item.id !== id) return item;
+      const permitido: Record<StatusComissao, StatusComissao[]> = {
+        'Solicitada': [], 'Aguardando aprovação do cliente': ['Solicitada'], 'Pendente': ['Aguardando aprovação do cliente'],
+        'Em andamento': ['Pendente'], 'Entregue': ['Em andamento'], 'Finalizada': ['Entregue'], 'Recusada': ['Solicitada'], 'Cancelada': ['Solicitada', 'Aguardando aprovação do cliente', 'Pendente'],
+      };
+      if (!permitido[status].includes(item.status)) return item;
+      if (status === 'Cancelada' && item.pagamentoStatus === 'pago') return item;
+      if ((status === 'Em andamento' || status === 'Entregue' || status === 'Finalizada') && item.pagamentoStatus !== 'pago') return item;
+      if (status === 'Pendente' && item.propostaValor !== undefined) return { ...item, status, valor: item.propostaValor, prazo: item.propostaPrazo ?? item.prazo };
+      if (status === 'Finalizada') return { ...item, status, concluidaEm: new Date().toISOString() };
+      return { ...item, status };
+    }));
+    this.salvarComissoes();
+  }
+
+  vincularCheckout(id: number, paymentId: string, checkoutUrl: string, status: 'pendente' | 'pago' | 'falhou', metodo: 'pix' | 'card' | 'transfer'): void {
+    const pagamento = metodo === 'pix' ? 'Pix' : metodo === 'card' ? 'Cartão' : 'Transferência';
+    this.comissoesSubject.next(this.comissoesSubject.value.map((item) => item.id === id && item.status === 'Pendente' ? { ...item, paymentId, checkoutUrl, pagamento, pagamentoStatus: status } : item));
+    this.salvarComissoes();
+  }
+
+  atualizarPagamento(id: number, status: 'pendente' | 'pago' | 'falhou'): void {
+    this.comissoesSubject.next(this.comissoesSubject.value.map((item) => item.id === id && item.status === 'Pendente' ? { ...item, pagamentoStatus: status } : item));
+    this.salvarComissoes();
+  }
+
+  enviarProposta(id: number, valor: number, prazo: string): void {
+    if (!Number.isFinite(valor) || valor <= 0 || !prazo.trim()) return;
+    this.comissoesSubject.next(this.comissoesSubject.value.map((item) => item.id === id && item.status === 'Solicitada'
+      ? { ...item, status: 'Aguardando aprovação do cliente', propostaValor: valor, propostaPrazo: prazo.trim() }
+      : item));
     this.salvarComissoes();
   }
 
   registrarEntrega(id: number, arquivoEntrega: string, observacaoEntrega: string): void {
-    this.comissoesSubject.next(this.comissoesSubject.value.map((item) => item.id === id ? { ...item, arquivoEntrega, observacaoEntrega, status: 'Entregue' } : item));
+    this.comissoesSubject.next(this.comissoesSubject.value.map((item) => item.id === id && item.pagamentoStatus === 'pago' && item.status === 'Em andamento' ? { ...item, arquivoEntrega, observacaoEntrega, status: 'Entregue' } : item));
     this.salvarComissoes();
   }
 

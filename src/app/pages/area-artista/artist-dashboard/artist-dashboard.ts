@@ -35,7 +35,7 @@ export class ArtistDashboard {
 
   get metricas() { return this.dados.metricas; }
   get totalComissoes(): number { return this.dados.comissoesPorStatus.reduce((total, item) => total + item.valor, 0); }
-  get statusResumo() { return this.dados.comissoesPorStatus.filter((item) => ['Solicitada', 'Pendente', 'Em andamento', 'Entregue', 'Finalizada'].includes(item.status)); }
+  get statusResumo() { return this.dados.comissoesPorStatus.filter((item) => ['Solicitada', 'Aguardando aprovação do cliente', 'Pendente', 'Em andamento', 'Entregue', 'Finalizada'].includes(item.status)); }
   get existeGanhoNoPeriodo(): boolean { return this.dados.ganhosPorMes.some((item) => item.valor > 0); }
 
   maximo(series: DashboardChartPoint[]): number { return Math.max(1, ...series.map((item) => item.valor)); }

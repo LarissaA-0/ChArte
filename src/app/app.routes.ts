@@ -7,6 +7,16 @@ import { Styles } from './pages/styles/styles';
 import { artistGuard } from '../services/guard';
 import { ArtistAreaPage } from './pages/area-artista/artist-area-page/artist-area-page';
 import { Cadastro } from './pages/cadastro/cadastro';
+import { OrderDetail } from './pages/order-detail/order-detail';
+import { inject } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { ModalService } from '../services/modal.service';
+
+const userLoginGuard = () => {
+  if (inject(AuthService).estaLogado()) return true;
+  inject(ModalService).openModal('login');
+  return false;
+};
 export const routes: Routes = [
   {
     path: '',
@@ -19,6 +29,12 @@ export const routes: Routes = [
   {
     path: 'carrinho',
     component: FavoritesPage,
+    canActivate: [userLoginGuard],
+  },
+  {
+    path: 'pedido/:id',
+    component: OrderDetail,
+    canActivate: [userLoginGuard],
   },
   {
     path: 'cadastro',

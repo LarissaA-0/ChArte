@@ -33,6 +33,7 @@ export interface DashboardData {
 
 const STATUS_DASHBOARD: { status: StatusComissao; cor: string }[] = [
   { status: 'Solicitada', cor: '#c084fc' },
+  { status: 'Aguardando aprovação do cliente', cor: '#f6c85f' },
   { status: 'Pendente', cor: '#f6c85f' },
   { status: 'Em andamento', cor: '#5aa9e6' },
   { status: 'Entregue', cor: '#62c2a3' },
@@ -62,7 +63,7 @@ export function criarDadosDashboard(comissoes: Comissao[], agora = new Date()): 
     mes: comissoes.filter((item) => chaveMes(item.criadaEm) === mesAtual && dataComissao(item.criadaEm) <= hoje).length,
     ano: comissoes.filter((item) => item.criadaEm.startsWith(anoAtual) && dataComissao(item.criadaEm) <= hoje).length,
     ganhos: comissoes.filter((item) => item.status === 'Finalizada' && chaveMes(item.concluidaEm || item.criadaEm) === mesAtual).reduce((total, item) => total + item.valor, 0),
-    pendentes: comissoes.filter((item) => item.status === 'Pendente' || item.status === 'Solicitada').length,
+    pendentes: comissoes.filter((item) => item.status === 'Pendente' || item.status === 'Solicitada' || item.status === 'Aguardando aprovação do cliente').length,
     andamento: comissoes.filter((item) => item.status === 'Em andamento' || item.status === 'Entregue').length,
     finalizadas: comissoes.filter((item) => item.status === 'Finalizada').length,
   };

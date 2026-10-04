@@ -43,22 +43,30 @@
 
 .home-menu main button {
   width: 100%;
-  height: 45px;
-
-  border: none;
-  border-radius: 10px;
-
-  background: transparent;
-  color: white;
-
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(255, 255, 255, 0.88);
   font-size: 15px;
+  font-weight: 500;
   text-align: left;
-
   cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
 }
 
 .home-menu main button:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(155, 36, 232, 0.2);
+  border-color: rgba(190, 112, 240, 0.35);
+  color: #fff;
+  transform: translateX(2px);
+}
+
+.home-menu main button:focus-visible,
+.lightOrDark button:focus-visible {
+  outline: 2px solid #d7a6f4;
+  outline-offset: 2px;
 }
 
 .user-header {
@@ -123,13 +131,18 @@
 
 .lightOrDark button {
   flex: 1;
-
   height: 40px;
-
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-
   background: rgba(255, 255, 255, 0.07);
-
+  color: white;
+  font-size: 17px;
   cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.lightOrDark button:hover {
+  background: rgba(155, 36, 232, 0.2);
+  border-color: rgba(190, 112, 240, 0.4);
+  transform: translateY(-1px);
 }

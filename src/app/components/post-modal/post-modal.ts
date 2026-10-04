@@ -5,6 +5,7 @@ import { ModalService } from '../../../services/modal.service';
 import { PerfilService } from '../../../services/perfil.service';
 import { PinService } from '../../../services/pinService';
 import { Post } from '../../models/post';
+import { CATEGORIAS, ESTILOS } from '../../models/catalog-options';
 
 @Component({
   selector: 'app-post-modal',
@@ -25,14 +26,8 @@ export class PostModal {
   previewImagem = '';
   erro = '';
 
-  categorias = [
-    { id: 1, nome: 'Ilustração' }, { id: 2, nome: 'Pixel Art' }, { id: 3, nome: '3D' },
-    { id: 4, nome: 'Animação' }, { id: 5, nome: 'Pintura' },
-  ];
-  estilos = [
-    { id: 1, nome: 'Anime' }, { id: 2, nome: 'Cartoon' }, { id: 3, nome: 'Realista' },
-    { id: 4, nome: 'Conceitual' }, { id: 5, nome: 'Minimalista' },
-  ];
+  categorias = CATEGORIAS.map((nome) => ({ nome }));
+  estilos = ESTILOS.map((nome) => ({ nome }));
 
   constructor(
     private modalService: ModalService,
@@ -52,8 +47,8 @@ export class PostModal {
       if (!perfil) { this.erro = 'Não foi possível localizar o perfil da artista.'; return; }
       const arte = this.pinService.adicionarArte({
         titulo: this.titulo.trim(), descricao: this.descricao.trim(), portfolio: this.previewImagem || this.imagemSelecionada!.name,
-        categoria: this.categorias.find((item) => item.id.toString() === this.categoria || item.nome.toLowerCase() === this.categoria.toLowerCase())?.nome || this.categoria,
-        estilo: this.estilos.find((item) => item.id.toString() === this.estilo || item.nome.toLowerCase() === this.estilo.toLowerCase())?.nome || this.estilo,
+        categoria: this.categorias.find((item) => item.nome.toLowerCase() === this.categoria.toLowerCase())?.nome || this.categoria,
+        estilo: this.estilos.find((item) => item.nome.toLowerCase() === this.estilo.toLowerCase())?.nome || this.estilo,
         preco: this.compravel ? Number(this.preco) : 0,
       }, perfil);
       this.artePublicada.emit(arte);

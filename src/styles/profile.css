@@ -230,12 +230,15 @@
 .menu-perfil {
   display: flex;
   width: 100%;
-  min-height: 60px;
+  height: 56px;
+  min-height: 56px;
   box-sizing: border-box;
   align-items: center;
   padding: 10px 30px;
   gap: 55px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
   background: #202039;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -390,13 +393,14 @@
   }
 
   .menu-perfil {
-    min-height: 55px;
-
-    justify-content: center;
-
-    gap: 15px;
-
+    height: 56px;
+    min-height: 56px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
     padding: 8px 15px;
+    gap: 15px;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 
   .menu-perfil a {
@@ -416,6 +420,7 @@
 @media (max-width: 400px) {
   .menu-perfil {
     gap: 8px;
+    flex-wrap: nowrap;
   }
 
   .menu-perfil a {

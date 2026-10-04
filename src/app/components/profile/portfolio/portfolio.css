@@ -40,12 +40,14 @@
 
 .artes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   align-items: start;
   gap: 22px;
   width: 100%;
   box-sizing: border-box;
 }
+
+.artes-grid app-pin-card { display: block; min-width: 0; }
 
 .portfolio-item {
   background: rgba(255, 255, 255, 0.03);
@@ -157,5 +159,4 @@
   font-size: 14px;
   margin: 0;
 }
-
 

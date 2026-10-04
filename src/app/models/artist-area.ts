@@ -1,4 +1,4 @@
-export type StatusComissao = 'Solicitada' | 'Pendente' | 'Em andamento' | 'Entregue' | 'Finalizada' | 'Recusada' | 'Cancelada';
+export type StatusComissao = 'Solicitada' | 'Aguardando aprovação do cliente' | 'Pendente' | 'Em andamento' | 'Entregue' | 'Finalizada' | 'Recusada' | 'Cancelada';
 
 export interface Comissao {
   id: number;
@@ -14,6 +14,13 @@ export interface Comissao {
   concluidaEm?: string;
   observacaoEntrega?: string;
   arquivoEntrega?: string;
+  pagamento?: string;
+  pagamentoStatus?: 'pendente' | 'pago' | 'falhou';
+  paymentId?: string;
+  checkoutUrl?: string;
+  opcaoTitulo?: string;
+  propostaValor?: number;
+  propostaPrazo?: string;
 }
 
 export interface OpcaoComissao {

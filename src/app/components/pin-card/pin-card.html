@@ -1,35 +1,37 @@
-<div class="pin-card" [class.apenas-imagem]="apenasImagem">
+<div class="pin-card" [class.apenas-imagem]="apenasImagem" (click)="abrirPinModal()" (keydown.enter)="abrirPinModal()" tabindex="0" role="button" [attr.aria-label]="'Abrir publicação: ' + post.titulo">
   @if (!apenasImagem) {
-    <!-- o botão abaixo leva para a pagina carrinho-->
-    <button class="btnFav">Carrinho</button>
+    <button
+      class="btnFav"
+      [class.saved]="favorites.contem(post.id)"
+      type="button"
+      [attr.aria-pressed]="favorites.contem(post.id)"
+      [attr.aria-label]="favorites.contem(post.id) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
+      [title]="favorites.contem(post.id) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
+      (click)="alternarFavorito($event)"
+    >
+      <svg class="bookmark-icon" viewBox="0 0 24 24" aria-hidden="true">
+        @if (favorites.contem(post.id)) {
+          <path d="M6 3.75A1.75 1.75 0 0 1 7.75 2h8.5A1.75 1.75 0 0 1 18 3.75V22l-6-3.8L6 22V3.75Z" />
+        } @else {
+          <path d="M7.75 3h8.5A.75.75 0 0 1 17 3.75v16.43l-4.46-2.82a1 1 0 0 0-1.08 0L7 20.18V3.75A.75.75 0 0 1 7.75 3Z" />
+        }
+      </svg>
+    </button>
   }
 
-  <img [src]="post.portfolio" [alt]="post.titulo" />
+  <img class="pin-image" [src]="imagemArte" [alt]="post.titulo" />
 
   @if (!apenasImagem) {
     <div class="description">
       <div class="left">
-        <a class="circle-sm" [routerLink]="['/perfil', post?.usuario?.nomeUsuario || 'muzzle']">
-          <img [src]="post?.usuario?.fotoPerfil" [alt]="" />
+        <a class="circle-sm" [routerLink]="['/perfil', post?.usuario?.nomeUsuario || 'muzzle']" (click)="$event.stopPropagation()">
+          <img [src]="fotoArtista" [alt]="'Foto de perfil de ' + nomeArtista" />
         </a>
       </div>
       <div class="midle">
         <div class="title">{{ post.titulo }}</div>
-        <div class="title">@{{ post.nomeArtistico }}</div>
+        <div class="title">{{ nomeArtista.startsWith('@') ? nomeArtista : '@' + nomeArtista }}</div>
       </div>
     </div>
   }
 </div>
-
-<!--
-chat, quero terminar meu site em dois dias. Eu tenho a home, tenho layout de perfil mas que n ta
-pegando os dados, tenho modals de login para artista e usuario comum, tenho modal pra entrada de
-pin, tenho modal para enviar uma arte digital, menu, cards para categoria e estilo que ja tem uma
-logica pronta, uma parte para o carrinho mas o botão n leva ainda para a pagina carrinho, tenho o
-banco de dados pronto no supabase, mas falta arrumar as configurações, o supabase ja cria api para
-back, o back ja tem as regras de negocio. o que mais quero fazer: dashboard para o artista esconder
-o botão quando loga ver o proprio perfil e reocnhecer se o perfil é seu ou não fazer as mecanicas de
-edição de perfil para usuarios comuns e artistas fazer a tela de status de pedido e entre outros
-relacionados conectar o chat e fazer ele funcional ter um banco de dados para teste separado no
-proprio front antes da conexão principal
--->

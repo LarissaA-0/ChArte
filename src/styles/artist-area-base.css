@@ -13,9 +13,9 @@
 #artist-area-root .area-section { min-width: 0; }
 #artist-area-root .section-heading { margin: 2px 0 18px; }
 #artist-area-root .section-heading h2, #artist-area-root .dashboard-heading h2 { margin: 0 0 5px; font-size: 23px; }
-#artist-area-root .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 18px; }
+#artist-area-root .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 18px; }
 #artist-area-root .work-card, #artist-area-root .commission-card, #artist-area-root .review-card, #artist-area-root .settings-card { min-width: 0; overflow: hidden; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.08); border-radius: 15px; }
-#artist-area-root .work-card > img { display: block; width: 100%; height: 185px; object-fit: cover; }
+#artist-area-root .work-card app-pin-card { display: block; min-width: 0; }
 #artist-area-root .work-info { padding: 14px; }
 #artist-area-root .work-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
 #artist-area-root .work-title-row h3, #artist-area-root .commission-main h3, #artist-area-root .review-person h3 { min-width: 0; margin: 0; color: white; font-size: 16px; font-weight: 600; }
@@ -72,4 +72,3 @@
   #artist-area-root .status-pill { margin-left: auto; }
   #artist-area-root .toggle-row, #artist-area-root .account-line { align-items: flex-start; }
 }
-
