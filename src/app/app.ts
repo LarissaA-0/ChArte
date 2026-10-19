@@ -2,8 +2,12 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Chat } from './components/chat/chat';
 import { UserLoginModal } from './components/user-login-modal/user-login-modal';
+<<<<<<< HEAD
 import { supabase } from './core/supabase/supabase.client';
 import { PinService } from '../services/pinService';
+=======
+
+>>>>>>> origin/master
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Chat, UserLoginModal],
@@ -13,6 +17,7 @@ import { PinService } from '../services/pinService';
 export class App {
   protected readonly title = signal('charte');
 
+<<<<<<< HEAD
   constructor(private pinService: PinService) {
     const temaSalvo = localStorage.getItem('charte-tema');
     document.documentElement.dataset['theme'] =
@@ -37,4 +42,10 @@ console.log('MENSAGEM:', error?.message);
 console.log('DETALHES:', error?.details);
 console.log('DICA:', error?.hint);
 }
+=======
+  constructor() {
+    const temaSalvo = localStorage.getItem('charte-tema');
+    document.documentElement.dataset['theme'] = temaSalvo === 'claro' ? 'claro' : 'escuro';
+  }
+>>>>>>> origin/master
 }

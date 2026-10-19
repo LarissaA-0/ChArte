@@ -58,6 +58,7 @@ export class UserProfileSettings implements OnInit {
 
   salvarEmail(): void {
     this.limparMensagens();
+<<<<<<< HEAD
     this.auth.atualizarEmail(this.emailNovo).then((ok) => {
       if (!ok) {
         this.erro = 'Não foi possível atualizar o e-mail. Confira o endereço informado.';
@@ -65,6 +66,13 @@ export class UserProfileSettings implements OnInit {
       }
       this.confirmar('E-mail atualizado.');
     });
+=======
+    if (!this.auth.atualizarEmailMock(this.emailNovo)) {
+      this.erro = 'Não foi possível atualizar o e-mail. Confira o endereço informado.';
+      return;
+    }
+    this.confirmar('E-mail atualizado.');
+>>>>>>> origin/master
   }
 
   async salvarSenha(): Promise<void> {
@@ -77,9 +85,14 @@ export class UserProfileSettings implements OnInit {
       this.erro = 'A confirmação não corresponde à nova senha.';
       return;
     }
+<<<<<<< HEAD
     const ok = await this.auth.atualizarSenha(this.senhaNova);
     if (!ok) {
       this.erro = 'Não foi possível atualizar a senha.';
+=======
+    if (!await this.auth.atualizarSenhaMock(this.senhaAtual, this.senhaNova)) {
+      this.erro = 'Não foi possível atualizar a senha. Confira a senha atual.';
+>>>>>>> origin/master
       return;
     }
     this.senhaAtual = this.senhaNova = this.senhaConfirmacao = '';

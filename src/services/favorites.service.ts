@@ -1,10 +1,19 @@
 import { Injectable } from '@angular/core';
+<<<<<<< HEAD
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { Post } from '../app/models/post';
 import { PinService } from './pinService';
 import { AuthService } from './auth.service';
 import { supabase } from '../app/core/supabase/supabase.client';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
+=======
+import { BehaviorSubject } from 'rxjs';
+import { Post } from '../app/models/post';
+import { PinService } from './pinService';
+import { AuthService } from './auth.service';
+
+const STORAGE_FAVORITOS = 'charte:favoritos:v1';
+>>>>>>> origin/master
 
 @Injectable({ providedIn: 'root' })
 export class FavoritesService {
@@ -17,6 +26,7 @@ export class FavoritesService {
     this.auth.usuarioLogado$.subscribe((usuario) => this.definirUsuario(usuario?.idUsuario ?? null));
   }
 
+<<<<<<< HEAD
   private async carregarIdsDoBanco(usuarioId: string): Promise<number[]> {
     try {
       const { data, error } = await supabase
@@ -33,11 +43,16 @@ export class FavoritesService {
     } catch {
       return [];
     }
+=======
+  private chaveStorage(usuarioId: string): string {
+    return `${STORAGE_FAVORITOS}:${encodeURIComponent(usuarioId)}`;
+>>>>>>> origin/master
   }
 
   private definirUsuario(usuarioId: string | null): void {
     if (this.usuarioId === usuarioId) return;
     this.usuarioId = usuarioId;
+<<<<<<< HEAD
     if (usuarioId) {
       this.carregarIdsDoBanco(usuarioId).then(ids => this.idsSubject.next(ids));
     } else {
@@ -58,10 +73,31 @@ export class FavoritesService {
 
   listarIds(): number[] {
     return this.idsSubject.value;
+=======
+    this.idsSubject.next(usuarioId ? this.carregarIds(usuarioId) : []);
+  }
+
+  private carregarIds(usuarioId: string): number[] {
+    try {
+      const dados = JSON.parse(localStorage.getItem(this.chaveStorage(usuarioId)) ?? '[]') as unknown;
+      return Array.isArray(dados) ? dados.filter((id): id is number => Number.isInteger(id)) : [];
+    } catch { return []; }
+  }
+
+  private persistir(): void {
+    if (!this.usuarioId) return;
+    try { localStorage.setItem(this.chaveStorage(this.usuarioId), JSON.stringify(this.idsSubject.value)); } catch { /* Disponível durante a sessão se o storage estiver bloqueado. */ }
+  }
+
+  listar(): Post[] {
+    const ids = new Set(this.idsSubject.value);
+    return this.pins.getArtes().filter((arte) => ids.has(arte.id));
+>>>>>>> origin/master
   }
 
   contem(id: number): boolean { return this.idsSubject.value.includes(id); }
 
+<<<<<<< HEAD
   async alternar(id: number): Promise<void> {
     if (!this.usuarioId) return;
 
@@ -100,3 +136,12 @@ export class FavoritesService {
     }
   }
 }
+=======
+  alternar(id: number): void {
+    if (!this.usuarioId) return;
+    const ids = this.contem(id) ? this.idsSubject.value.filter((atual) => atual !== id) : [...this.idsSubject.value, id];
+    this.idsSubject.next(ids);
+    this.persistir();
+  }
+}
+>>>>>>> origin/master

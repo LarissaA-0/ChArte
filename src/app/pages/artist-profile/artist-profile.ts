@@ -109,12 +109,19 @@ export class ArtistProfile implements OnInit, OnDestroy {
       const imagem = typeof reader.result === 'string' ? reader.result : '';
       if (!imagem || !this.perfil) return;
       const dados = evento.campo === 'foto' ? { fotoPerfil: imagem } : { banner: imagem };
+<<<<<<< HEAD
       this.perfilService.atualizarPerfil(this.perfil.nomeUsuario, dados).then((ok) => {
         if (ok && this.perfil) {
           this.perfil = { ...this.perfil, ...dados } as PerfilView;
           if (evento.campo === 'foto') this.authService.atualizarFotoPerfil(imagem);
         }
       });
+=======
+      if (this.perfilService.atualizarPerfil(this.perfil.nomeUsuario, dados)) {
+        this.perfil = { ...this.perfil, ...dados };
+        if (evento.campo === 'foto') this.authService.atualizarFotoPerfilMock(imagem);
+      }
+>>>>>>> origin/master
     };
     reader.readAsDataURL(evento.arquivo);
   }
@@ -157,7 +164,11 @@ export class ArtistProfile implements OnInit, OnDestroy {
         this.perfil = perfil;
         this.abaAtual = 'colecao';
         this.perfilNaoEncontrado = false;
+<<<<<<< HEAD
         this.pinService.getArtesPorArtista(perfil.nomeUsuario).subscribe(artes => this.artesArtista = artes);
+=======
+        this.artesArtista = this.pinService.getArtesPorArtista(perfil.nomeUsuario);
+>>>>>>> origin/master
         this.verificarOwner();
       } else {
         this.perfil = null;
@@ -174,7 +185,11 @@ export class ArtistProfile implements OnInit, OnDestroy {
   }
 
   atualizarArtes(): void {
+<<<<<<< HEAD
     if (this.perfil) this.pinService.getArtesPorArtista(this.perfil.nomeUsuario).subscribe(artes => this.artesArtista = artes);
+=======
+    if (this.perfil) this.artesArtista = this.pinService.getArtesPorArtista(this.perfil.nomeUsuario);
+>>>>>>> origin/master
   }
 
   verificarOwner(): void {

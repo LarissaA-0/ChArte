@@ -3,6 +3,7 @@
   min-height: 100vh;
   color: var(--text-bg);
   background: #151522;
+<<<<<<< HEAD
   --cor-sucesso: #22c58e;
   --cor-erro: #ff6b6b;
   --cor-atencao: #ffd93d;
@@ -13,6 +14,8 @@
   --cor-atencao-bg: rgba(255, 217, 61, 0.12);
   --cor-atencao-borda: rgba(255, 217, 61, 0.35);
   --cor-icone-sucesso: #fff;
+=======
+>>>>>>> origin/master
 }
 .signup-page {
   display: grid;
@@ -33,10 +36,15 @@
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
+<<<<<<< HEAD
   width: min(calc(100% - 48px), 960px);
   max-height: calc(100vh - 48px);
   overflow-y: auto;
   padding: 32px 48px 28px;
+=======
+  width: min(calc(100% - 48px), 760px);
+  padding: 36px 42px 28px;
+>>>>>>> origin/master
   box-sizing: border-box;
   background: linear-gradient(145deg, #303052, #24243d);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -46,6 +54,7 @@
     0 0 35px rgba(139, 11, 224, 0.12);
   animation: signupRise 0.35s;
 }
+<<<<<<< HEAD
 .signup-panel::-webkit-scrollbar {
   width: 8px;
 }
@@ -66,6 +75,15 @@
   display: inline-block;
   margin-bottom: 8px;
   font-size: 40px;
+=======
+.signup-header {
+  margin-bottom: 24px;
+}
+.signup-brand {
+  display: inline-block;
+  margin-bottom: 22px;
+  font-size: 42px;
+>>>>>>> origin/master
   font-weight: 800;
   letter-spacing: -1px;
   text-decoration: none;
@@ -81,18 +99,28 @@
   letter-spacing: 0.16em;
 }
 .signup-panel h1 {
+<<<<<<< HEAD
   margin: 6px 0 4px;
   font-size: 28px;
+=======
+  margin: 8px 0 6px;
+  font-size: 30px;
+>>>>>>> origin/master
   font-weight: 800;
 }
 .signup-header p {
   margin: 0;
   color: rgba(255, 255, 255, 0.55);
+<<<<<<< HEAD
   font-size: 14px;
+=======
+  font-size: 14.5px;
+>>>>>>> origin/master
   line-height: 1.5;
 }
 .signup-form {
   display: grid;
+<<<<<<< HEAD
   gap: 12px;
 }
 .signup-field {
@@ -102,21 +130,40 @@
 .signup-label {
   color: rgba(255, 255, 255, 0.72);
   font-size: 11px;
+=======
+  gap: 14px;
+}
+.signup-field {
+  display: grid;
+  gap: 8px;
+}
+.signup-label {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 11.5px;
+>>>>>>> origin/master
   font-weight: 800;
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
+<<<<<<< HEAD
 .signup-field input,
 .signup-field select {
   width: 100%;
   height: 48px;
   padding: 0 16px;
+=======
+.signup-field input {
+  width: 100%;
+  height: 52px;
+  padding: 0 17px;
+>>>>>>> origin/master
   box-sizing: border-box;
   color: #fff;
   font: inherit;
   font-size: 15px;
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.08);
+<<<<<<< HEAD
   border-radius: 12px;
   outline: none;
   transition: 0.2s;
@@ -142,16 +189,26 @@
   background: #24243d;
   color: #fff;
   padding: 10px;
+=======
+  border-radius: 14px;
+  outline: none;
+  transition: 0.2s;
+>>>>>>> origin/master
 }
 .signup-field input::placeholder {
   color: rgba(255, 255, 255, 0.4);
 }
+<<<<<<< HEAD
 .signup-field input:focus,
 .signup-field select:focus {
+=======
+.signup-field input:focus {
+>>>>>>> origin/master
   background: rgba(255, 255, 255, 0.1);
   border-color: #9b24e8;
   box-shadow: 0 0 0 3px rgba(139, 11, 224, 0.15);
 }
+<<<<<<< HEAD
 .signup-field input[type="date"] {
   padding-right: 44px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23c875ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
@@ -172,6 +229,8 @@
   height: 100%;
   cursor: pointer;
 }
+=======
+>>>>>>> origin/master
 .signup-segment {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -207,6 +266,7 @@
 .signup-duo {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+<<<<<<< HEAD
   gap: 12px;
 }
 .signup-trio {
@@ -262,6 +322,25 @@
   padding: 10px 12px;
   color: #ffc2cb;
   font-size: 13px;
+=======
+  gap: 13px;
+}
+.signup-hint {
+  margin: -4px 0 0;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 12px;
+}
+.signup-field-error {
+  color: #ffc2cb;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.signup-error {
+  margin: 0;
+  padding: 11px 13px;
+  color: #ffc2cb;
+  font-size: 13.5px;
+>>>>>>> origin/master
   line-height: 1.45;
   background: rgba(255, 99, 124, 0.12);
   border: 1px solid rgba(255, 99, 124, 0.3);
@@ -269,16 +348,28 @@
   animation: signupRise 0.25s;
 }
 .signup-submit {
+<<<<<<< HEAD
   height: 50px;
   margin-top: 6px;
   color: #fff;
   font: inherit;
   font-size: 15.5px;
+=======
+  height: 52px;
+  margin-top: 4px;
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+>>>>>>> origin/master
   font-weight: 700;
   cursor: pointer;
   background: linear-gradient(135deg, #8b0be0, #b22cff);
   border: 0;
+<<<<<<< HEAD
   border-radius: 12px;
+=======
+  border-radius: 14px;
+>>>>>>> origin/master
   box-shadow: 0 8px 20px rgba(139, 11, 224, 0.3);
   transition: 0.2s;
 }
@@ -298,10 +389,17 @@
   display: flex;
   justify-content: center;
   gap: 6px;
+<<<<<<< HEAD
   margin-top: 22px;
   padding-top: 18px;
   color: rgba(255, 255, 255, 0.55);
   font-size: 12.5px;
+=======
+  margin-top: 25px;
+  padding-top: 20px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+>>>>>>> origin/master
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 .signup-footer a {
@@ -313,6 +411,7 @@
   color: #fff;
   text-decoration: underline;
 }
+<<<<<<< HEAD
 
 /* --------------------------------------------------
    Feedback unificado (sucesso / confirmação / erro)
@@ -496,6 +595,8 @@
   background: rgba(139, 11, 224, 0.15);
   border-color: rgba(200, 117, 255, 0.5);
 }
+=======
+>>>>>>> origin/master
 @keyframes signupRise {
   from {
     opacity: 0;
@@ -509,10 +610,17 @@
 @media (max-width: 900px) {
   .signup-page {
     grid-template-columns: minmax(0, 1fr);
+<<<<<<< HEAD
     gap: 20px;
     height: auto;
     min-height: 100vh;
     padding: 20px 16px;
+=======
+    gap: 26px;
+    height: auto;
+    min-height: 100vh;
+    padding: 24px 18px;
+>>>>>>> origin/master
     align-content: start;
   }
   .signup-page > .loading-gallery {
@@ -521,13 +629,18 @@
   .signup-panel {
     grid-column: 1;
     grid-row: 1;
+<<<<<<< HEAD
     width: min(100%, 960px);
     max-height: none;
     overflow-y: visible;
+=======
+    width: min(100%, 760px);
+>>>>>>> origin/master
   }
 }
 @media (max-width: 560px) {
   .signup-panel {
+<<<<<<< HEAD
     padding: 26px 20px 22px;
     border-radius: 22px;
   }
@@ -543,10 +656,22 @@
     height: 52px;
     font-size: 16px;
   }
+=======
+    padding: 28px 22px 24px;
+    border-radius: 22px;
+  }
+  .signup-brand {
+    font-size: 34px;
+  }
+  .signup-duo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+>>>>>>> origin/master
 }
 @media (prefers-reduced-motion: reduce) {
   .signup-panel,
   .signup-field--reveal,
+<<<<<<< HEAD
   .signup-confirm,
   .signup-banner {
     animation: none;
@@ -575,3 +700,9 @@
   line-height: 1.5;
   font-size: 0.9rem;
 }
+=======
+  .signup-error {
+    animation: none;
+  }
+}
+>>>>>>> origin/master

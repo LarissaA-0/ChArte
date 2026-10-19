@@ -7,7 +7,11 @@
   <header class="orders-heading"></header>
   <nav class="orders-tabs" aria-label="Favoritos e pedidos">
     <button type="button" [class.active]="aba === 'favoritos'" (click)="selecionarAba('favoritos')">
+<<<<<<< HEAD
       Favoritos <span>{{ (artesFavoritas$ | async)?.length ?? 0 }}</span>
+=======
+      Favoritos <span>{{ artesFavoritas.length }}</span>
+>>>>>>> origin/master
     </button>
     <button type="button" [class.active]="aba === 'pedidos'" (click)="selecionarAba('pedidos')">
       Pedidos <span>{{ pedidos.length }}</span>
@@ -15,7 +19,11 @@
   </nav>
   @if (aba === 'favoritos') {
     <section class="pin_container favorites-grid">
+<<<<<<< HEAD
       @for (arte of artesFavoritas$ | async; track arte.id) {
+=======
+      @for (arte of artesFavoritas; track arte.id) {
+>>>>>>> origin/master
         <app-pin-card [post]="arte" (click)="abrirPin(arte)"></app-pin-card>
       } @empty {
         <div class="orders-empty">

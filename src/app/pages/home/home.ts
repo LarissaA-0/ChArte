@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Component, ChangeDetectorRef } from '@angular/core';
+=======
+import { Component } from '@angular/core';
+>>>>>>> origin/master
 import { SearchBar } from '../../components/search-bar/search-bar';
 import { Card } from '../../components/card/card';
 import { CardSm } from '../../components/card-sm/card-sm';
@@ -29,6 +33,7 @@ export class Home {
   artes: Post[] = [];
   postSelecionado!: Post;
 
+<<<<<<< HEAD
   constructor(
   private pinService: PinService,
   private cdr: ChangeDetectorRef
@@ -39,4 +44,9 @@ export class Home {
     this.cdr.markForCheck();
   });
 }
+=======
+  constructor(private pinService: PinService) {
+    this.artes = this.pinService.getArtes();
+  }
+>>>>>>> origin/master
 }

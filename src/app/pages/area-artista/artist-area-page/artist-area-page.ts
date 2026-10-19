@@ -34,15 +34,23 @@ export class ArtistAreaPage implements OnInit {
     if (!usuario) return;
     this.perfis.getPerfil(usuario.nomeUsuario).subscribe((perfil) => {
       this.perfil = perfil;
+<<<<<<< HEAD
       if (perfil) {
         this.pins.getArtesPorArtista(perfil.nomeUsuario).subscribe(artes => this.artes = artes);
       }
+=======
+      this.artes = perfil ? this.pins.getArtesPorArtista(perfil.nomeUsuario) : [];
+>>>>>>> origin/master
     });
   }
 
   atualizarPerfil(perfil: PerfilView): void {
     this.perfil = perfil;
+<<<<<<< HEAD
     this.pins.getArtesPorArtista(perfil.nomeUsuario).subscribe(artes => this.artes = artes);
+=======
+    this.artes = this.pins.getArtesPorArtista(perfil.nomeUsuario);
+>>>>>>> origin/master
   }
 
   atualizarArtes(artes: Post[]): void { this.artes = [...artes]; }

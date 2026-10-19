@@ -2,10 +2,14 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { TipoUsuario } from '../../mocks/usuarios.mock';
+<<<<<<< HEAD
 import {
   AuthService,
   SignUpResult,
 } from '../../../services/auth.service';
+=======
+import { AuthService } from '../../../services/auth.service';
+>>>>>>> origin/master
 
 interface SlotGaleria {
   imagem: string;
@@ -36,6 +40,7 @@ export class Cadastro {
   mostrarSenha = false;
   mostrarConfirmarSenha = false;
   tipoUsuario: TipoUsuario = 'Comum';
+<<<<<<< HEAD
   dataNascimento = '';
   genero = '';
   telefone = '';
@@ -69,6 +74,12 @@ export class Cadastro {
   )
     .toISOString()
     .split('T')[0];
+=======
+  erro = '';
+  carregando = false;
+
+  readonly tipos: TipoUsuario[] = ['Comum', 'Artista'];
+>>>>>>> origin/master
 
   private readonly imagensGaleria = [
     '/styles-icons/fantasy_style.jpeg',
@@ -89,6 +100,7 @@ export class Cadastro {
     '/styles-icons/horror_style.jpeg',
   ];
 
+<<<<<<< HEAD
   readonly galeria: LinhaGaleria[] = Array.from(
     { length: 4 },
     (_, coluna) => {
@@ -118,11 +130,34 @@ export class Cadastro {
     private auth: AuthService,
     private router: Router,
   ) {}
+=======
+  readonly galeria: LinhaGaleria[] = Array.from({ length: 4 }, (_, coluna) => {
+    const tamanhos = [
+      [1.5, 0.65, 1, 1.5],
+      [1, 1.5, 1, 0.65],
+      [0.65, 1, 1.5, 1],
+      [1.5, 1, 0.65, 1.5],
+    ][coluna];
+
+    return {
+      itens: tamanhos.map((tamanho, indice) => ({
+        imagem: this.imagensGaleria[(coluna * tamanhos.length + indice) % this.imagensGaleria.length],
+        direcao: coluna % 2 === 0 ? ('up' as const) : ('down' as const),
+        duracao: `${(18 + coluna * 2.5).toFixed(2)}s`,
+        atraso: `${(coluna * 1.1).toFixed(2)}s`,
+        tamanho,
+      })),
+    };
+  });
+
+  constructor(private auth: AuthService, private router: Router) {}
+>>>>>>> origin/master
 
   rotuloTipo(tipo: TipoUsuario): string {
     return tipo === 'Artista' ? 'Artista' : 'Usuário';
   }
 
+<<<<<<< HEAD
   /** Exibe a mensagem de erro de um campo, se houver. */
   erroDoCampo(campo: string): string | undefined {
     return this.erros[campo];
@@ -447,4 +482,38 @@ export class Cadastro {
   irParaLogin(): void {
     void this.router.navigate(['/']);
   }
+=======
+  async criarConta(): Promise<void> {
+    this.erro = '';
+    const emailNormalizado = this.email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailNormalizado)) {
+      this.erro = 'Digite um e-mail válido, como voce@email.com.';
+      return;
+    }
+    if (this.senha !== this.confirmarSenha) {
+      this.erro = 'As senhas não conferem.';
+      return;
+    }
+    this.carregando = true;
+    try {
+      const sessao = await this.auth.registrar({
+        nome: this.nome,
+        nomeArtistico: this.nomeArtistico,
+        nomeUsuario: this.nomeUsuario,
+        email: emailNormalizado,
+        senha: this.senha,
+        tipoUsuario: this.tipoUsuario,
+      });
+      if (!sessao) {
+        this.erro = 'Não foi possível criar a conta. Verifique os dados e se o e-mail ou usuário já estão cadastrados.';
+        return;
+      }
+      void this.router.navigate(
+        sessao.tipoUsuario === 'Artista' ? ['/artista'] : ['/perfil', sessao.nomeUsuario],
+      );
+    } finally {
+      this.carregando = false;
+    }
+  }
+>>>>>>> origin/master
 }

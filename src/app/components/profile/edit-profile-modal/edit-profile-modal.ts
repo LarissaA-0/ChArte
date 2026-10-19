@@ -85,6 +85,7 @@ export class EditProfileModal implements OnChanges, OnDestroy {
       },
     };
 
+<<<<<<< HEAD
     this.perfilService.atualizarPerfil(this.perfil.nomeUsuario, dadosAtualizados).then((sucesso) => {
       if (sucesso) {
         const perfilCompleto: PerfilView = {
@@ -99,6 +100,22 @@ export class EditProfileModal implements OnChanges, OnDestroy {
         this.fechar();
       }
     });
+=======
+    const sucesso = this.perfilService.atualizarPerfil(this.perfil.nomeUsuario, dadosAtualizados);
+
+    if (sucesso) {
+      const perfilCompleto: PerfilView = {
+        ...this.perfil,
+        ...dadosAtualizados,
+        redesSociais: {
+          ...this.perfil.redesSociais,
+          ...dadosAtualizados.redesSociais,
+        },
+      };
+      this.perfilAtualizado.emit(perfilCompleto);
+      this.fechar();
+    }
+>>>>>>> origin/master
   }
 
   selecionarImagem(event: Event, campo: 'foto' | 'banner'): void {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+<<<<<<< HEAD
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Post } from '../app/models/post';
 
@@ -9,10 +10,15 @@ interface ItemCarrinho {
   addedAt: number;
 }
 
+=======
+import { Post } from '../app/models/post';
+
+>>>>>>> origin/master
 @Injectable({
   providedIn: 'root',
 })
 export class CarrinhoService {
+<<<<<<< HEAD
   private readonly itensSubject = new BehaviorSubject<ItemCarrinho[]>([]);
   readonly itens$ = this.itensSubject.asObservable();
 
@@ -87,3 +93,21 @@ export class CarrinhoService {
     return this.itensSubject.value.length;
   }
 }
+=======
+  adicionar(post: Post) {
+    // adiciona a arte ao carrinho
+  }
+
+  remover(postId: number) {
+    // remove do carrinho
+  }
+
+  listar() {
+    // retorna itens
+  }
+
+  limpar() {
+    // limpa carrinho
+  }
+}
+>>>>>>> origin/master

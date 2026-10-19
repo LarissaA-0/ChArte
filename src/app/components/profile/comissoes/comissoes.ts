@@ -88,6 +88,7 @@ export class Comissoes {
       valor: this.opcaoSelecionada.precoInicial, prazo: this.opcaoSelecionada.prazo,
       pagamentoStatus: 'pendente', opcaoTitulo: this.opcaoSelecionada.titulo,
     };
+<<<<<<< HEAD
     const criada = await this.artistData.solicitarComissao(comissao);
     this.enviando = false;
     this.opcaoSelecionada = null;
@@ -96,5 +97,11 @@ export class Comissoes {
     } else {
       this.erro = 'Erro ao enviar solicitação. Tente novamente.';
     }
+=======
+    const criada = this.artistData.solicitarComissao(comissao);
+    this.enviando = false;
+    this.opcaoSelecionada = null;
+    void this.router.navigate(['/carrinho'], { queryParams: { aba: 'pedidos', pedido: criada.id } });
+>>>>>>> origin/master
   }
 }

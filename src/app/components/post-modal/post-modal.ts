@@ -43,14 +43,21 @@ export class PostModal {
     if (!usuario || usuario.tipoUsuario !== 'Artista') { this.erro = 'Entre como artista para publicar uma obra.'; return; }
     if (!this.titulo.trim() || !this.imagemSelecionada || !this.categoria) { this.erro = 'Preencha o título, a imagem e a categoria.'; return; }
     if (this.compravel && (!this.preco || this.preco <= 0)) { this.erro = 'Informe um preço válido para a obra.'; return; }
+<<<<<<< HEAD
     this.perfilService.getPerfil(usuario.nomeUsuario).subscribe(async (perfil) => {
       if (!perfil) { this.erro = 'Não foi possível localizar o perfil da artista.'; return; }
       const arte = await this.pinService.adicionarArte({
+=======
+    this.perfilService.getPerfil(usuario.nomeUsuario).subscribe((perfil) => {
+      if (!perfil) { this.erro = 'Não foi possível localizar o perfil da artista.'; return; }
+      const arte = this.pinService.adicionarArte({
+>>>>>>> origin/master
         titulo: this.titulo.trim(), descricao: this.descricao.trim(), portfolio: this.previewImagem || this.imagemSelecionada!.name,
         categoria: this.categorias.find((item) => item.nome.toLowerCase() === this.categoria.toLowerCase())?.nome || this.categoria,
         estilo: this.estilos.find((item) => item.nome.toLowerCase() === this.estilo.toLowerCase())?.nome || this.estilo,
         preco: this.compravel ? Number(this.preco) : 0,
       }, perfil);
+<<<<<<< HEAD
       if (arte) {
         this.artePublicada.emit(arte);
         this.limparFormulario();
@@ -58,6 +65,11 @@ export class PostModal {
       } else {
         this.erro = 'Erro ao publicar a obra. Tente novamente.';
       }
+=======
+      this.artePublicada.emit(arte);
+      this.limparFormulario();
+      this.modalService.closeModal();
+>>>>>>> origin/master
     });
   }
 

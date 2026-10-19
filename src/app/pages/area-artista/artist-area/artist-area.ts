@@ -231,6 +231,7 @@ export class ArtistArea {
   alterarUsername(): void {
     const anterior = this.perfil.nomeUsuario;
     const novo = this.usernameNovo.trim().replace(/^@/, '');
+<<<<<<< HEAD
     if (!this.perfilService.nomeUsuarioDisponivel(novo, anterior)) {
       this.mensagemSeguranca = 'Username inválido ou já utilizado.';
       return;
@@ -258,6 +259,28 @@ export class ArtistArea {
     if (this.senhaNova !== this.senhaConfirmacao || this.senhaNova.length < 6) { this.mensagemSeguranca = 'Confira a confirmação e use ao menos 6 caracteres.'; return; }
     const ok = await this.auth.atualizarSenha(this.senhaNova);
     this.mensagemSeguranca = ok ? 'Senha atualizada.' : 'Não foi possível atualizar a senha.';
+=======
+    if (!this.perfilService.nomeUsuarioDisponivel(novo, anterior) || !this.auth.atualizarUsernameMock(novo)) {
+      this.mensagemSeguranca = 'Username inválido ou já utilizado.';
+      return;
+    }
+    this.perfilService.atualizarPerfil(anterior, { nomeUsuario: novo });
+    this.artistData.renomearArtista(anterior, novo);
+    this.perfil = { ...this.perfil, nomeUsuario: novo };
+    this.usernameNovo = '';
+    this.mensagemSeguranca = 'Username atualizado nos dados de teste.';
+    this.perfilAtualizado.emit(this.perfil);
+  }
+  alterarEmail(): void {
+    const ok = this.auth.atualizarEmailMock(this.emailNovo);
+    this.mensagemSeguranca = ok ? 'E-mail atualizado nos dados de teste.' : 'Informe um e-mail válido.';
+    if (ok) this.emailNovo = '';
+  }
+  async alterarSenha(): Promise<void> {
+    if (this.senhaNova !== this.senhaConfirmacao || this.senhaNova.length < 6) { this.mensagemSeguranca = 'Confira a confirmação e use ao menos 6 caracteres.'; return; }
+    const ok = await this.auth.atualizarSenhaMock(this.senhaAtual, this.senhaNova);
+    this.mensagemSeguranca = ok ? 'Senha atualizada nos dados de teste.' : 'A senha atual não confere.';
+>>>>>>> origin/master
     if (ok) this.senhaAtual = this.senhaNova = this.senhaConfirmacao = '';
   }
   sair(): void { this.auth.logout(); void this.router.navigate(['/']); }

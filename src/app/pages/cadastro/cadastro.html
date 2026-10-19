@@ -31,6 +31,7 @@
   <section class="signup-panel" aria-labelledby="signup-title">
     <header class="signup-header">
       <a class="signup-brand" routerLink="/">ChArte</a>
+<<<<<<< HEAD
     </header>
 
     <form
@@ -44,12 +45,20 @@
         [class.signup-field--error]="campoInvalido('nome')"
         aria-describedby="nome-erro"
       >
+=======
+      <h1 id="signup-title">Crie sua conta</h1>
+    </header>
+
+    <form class="signup-form" (ngSubmit)="criarConta()">
+      <label class="signup-field">
+>>>>>>> origin/master
         <span class="signup-label">Nome</span>
         <input
           required
           maxlength="80"
           [(ngModel)]="nome"
           name="nome"
+<<<<<<< HEAD
           #nomeControl="ngModel"
           autocomplete="name"
           placeholder="Como podemos te chamar?"
@@ -70,6 +79,14 @@
         [class.signup-field--error]="campoInvalido('nomeUsuario')"
         aria-describedby="nome-usuario-erro"
       >
+=======
+          autocomplete="name"
+          placeholder="Como podemos te chamar?"
+        />
+      </label>
+
+      <label class="signup-field">
+>>>>>>> origin/master
         <span class="signup-label">Nome de usuário</span>
         <input
           required
@@ -78,6 +95,7 @@
           pattern="[A-Za-z0-9_.]+"
           [(ngModel)]="nomeUsuario"
           name="nomeUsuario"
+<<<<<<< HEAD
           #nomeUsuarioControl="ngModel"
           autocomplete="username"
           placeholder="seu_usuario"
@@ -94,6 +112,14 @@
       </label>
 
       <label class="signup-field" [class.signup-field--error]="campoInvalido('email')" aria-describedby="email-erro">
+=======
+          autocomplete="username"
+          placeholder="seu_usuario"
+        />
+      </label>
+
+      <label class="signup-field">
+>>>>>>> origin/master
         <span class="signup-label">E-mail</span>
         <input
           required
@@ -107,6 +133,7 @@
           autocapitalize="none"
           spellcheck="false"
           placeholder="voce@email.com"
+<<<<<<< HEAD
           [attr.aria-invalid]="(emailControl.invalid && (emailControl.dirty || emailControl.touched)) || campoInvalido('email') ? 'true' : 'false'"
           aria-describedby="email-hint email-erro"
         />
@@ -117,11 +144,20 @@
               {{ erros['email'] }}
             }
             @else if (emailControl.errors?.['required']) { Informe seu e-mail. }
+=======
+          aria-describedby="email-hint email-error"
+        />
+        <span id="email-hint" class="signup-hint">Use um endereço no formato voce@email.com.</span>
+        @if (emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+          <span id="email-error" class="signup-field-error" role="status">
+            @if (emailControl.errors?.['required']) { Informe seu e-mail. }
+>>>>>>> origin/master
             @else { Confira o formato do e-mail. }
           </span>
         }
       </label>
 
+<<<<<<< HEAD
       <div class="signup-trio">
         <label class="signup-field" [class.signup-field--error]="campoInvalido('dataNascimento')" aria-describedby="data-nascimento-erro">
           <span class="signup-label">Data de nascimento</span>
@@ -203,6 +239,8 @@
         </label>
       </div>
 
+=======
+>>>>>>> origin/master
       <div class="signup-field">
         <span class="signup-label">Tipo de conta</span>
         <div class="signup-segment" role="radiogroup" aria-label="Tipo de conta">
@@ -221,6 +259,7 @@
       </div>
 
       @if (tipoUsuario === 'Artista') {
+<<<<<<< HEAD
         <label class="signup-field signup-field--reveal" [class.signup-field--error]="campoInvalido('nomeArtistico')" aria-describedby="nome-artistico-erro">
           <span class="signup-label">NickName</span>
           <input
@@ -240,10 +279,21 @@
               {{ erros['nomeArtistico'] }}
             </span>
           }
+=======
+        <label class="signup-field signup-field--reveal">
+          <span class="signup-label">NickName</span>
+          <input
+            maxlength="80"
+            [(ngModel)]="nomeArtistico"
+            name="nomeArtistico"
+            placeholder="Como você assina suas obras"
+          />
+>>>>>>> origin/master
         </label>
       }
 
       <div class="signup-duo">
+<<<<<<< HEAD
         <label class="signup-field" [class.signup-field--error]="campoInvalido('senha')" aria-describedby="senha-erro">
           <span class="signup-label">Senha</span>
           <div class="password-field-control">
@@ -414,6 +464,36 @@
           <ng-container>{{ carregando ? 'Criando conta…' : 'Criar conta' }}</ng-container>
         </button>
       }
+=======
+        <label class="signup-field">
+          <span class="signup-label">Senha</span>
+          <div class="password-field-control">
+            <input required [type]="mostrarSenha ? 'text' : 'password'" minlength="6" [(ngModel)]="senha" name="senha" autocomplete="new-password" />
+            <button type="button" class="password-visibility" (click)="mostrarSenha = !mostrarSenha" [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarSenha">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>@if (!mostrarSenha) { <path class="eye-slash" d="m4 4 16 16"/> }</svg>
+            </button>
+          </div>
+        </label>
+        <label class="signup-field">
+          <span class="signup-label">Confirmar senha</span>
+          <div class="password-field-control">
+            <input required [type]="mostrarConfirmarSenha ? 'text' : 'password'" minlength="6" [(ngModel)]="confirmarSenha" name="confirmarSenha" autocomplete="new-password" />
+            <button type="button" class="password-visibility" (click)="mostrarConfirmarSenha = !mostrarConfirmarSenha" [attr.aria-label]="mostrarConfirmarSenha ? 'Ocultar senha' : 'Mostrar senha'" [attr.aria-pressed]="mostrarConfirmarSenha">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>@if (!mostrarConfirmarSenha) { <path class="eye-slash" d="m4 4 16 16"/> }</svg>
+            </button>
+          </div>
+        </label>
+      </div>
+      <p class="signup-hint">A senha precisa ter no mínimo 6 caracteres.</p>
+
+      @if (erro) {
+        <p class="signup-error" role="alert">{{ erro }}</p>
+      }
+
+      <button class="signup-submit" type="submit" [disabled]="carregando">
+        {{ carregando ? 'Criando conta…' : 'Criar conta' }}
+      </button>
+>>>>>>> origin/master
     </form>
 
     <footer class="signup-footer">
