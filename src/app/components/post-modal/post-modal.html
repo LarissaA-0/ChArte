@@ -7,7 +7,7 @@
         <p>Compartilhe uma nova arte com a comunidade</p>
       </div>
 
-      <button type="button" class="btn-fechar" (click)="fecharModal()">×</button>
+      <button type="button" class="btn-fechar" (click)="fecharModal()" [disabled]="publicando">×</button>
     </header>
 
     <!-- CONTEÚDO -->
@@ -31,8 +31,8 @@
             hidden
           />
 
-          <label for="imagem" class="btn-upload"> Escolher imagem </label>
-          @if (imagemSelecionada) { <button type="button" class="btn-remover-imagem" (click)="removerImagem()">Remover imagem</button> }
+          <label for="imagem" class="btn-upload" [class.disabled]="publicando"> Escolher imagem </label>
+          @if (imagemSelecionada) { <button type="button" class="btn-remover-imagem" (click)="removerImagem()" [disabled]="publicando">Remover imagem</button> }
         </div>
       </section>
 
@@ -121,9 +121,9 @@
 
     <!-- RODAPÉ -->
     <footer class="modal-footer">
-      <button type="button" class="btn-cancelar" (click)="fecharModal()">Cancelar</button>
+      <button type="button" class="btn-cancelar" (click)="fecharModal()" [disabled]="publicando">Cancelar</button>
 
-      <button type="button" class="btn-publicar" (click)="publicarPostagem()">Publicar arte</button>
+      <button type="button" class="btn-publicar" (click)="publicarPostagem()" [disabled]="publicando">{{ publicando ? "Publicando..." : "Publicar arte" }}</button>
     </footer>
   </div>
 </div>

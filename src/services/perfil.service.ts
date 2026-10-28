@@ -24,127 +24,180 @@ export class PerfilService {
         foto_perfil,
         banner_perfil,
         bio,
-        tipo_usuario,
-        seguidores,
-        seguindo,
-        avaliacao_media,
-        total_reviews
+        tipo_usuario
       `)
       .ilike('nome_usuario', nomeUsuario)
-      .single();
+      .maybeSingle();
 
-    if (error || !usuario) {
+    if (error) {
+      console.error('Erro ao buscar perfil do usuário:', error);
       return null;
     }
+
+    if (!usuario) {
+      console.warn('Usuário não encontrado:', nomeUsuario);
+      return null;
+    }
+
+    const ehArtista =
+      String(usuario.tipo_usuario).toLowerCase() === 'artista';
 
     let artistaData: {
       id_artista: number;
       nome_artistico: string;
-      bio: string;
-      total_reviews: number;
       data_inicio: string;
-      avaliacao_media: number;
     } | null = null;
 
-    if (usuario.tipo_usuario === 'Artista') {
-      const { data: artista } = await supabase
+    if (ehArtista) {
+      const { data: artista, error: erroArtista } = await supabase
         .from('artista')
-        .select('id_artista, nome_artistico, bio, total_reviews, data_inicio, avaliacao_media')
+        .select('id_artista, nome_artistico, data_inicio')
         .eq('id_usuario', usuario.id_usuario)
-        .single();
+        .maybeSingle();
+
+      if (erroArtista) {
+        console.error('Erro ao buscar dados do artista:', erroArtista);
+      }
+
       artistaData = artista;
     }
 
-    const { data: redesSociais } = await supabase
+    const { data: redes, error: erroRedes } = await supabase
       .from('redes_sociais')
       .select('twitter, instagram, tiktok, youtube')
       .eq('id_usuario', usuario.id_usuario)
-      .single();
+      .maybeSingle();
+
+    if (erroRedes) {
+      console.error('Erro ao buscar redes sociais:', erroRedes);
+    }
+
+    const redesSociais = redes ?? {};
 
     return {
-      idUsuario: usuario.id_usuario.toString(),
+      idUsuario: String(usuario.id_usuario),
       nomeUsuario: usuario.nome_usuario,
       nome: usuario.nome,
       nomeArtistico: artistaData?.nome_artistico,
       fotoPerfil: usuario.foto_perfil || '/gato.jpeg',
       banner: usuario.banner_perfil || '/nimona.jpeg',
-      bio: artistaData?.bio || usuario.bio || '',
-      tipoUsuario: usuario.tipo_usuario === 'Cliente' ? 'Comum' : usuario.tipo_usuario,
-      seguidores: usuario.seguidores || 0,
-      seguindo: usuario.seguindo || 0,
-      avaliacaoMedia: artistaData?.avaliacao_media ?? usuario.avaliacao_media ?? 0,
-      totalReviews: artistaData?.total_reviews ?? usuario.total_reviews ?? 0,
+      bio: usuario.bio || '',
+      tipoUsuario: ehArtista ? 'Artista' :
+        (String(usuario.tipo_usuario).toLowerCase() === 'cliente'
+          ? 'Comum'
+          : usuario.tipo_usuario),
+      seguidores: 0,
+      seguindo: 0,
+      avaliacaoMedia: 0,
+      totalReviews: 0,
       idArtista: artistaData?.id_artista,
       redesSociais: redesSociais || {},
     };
   }
 
-  async atualizarPerfil(nomeUsuario: string, dadosAtualizados: Partial<PerfilView>): Promise<boolean> {
-    const nome = nomeUsuario.trim().toLowerCase();
+  async atualizarPerfil(
+    nomeUsuario: string,
+    dadosAtualizados: Partial<PerfilView>
+  ): Promise<boolean> {
+    const { data: authData, error: erroAuth } =
+      await supabase.auth.getUser();
 
-    const usuarioUpdates: Record<string, unknown> = {};
-    if (dadosAtualizados.nome !== undefined) usuarioUpdates['nome'] = dadosAtualizados.nome;
-    if (dadosAtualizados.fotoPerfil !== undefined) usuarioUpdates['foto_perfil'] = dadosAtualizados.fotoPerfil;
-    if (dadosAtualizados.banner !== undefined) usuarioUpdates['banner_perfil'] = dadosAtualizados.banner;
-    if (dadosAtualizados.bio !== undefined) usuarioUpdates['bio'] = dadosAtualizados.bio;
+    const authUser = authData.user;
+
+    if (erroAuth || !authUser) {
+      console.error(
+        'Não foi possível salvar o perfil: usuário não autenticado.',
+        erroAuth
+      );
+      return false;
+    }
+
+    const { data: usuario, error: erroUsuario } = await supabase
+      .from('usuario')
+      .select('id_usuario, nome_usuario, tipo_usuario')
+      .eq('id_auth', authUser.id)
+      .maybeSingle();
+
+    if (erroUsuario || !usuario) {
+      console.error(
+        'Não foi possível localizar o perfil do usuário autenticado.',
+        erroUsuario
+      );
+      return false;
+    }
+
+    const nomeAtual = nomeUsuario.trim().toLowerCase();
+    if (usuario.nome_usuario?.trim().toLowerCase() !== nomeAtual) {
+      console.error(
+        'O perfil aberto não corresponde ao usuário autenticado.',
+        { perfilAberto: nomeAtual, perfilAutenticado: usuario.nome_usuario }
+      );
+      return false;
+    }
 
     let sucesso = true;
 
+    const usuarioUpdates: Record<string, unknown> = {};
+    if (dadosAtualizados.nome !== undefined)
+      usuarioUpdates['nome'] = dadosAtualizados.nome;
+    if (dadosAtualizados.fotoPerfil !== undefined)
+      usuarioUpdates['foto_perfil'] = dadosAtualizados.fotoPerfil;
+    if (dadosAtualizados.banner !== undefined)
+      usuarioUpdates['banner_perfil'] = dadosAtualizados.banner;
+    if (dadosAtualizados.bio !== undefined)
+      usuarioUpdates['bio'] = dadosAtualizados.bio;
+
     if (Object.keys(usuarioUpdates).length > 0) {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('usuario')
         .update(usuarioUpdates)
-        .ilike('nome_usuario', nome);
-      if (error) {
-        console.error('Erro ao atualizar usuário:', error);
+        .eq('id_usuario', usuario.id_usuario)
+        .select('id_usuario');
+
+      if (error || !data || data.length === 0) {
+        console.error(
+          'Erro ao salvar os dados do usuário:',
+          error ?? 'Nenhuma linha foi atualizada; verifique a política RLS.'
+        );
         sucesso = false;
       }
     }
 
-    if (dadosAtualizados.nomeArtistico !== undefined || dadosAtualizados.bio !== undefined) {
-      const { data: usuario } = await supabase
-        .from('usuario')
-        .select('id_usuario, tipo_usuario')
-        .ilike('nome_usuario', nome)
-        .single();
-
-      if (usuario && usuario.tipo_usuario === 'Artista') {
-        const artistaUpdates: Record<string, unknown> = {};
-        if (dadosAtualizados.nomeArtistico !== undefined) artistaUpdates['nome_artistico'] = dadosAtualizados.nomeArtistico;
-        if (dadosAtualizados.bio !== undefined) artistaUpdates['bio'] = dadosAtualizados.bio;
-
-        const { error } = await supabase
+    if (dadosAtualizados.nomeArtistico !== undefined) {
+      if (String(usuario.tipo_usuario).toLowerCase() !== 'artista') {
+        console.error('Não é possível salvar nome artístico para este tipo de usuário.');
+        sucesso = false;
+      } else {
+        const { data, error } = await supabase
           .from('artista')
-          .update(artistaUpdates)
-          .eq('id_usuario', usuario.id_usuario);
-        if (error) {
-          console.error('Erro ao atualizar artista:', error);
+          .update({ nome_artistico: dadosAtualizados.nomeArtistico })
+          .eq('id_usuario', usuario.id_usuario)
+          .select('id_artista');
+
+        if (error || !data || data.length === 0) {
+          console.error(
+            'Erro ao salvar o nome artístico:',
+            error ?? 'Nenhum artista foi atualizado; verifique a política RLS.'
+          );
           sucesso = false;
         }
       }
     }
 
-    if (dadosAtualizados.redesSociais) {
-      const { data: usuario } = await supabase
-        .from('usuario')
-        .select('id_usuario')
-        .ilike('nome_usuario', nome)
-        .single();
+    if (dadosAtualizados.redesSociais !== undefined) {
+      const { error } = await supabase
+        .from('redes_sociais')
+        .upsert({
+          id_usuario: usuario.id_usuario,
+          twitter: dadosAtualizados.redesSociais.twitter ?? null,
+          instagram: dadosAtualizados.redesSociais.instagram ?? null,
+          tiktok: dadosAtualizados.redesSociais.tiktok ?? null,
+          youtube: dadosAtualizados.redesSociais.youtube ?? null,
+        }, { onConflict: 'id_usuario' });
 
-      if (usuario) {
-        const { error } = await supabase
-          .from('redes_sociais')
-          .upsert({
-            id_usuario: usuario.id_usuario,
-            twitter: dadosAtualizados.redesSociais.twitter,
-            instagram: dadosAtualizados.redesSociais.instagram,
-            tiktok: dadosAtualizados.redesSociais.tiktok,
-            youtube: dadosAtualizados.redesSociais.youtube,
-          });
-        if (error) {
-          console.error('Erro ao atualizar redes sociais:', error);
-          sucesso = false;
-        }
+      if (error) {
+        console.error('Erro ao salvar as redes sociais:', error);
+        sucesso = false;
       }
     }
 

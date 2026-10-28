@@ -1,4 +1,5 @@
-import { Component, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, Output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Post } from '../../models/post';
 import { ModalService } from '../../../services/modal.service';
 import { RouterLink } from '@angular/router';
@@ -27,7 +28,14 @@ export class PinCard {
     private pinService: PinService,
     public favorites: FavoritesService,
     private auth: AuthService,
-  ) {}
+    private cdr: ChangeDetectorRef,
+  ) {
+    this.favorites.ids$
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.cdr.markForCheck();
+      });
+  }
 
   get imagemArte(): string { return this.resolverImagem(this.post?.portfolio, '/gato.jpeg'); }
   get fotoArtista(): string { return this.resolverImagem(this.post?.usuario?.fotoPerfil, '/gato.jpeg'); }
@@ -51,6 +59,8 @@ export class PinCard {
       this.modal.openModal('login');
       return;
     }
-    this.favorites.alternar(this.post.id);
+    this.favorites.alternar(this.post.id).finally(() => {
+      this.cdr.detectChanges();
+    });
   }
 }

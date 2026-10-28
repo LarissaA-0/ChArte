@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Post } from '../../models/post';
 import { PinCardModal } from '../../components/pin-card-modal/pin-card-modal';
 import { PinCard } from '../../components/pin-card/pin-card';
@@ -63,6 +63,7 @@ export class ArtistProfile implements OnInit, OnDestroy {
     private authService: AuthService,
     private pinService: PinService,
     private artistAreaService: ArtistAreaService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   selecionarAba(aba: string): void {
@@ -104,18 +105,41 @@ export class ArtistProfile implements OnInit, OnDestroy {
 
   salvarImagemPerfil(evento: { campo: 'foto' | 'banner'; arquivo: File }): void {
     if (!this.isOwner || !this.perfil || !evento.arquivo.type.startsWith('image/') || evento.arquivo.size > 5 * 1024 * 1024) return;
+
     const reader = new FileReader();
-    reader.onload = () => {
+
+    reader.onload = async () => {
       const imagem = typeof reader.result === 'string' ? reader.result : '';
       if (!imagem || !this.perfil) return;
-      const dados = evento.campo === 'foto' ? { fotoPerfil: imagem } : { banner: imagem };
-      this.perfilService.atualizarPerfil(this.perfil.nomeUsuario, dados).then((ok) => {
-        if (ok && this.perfil) {
-          this.perfil = { ...this.perfil, ...dados } as PerfilView;
-          if (evento.campo === 'foto') this.authService.atualizarFotoPerfil(imagem);
+
+      const perfilAtual = this.perfil;
+      const dados = evento.campo === 'foto'
+        ? { fotoPerfil: imagem }
+        : { banner: imagem };
+
+      try {
+        const ok = await this.perfilService.atualizarPerfil(perfilAtual.nomeUsuario, dados);
+
+        if (!ok) {
+          console.error('Não foi possível salvar a imagem do perfil.');
+          return;
         }
-      });
+
+        this.perfil = { ...perfilAtual, ...dados } as PerfilView;
+        this.cdr.detectChanges();
+
+        if (evento.campo === 'foto') {
+          await this.authService.atualizarFotoPerfil(imagem);
+        }
+      } catch (erro) {
+        console.error('Erro ao atualizar a imagem do perfil:', erro);
+      }
     };
+
+    reader.onerror = () => {
+      console.error('Não foi possível ler o arquivo de imagem.');
+    };
+
     reader.readAsDataURL(evento.arquivo);
   }
 
@@ -157,7 +181,10 @@ export class ArtistProfile implements OnInit, OnDestroy {
         this.perfil = perfil;
         this.abaAtual = 'colecao';
         this.perfilNaoEncontrado = false;
-        this.pinService.getArtesPorArtista(perfil.nomeUsuario).subscribe(artes => this.artesArtista = artes);
+        this.pinService.getArtesPorArtista(perfil.nomeUsuario).subscribe(artes => {
+          this.artesArtista = artes;
+          this.cdr.markForCheck();
+        });
         this.verificarOwner();
       } else {
         this.perfil = null;
@@ -165,6 +192,8 @@ export class ArtistProfile implements OnInit, OnDestroy {
         this.artesArtista = [];
         this.isOwner = false;
       }
+
+      this.cdr.markForCheck();
     });
   }
 
@@ -174,7 +203,12 @@ export class ArtistProfile implements OnInit, OnDestroy {
   }
 
   atualizarArtes(): void {
-    if (this.perfil) this.pinService.getArtesPorArtista(this.perfil.nomeUsuario).subscribe(artes => this.artesArtista = artes);
+    if (this.perfil) {
+      this.pinService.getArtesPorArtista(this.perfil.nomeUsuario).subscribe(artes => {
+        this.artesArtista = artes;
+        this.cdr.markForCheck();
+      });
+    }
   }
 
   verificarOwner(): void {

@@ -221,10 +221,18 @@ export class ArtistArea {
     this.previewEdicaoArte = '';
     this.erroEdicaoArte = '';
   }
-  excluirArte(arte: Post): void {
+  async excluirArte(arte: Post): Promise<void> {
     if (!window.confirm(`Excluir “${arte.titulo}” do portfólio?`)) return;
-    this.pinService.excluirArte(arte.id);
+
+    const excluida = await this.pinService.excluirArte(arte.id);
+
+    if (!excluida) {
+      window.alert('Não foi possível excluir a obra. Verifique o console para mais detalhes.');
+      return;
+    }
+
     this.artes = this.artes.filter((item) => item.id !== arte.id);
+    this.artesAtualizadas.emit(this.artes);
   }
 
   salvarPrivacidade(): void { this.artistData.salvarPrivacidade(this.perfil.nomeUsuario, this.privacidade); }

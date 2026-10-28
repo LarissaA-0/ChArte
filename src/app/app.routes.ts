@@ -13,9 +13,15 @@ import { AuthService } from '../services/auth.service';
 import { ModalService } from '../services/modal.service';
 import { UserProfileSettings } from './components/profile/user-profile-settings/user-profile-settings';
 
-const userLoginGuard = () => {
-  if (inject(AuthService).estaLogado()) return true;
-  inject(ModalService).openModal('login');
+const userLoginGuard = async () => {
+  const auth = inject(AuthService);
+  const modal = inject(ModalService);
+
+  await auth.aguardarInicializacao();
+
+  if (auth.estaLogado()) return true;
+
+  modal.openModal('login');
   return false;
 };
 export const routes: Routes = [

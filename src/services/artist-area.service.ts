@@ -60,82 +60,88 @@ export class ArtistAreaService {
   // COMISSÕES
   // ============================================================================
 
-  private async carregarComissoes(): Promise<void> {
-    const { data, error } = await supabase
-      .from('comissao')
-      .select(`
-        id_comissao,
+  
+private async carregarComissoes(): Promise<void> {
+  const { data, error } = await supabase
+    .from('pedidos_principal')
+    .select(`
+      id_pedido,
+      id_cliente,
+      id_artista,
+      valor_total,
+      status_pedido,
+      data_criacao,
+      artista:artista!fk_pedido_artista (
         id_artista,
-        id_cliente,
-        titulo,
-        descricao,
-        referencias,
-        valor,
-        criada_em,
-        prazo,
-        status,
-        concluida_em,
-        observacao_entrega,
-        arquivo_entrega,
-        pagamento,
-        pagamento_status,
-        payment_id,
-        checkout_url,
-        opcao_titulo,
-        proposta_valor,
-        proposta_prazo,
-        artista!inner (
-          id_artista,
-          nome_artistico,
-          id_usuario
-        ),
-        cliente:usuario!comissao_id_cliente_fkey (
-          id_usuario,
-          nome_usuario,
-          foto_perfil,
-          nome
-        )
-      `);
+        nome_artistico
+      ),
+      cliente:usuario!fk_pedido_cliente (
+        id_usuario,
+        nome_usuario,
+        nome,
+        foto_perfil
+      )
+    `);
 
-    if (error) {
-      console.error('Erro ao carregar comissões:', error);
-      return;
-    }
-
-    const comissoes = (data ?? []).map((item: any): Comissao => {
-      const artista = Array.isArray(item.artista) ? item.artista[0] : item.artista;
-      const cliente = Array.isArray(item.cliente) ? item.cliente[0] : item.cliente;
-      return {
-        id: item.id_comissao,
-        artistaUsername: artista?.nome_artistico ?? '',
-        cliente: {
-          nome: cliente?.nome ?? '',
-          username: cliente?.nome_usuario ?? '',
-          foto: cliente?.foto_perfil ?? '/gato.jpeg',
-        },
-        titulo: item.titulo,
-        descricao: item.descricao,
-        referencias: item.referencias ?? [],
-        valor: Number(item.valor),
-        criadaEm: item.criada_em,
-        prazo: item.prazo,
-        status: item.status,
-        concluidaEm: item.concluida_em,
-        observacaoEntrega: item.observacao_entrega,
-        arquivoEntrega: item.arquivo_entrega,
-        pagamento: item.pagamento,
-        pagamentoStatus: item.pagamento_status,
-        paymentId: item.payment_id,
-        checkoutUrl: item.checkout_url,
-        opcaoTitulo: item.opcao_titulo,
-        propostaValor: item.proposta_valor ? Number(item.proposta_valor) : undefined,
-        propostaPrazo: item.proposta_prazo,
-      };
-    });
-
-    this.comissoesSubject.next(comissoes);
+  if (error) {
+    console.error('Erro ao carregar pedidos:', error);
+    return;
   }
 
+  const mapearStatus = (status: string): StatusComissao => {
+    switch (status) {
+      case 'Em Produção':
+        return 'Em andamento';
+
+      case 'Enviado':
+        return 'Em andamento';
+
+      case 'Entregue':
+      case 'Entregue para Avaliação do Cliente':
+        return 'Entregue';
+
+      case 'Cancelado':
+      case 'Devolvido':
+      case 'Reembolso':
+        return 'Cancelada';
+
+      case 'Pendente':
+      default:
+        return 'Pendente';
+    }
+  };
+
+  const pedidos = (data ?? []).map((item: any): Comissao => {
+    const artista = Array.isArray(item.artista)
+      ? item.artista[0]
+      : item.artista;
+
+    const cliente = Array.isArray(item.cliente)
+      ? item.cliente[0]
+      : item.cliente;
+
+    return {
+      id: item.id_pedido,
+      artistaUsername: artista?.nome_artistico ?? '',
+      cliente: {
+        nome: cliente?.nome ?? '',
+        username: cliente?.nome_usuario ?? '',
+        foto: cliente?.foto_perfil ?? '/gato.jpeg',
+      },
+      titulo: `Pedido #${item.id_pedido}`,
+      descricao: '',
+      referencias: [],
+      valor: Number(item.valor_total ?? 0),
+      criadaEm: item.data_criacao,
+      prazo: '',
+      status: mapearStatus(item.status_pedido),
+    };
+  });
+
+  this.comissoesSubject.next(pedidos);
+}
+
+        
   listarComissoes(username: string): Comissao[] {
     return this.comissoesSubject.value
       .filter((item) => item.artistaUsername.toLowerCase() === username.toLowerCase())
@@ -569,42 +575,45 @@ export class ArtistAreaService {
   // AVALIAÇÕES
   // ============================================================================
 
-  private async carregarAvaliacoes(): Promise<void> {
-    const { data, error } = await supabase
-      .from('avaliacao_artista')
-      .select(`
-        id_avaliacao,
+  
+private async carregarAvaliacoes(): Promise<void> {
+  const { data, error } = await supabase
+    .from('review')
+    .select(`
+      id_review,
+      id_artista,
+      id_cliente,
+      nota,
+      comentario,
+      data_review,
+      artista:artista!fk_review_artista (
         id_artista,
-        id_cliente,
-        nota,
-        comentario,
-        data,
-        artista (
-          id_artista,
-          nome_artistico
-        ),
-        cliente:usuario!avaliacao_artista_id_cliente_fkey (
-          id_usuario,
-          nome_usuario
-        )
-      `);
+        nome_artistico
+      ),
+      cliente:usuario!fk_review_cliente (
+        id_usuario,
+        nome_usuario
+      )
+    `);
 
-    if (error) {
-      console.error('Erro ao carregar avaliações:', error);
-      return;
-    }
+  if (error) {
+    console.error('Erro ao carregar avaliações:', error);
+    return;
+  }
 
-    const avaliacoes: AvaliacaoArtista[] = (data ?? []).map((item: any): AvaliacaoArtista => ({
-      id: item.id_avaliacao,
+  const avaliacoes: AvaliacaoArtista[] = (data ?? []).map(
+    (item: any): AvaliacaoArtista => ({
+      id: item.id_review,
       artistaUsername: item.artista?.nome_artistico ?? '',
       cliente: item.cliente?.nome_usuario ?? '',
       nota: item.nota,
-      comentario: item.comentario,
-      data: item.data,
-    }));
+      comentario: item.comentario ?? '',
+      data: item.data_review,
+    })
+  );
 
-    this.avaliacoesSubject.next(avaliacoes);
-  }
+  this.avaliacoesSubject.next(avaliacoes);
+}
 
   listarAvaliacoes(username: string): AvaliacaoArtista[] {
     return this.avaliacoesSubject.value
